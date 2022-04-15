@@ -2,7 +2,7 @@
 
 ## use test7; #데이터베이스 사용
 # autoincrement 지정
-# primarykey지정
+# primarykey지정 
 ############################################## 테이블 생성 ################################
 DROP TABLE IF EXISTS `member`;
 
