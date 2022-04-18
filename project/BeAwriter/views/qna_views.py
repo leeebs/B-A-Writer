@@ -9,6 +9,7 @@ bp = Blueprint('qna', __name__, url_prefix='/qna')
 
 @bp.route('/qnawrite',  methods=('GET','POST'))
 def qnawrite():
+    error = None
     if request.method == 'POST':
 
         TITLE = request.form['title']
@@ -27,8 +28,8 @@ def qnawrite():
             db.session.commit()
             return redirect(url_for('qna.qnalist'))
 
-    return render_template("/qna/FAQ_write.html")
-    
+    return render_template("/qna/FAQ_write.html", error=error)
+
 @bp.route('/qnalist')
 def qnalist():
     return render_template("/qna/FAQ_list.html")
