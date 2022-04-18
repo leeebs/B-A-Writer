@@ -59,3 +59,23 @@ def cover(book_no):
             return redirect(url_for('main.index')) #동화읽는페이지로 수정
             
     return render_template('book/bookcover.html', msg=msg, book_no=book_no)
+
+@bp.route('/bookstar', methods=('GET','POST'))
+def bookstar():
+    error = None
+
+    if request.method == 'POST':
+        try:
+            request.form['rating']
+            VALUE = request.form['rating']
+            star = Rating(rating_no=1,
+                            member_no=2,
+                            book_no=3,
+                            rating=int(VALUE))
+            db.session.add(star)
+            db.session.commit()
+            return redirect(url_for('main.index'))
+        except: 
+            error ="평점을 매겨주세요!"
+         
+    return render_template("/book/bookstar.html", error=error)
