@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+        {% block content %}
+
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-light bg-warning">
+            <div class="container px-4 px-lg-5">
+                <a class="navbar-brand" href="{{url_for('main.index')}}" style="color:blueviolet; font-family: 'Jua', sans-serif;"><b>B a writer</b></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="{{url_for('main.index')}}" style="color:blueviolet; font-family: 'Jua', sans-serif;">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#!" style="color:blueviolet; font-family: 'Jua', sans-serif;">QnA</a></li>
+                    </ul>
+
+                    {% if g.user %}
+                    <span class="mx-5" style="font-family: 'Jua', sans-serif;">{{ g.user.member_name }}님 안녕하세요!👋🏻</span>
+                    <a href="{{url_for('auth.logout')}}" class="btn btn-success" style="font-family: 'Jua', sans-serif;">로그아웃</a>
+                    {% else %}
+                    <a href="{{url_for('auth.login')}}" class="btn btn-success" style="font-family: 'Jua', sans-serif;">로그인</a>
+                    <a href="{{url_for('auth.register')}}" class="btn btn-success" style="margin-left: 15px; font-family: 'Jua', sans-serif;">회원가입</a>
+                    {% endif %}
+                </div>
+            </div>
+        </nav>
+        
+        <!-- Header-->
+        <header class="bg-warning py-5">
+            <div class="container px-4 px-lg-5 my-5">
+                <div class="text-center text-white">
+                    <p class="display-4 fw-bolder nav-link" href="#!" style="color:blueviolet; font-family: 'Jua', sans-serif;">🎇나만의 동화책 표지 만들기🎇</p>
+                    <p class="lead fw-normal text-white mb-0" style="font-family: 'Jua', sans-serif;">
+                        먼저 나만의 책 표지를 만들어 보아요~
+                        <br>직접 만든 책 표지를 올려주세요!
+                        <br>450x300 사이즈가 예쁘게 보여요 :)
+                    </p>
+                </div>
+            </div>
+        </header>
+        <!-- Section-->
+        <section class="py-5">
+            <div class="container px-4 px-lg-5 mt-5">
+                <div class="row my-5">
+                    <div class="col-1"></div>
+                    <div class="col-10 text-center">
+                        <form action="{{url_for('book.cover')}}" method="post"
+                            enctype="multipart/form-data">
+                            <input type="file" name ="file" style="font-family: 'Jua', sans-serif;"/>
+                            <input class="btn btn-success" type="submit" style="font-family: 'Jua', sans-serif;"/>
+                        </form>
+                    </div>
+                </div>
+                {% if msg %}
+                <p class="text-center" style="color:rgba(220, 20, 60, 0.5); font-family: 'Jua', sans-serif;">{{msg}}</p>
+                {% endif %}
+                <div class="row">
+                    <div class="col-4"></div>
+                    <div class="col-4 mt-5 text-center">
+                        <a href="{{url_for('main.index')}}" class="btn btn-success" style="font-family: 'Jua', sans-serif;">생략하기</a>
+                        <!-- 동화생성페이지로 수정 -->
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        {% endblock %}
