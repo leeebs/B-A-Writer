@@ -30,43 +30,81 @@
                     <div class="col-6 text-center">
                         <form method="post" class="justify-content-center">
                             <h4 style="font-family: 'Jua', sans-serif;">동화를 써주세요!😊</h4>
-                            <p style="font-size:large;"><textarea rows=5 name=content placeholder="동화 내용 입력하기" style="width:100%; border:solid 5px; border-color:blueviolet;"></textarea></p>
-                            <button class="btn btn-success mx-2" type="submit" style="font-family: 'Jua', sans-serif;" formaction="{{url_for('book.make')}}">동화에 바로 넣기</button>
-                            <button class="btn btn-success mx-2" type="submit" style="font-family: 'Jua', sans-serif;">도움받기</button> <!-- formaction="" -->
+                            <p style="font-size:large;"><textarea rows=5 name='writecontent' id='writecontent' placeholder="동화 내용 입력하기" style="width:100%; border:solid 5px; border-color:blueviolet;"></textarea></p>
+                            <button id="btn1" class="btn btn-success mx-2" style="font-family: 'Jua', sans-serif;">동화에 바로 넣기</button>
+                            <button class="btn btn-success mx-2" style="font-family: 'Jua', sans-serif;">도움받기</button> <!-- formaction="" -->
+                            {% if msg %}
+                            <p id="msg" class="my-3" style="color:rgba(220, 20, 60, 0.5); font-family: 'Jua', sans-serif;">{{msg}}</p>
+                            {% endif %}
                         </form>
                     </div>
                     <div class="col-6 text-center justify-content-center">
-                            <h4 style="font-family: 'Jua', sans-serif;">도움을 줄게요!😉</h4>
-                            <p style="font-size:large;">
-                                <textarea rows=5 name=content placeholder="도움받기 버튼을 눌러주세요" style="width:100%; border:solid 5px; border-color:blueviolet;"></textarea>
-                                <!-- 동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다 -->
-                            </p>
-                            <button class="btn btn-success mx-2" type="submit" style="font-family: 'Jua', sans-serif;">동화에 넣기</button>
-                        </form>
+                        <h4 style="font-family: 'Jua', sans-serif;">도움을 줄게요!😉</h4>
+                        <p style="font-size:large;">
+                            <textarea rows=5 name=content placeholder="도움받기 버튼을 눌러주세요" style="width:100%; border:solid 5px; border-color:blueviolet;"></textarea>
+                            <!-- 동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다 -->
+                        </p>
+                        <button class="btn btn-success mx-2" type="submit" style="font-family: 'Jua', sans-serif;">동화에 넣기</button>
                     </div>
                 </div>
-
-                <div class="row mb-2">
-                    <div class="col-6 text-center">
-                        {% if msg %}
-                        <p style="color:rgba(220, 20, 60, 0.5); font-family: 'Jua', sans-serif;">{{msg}}</p>
-                        {% endif %}
-                    </div>
-                </div>
-
                 <div class="row text-center justify-content-center">
                     <h4 style="font-family: 'Jua', sans-serif;">동화가 만들어지고 있어요 😎</h4>
                     <div style="overflow:auto; width:98%; height:150px; border:solid 5px; border-color:blueviolet;">
-                        <p style="font-size:large;">
-                            만들어진 동화
-                        </p>
+                        <p id="makedcontent" style="font-size:large;"></p>
                     </div>
                 </div>
                 <div class="text-center my-3">
-                    <a href="{{url_for('main.index')}}" class="btn btn-success" style="font-family: 'Jua', sans-serif;">생략하기</a>
+                    <button id="btn2" class="btn btn-success" style="font-family: 'Jua', sans-serif;">완성하기</button>
                     <!-- 동화읽는페이지로 수정 -->
                 </div>
             </div>
         </section>
-        
+
+        <script>
+            $("#btn1").click(function(){
+                var writecon = $("#writecontent").val();
+                var makecon = $("#makedcontent").text();
+                var postdata = {
+                    'inputdata' : writecon,
+                    'origindata' : makecon
+                }
+                $.ajax({
+                    type: 'POST',
+                    url: "{{url_for('book.req')}}",
+                    data: JSON.stringify(postdata),
+                    dataType: "JSON",
+                    contentType: "application/json",
+                    success: function(data){
+                        $("#makedcontent").text(data['origindata']+' '+data['inputdata'])
+                        $("#writecontent").val('')
+                    },
+                    error: function(request, status, error){
+                        alert('ajax error:['+status+']['+error+']')
+                    }
+                })
+                return false;
+            });
+
+            $("#btn2").click(function(){
+                var allcon = $("#makedcontent").text();
+                var postdata = {
+                    'alldata' : allcon
+                }
+                $.ajax({
+                    type: 'POST',
+                    url: "{{url_for('book.save')}}",
+                    data: JSON.stringify(postdata),
+                    dataType: "JSON",
+                    contentType: "application/json",
+                    success: function(bookn){
+                        var num = bookn['bookn'];
+                        location.href="/book/cover/"+num
+                    },
+                    error: function(request, status, error){
+                        alert('ajax error:['+status+']['+error+']')
+                    }
+                })
+            });
+        </script>
+
         {% endblock %}

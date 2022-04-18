@@ -43,7 +43,7 @@
                 <div class="row my-5">
                     <div class="col-1"></div>
                     <div class="col-10 text-center">
-                        <form action="{{url_for('book.cover')}}" method="post"
+                        <form action="{{url_for('book.cover', book_no=book_no)}}" method="post"
                             enctype="multipart/form-data">
                             <input type="file" name ="file" style="font-family: 'Jua', sans-serif;"/>
                             <input class="btn btn-success" type="submit" style="font-family: 'Jua', sans-serif;"/>
