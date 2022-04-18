@@ -1,5 +1,4 @@
-from ftplib import error_perm
-from flask import Blueprint, render_template, url_for, flash, request, session
+from flask import Blueprint, render_template, url_for, request, session, g
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import redirect
 
@@ -29,7 +28,7 @@ def login():
             
         if error is None:
             session.clear()
-            session['user_id'] = user.member_id
+            session['user_no'] = user.member_no
             return redirect(url_for('main.index'))
     
     return render_template('member/login.html',error=error)
@@ -37,3 +36,16 @@ def login():
 @bp.route('/register')
 def register():
     return 'register!'
+
+@bp.before_app_request
+def load_logged_in_user():
+    user_no = session.get('user_no')
+    if user_no is None:
+        g.user = None
+    else:
+        g.user = Member.query.get(user_no)
+        
+@bp.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('main.index'))

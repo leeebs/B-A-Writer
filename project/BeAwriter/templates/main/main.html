@@ -1,47 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>B a writer</title>
-        <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="static/assets/favicon.ico" />
-        <!-- Bootstrap icons-->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
-        <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="static/css/styles.css" rel="stylesheet" />
-        <!-- Font -->
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
-        <!-- font-family: 'Jua', sans-serif; -->
-    </head>
-    <body>
+        {% extends 'base.html' %}
+        {% block content %}
+
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-light bg-warning">
             <div class="container px-4 px-lg-5">
-                <a class="navbar-brand" href="#!" style="color:blueviolet; font-family: 'Jua', sans-serif;"><b>B a writer</b></a>
+                <a class="navbar-brand" href="{{url_for('main.index')}}" style="color:blueviolet; font-family: 'Jua', sans-serif;"><b>B a writer</b></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!" style="color:blueviolet; font-family: 'Jua', sans-serif;">Home</a></li>
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="{{url_for('main.index')}}" style="color:blueviolet; font-family: 'Jua', sans-serif;">Home</a></li>
                         <li class="nav-item"><a class="nav-link" href="#!" style="color:blueviolet; font-family: 'Jua', sans-serif;">QnA</a></li>
-                        <!-- <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#!">All Products</a></li>
-                                <li><hr class="dropdown-divider" /></li>
-                                <li><a class="dropdown-item" href="#!">Popular Items</a></li>
-                                <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
-                            </ul>
-                        </li> -->
                     </ul>
-                    <form class="d-flex">
-                        <button class="btn btn-success" type="submit" style="font-family: 'Jua', sans-serif;">로그인</button>
-                        <button class="btn btn-success" type="submit" style="margin-left: 15px; font-family: 'Jua', sans-serif;">회원가입</button>
-                    </form>
+
+                    {% if g.user %}
+                    <span class="mx-5" style="font-family: 'Jua', sans-serif;">{{ g.user.member_name }}님 안녕하세요!👋🏻</span>
+                    <a href="{{url_for('auth.logout')}}" class="btn btn-success" style="font-family: 'Jua', sans-serif;">로그아웃</a>
+                    {% else %}
+                    <a href="{{url_for('auth.login')}}" class="btn btn-success" style="font-family: 'Jua', sans-serif;">로그인</a>
+                    <a href="{{url_for('auth.register')}}" class="btn btn-success" style="margin-left: 15px; font-family: 'Jua', sans-serif;">회원가입</a>
+                    {% endif %}
                 </div>
             </div>
         </nav>
@@ -49,7 +26,7 @@
         <header class="bg-warning py-5">
             <div class="container px-4 px-lg-5 my-5">
                 <div class="text-center text-white">
-                    <a class="display-4 fw-bolder nav-link" href="#!" style="color:blueviolet; font-family: 'Jua', sans-serif;">나도 만들기</a>
+                    <a class="display-4 fw-bolder nav-link" href="{{url_for('book.cover')}}" style="color:blueviolet; font-family: 'Jua', sans-serif;">나도 만들기</a>
                     <p class="lead fw-normal text-white mb-0" style="font-family: 'Jua', sans-serif;">상상의 나래를 펼쳐 보아요!</p>
                 </div>
             </div>
@@ -57,8 +34,13 @@
         <!-- Section-->
         <section class="py-5">
             <div class="container px-4 px-lg-5 mt-5">
-                <h3>카테고리1</h3>
-                <hr>
+                <div class="row">
+                    <div class="col-1"></div>
+                    <div class="col-10">
+                        <h3>카테고리1</h3>
+                        <hr>
+                    </div>
+                </div>
                 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                     <div class="col mb-5">
                         <div class="card h-100">
@@ -247,13 +229,5 @@
                 </div>
             </div>
         </section>
-        <!-- Footer-->
-        <footer class="py-5 bg-warning">
-            <div class="container"><p class="m-0 text-center text-white" style="font-family: 'Jua', sans-serif;">Copyright &copy; B a writer 2022</p></div>
-        </footer>
-        <!-- Bootstrap core JS-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Core theme JS-->
-        <script src="static/js/scripts.js"></script>
-    </body>
-</html>
+        
+        {% endblock %}
