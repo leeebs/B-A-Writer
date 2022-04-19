@@ -12,6 +12,7 @@ migrate = Migrate()
 def create_app():
     app = Flask(__name__)
     app.config.from_object(config)
+    app.config['SECRET_KEY'] = 'SECRET KEYS'
     
     # 세션
     app.config['SESSION_TYPE'] = 'memcached'
@@ -25,10 +26,16 @@ def create_app():
     from . import models
     
     # 블루프린트
-    from .views import main_views, auth_views, book_views
+    from .views import main_views, auth_views, qna_views, book_views
     app.register_blueprint(main_views.bp)
     app.register_blueprint(auth_views.bp)
     app.register_blueprint(book_views.bp)
+    app.register_blueprint(qna_views.bp)
 
-    
+    # 필터
+    from filter import format_datetime
+    app.jinja_env.filters['datetime'] = format_datetime
+
+
+
     return app

@@ -9,7 +9,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                         <li class="nav-item"><a class="nav-link active" aria-current="page" href="{{url_for('main.index')}}" style="color:blueviolet; font-family: 'Jua', sans-serif;">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/qnalist" style="color:blueviolet; font-family: 'Jua', sans-serif;">QnA</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{url_for('qna.qnalist')}}" style="color:blueviolet; font-family: 'Jua', sans-serif;">QnA</a></li>
                     </ul>
 
                     {% if g.user %}
@@ -19,6 +19,7 @@
                     <a href="{{url_for('auth.login')}}" class="btn btn-success" style="font-family: 'Jua', sans-serif;">로그인</a>
                     <a href="{{url_for('auth.register')}}" class="btn btn-success" style="margin-left: 15px; font-family: 'Jua', sans-serif;">회원가입</a>
                     {% endif %}
+                    
                 </div>
             </div>
         </nav>
@@ -26,10 +27,7 @@
         <header class="bg-warning py-5">
             <div class="container px-4 px-lg-5 my-5">
                 <div class="text-center text-white">
-                    <a class="display-4 fw-bolder nav-link" style="color:blueviolet; font-family: 'Jua', sans-serif;"
-                    {% if g.user %} href = "{{url_for('book.cover')}}"
-                    {% else %} href="{{url_for('auth.login')}}"
-                    {% endif %}> 나도 만들기 </a>
+                    <a class="display-4 fw-bolder nav-link" href="{{url_for('book.make')}}" style="color:blueviolet; font-family: 'Jua', sans-serif;">나도 만들기</a>
                     <p class="lead fw-normal text-white mb-0" style="font-family: 'Jua', sans-serif;">상상의 나래를 펼쳐 보아요!</p>
                 </div>
             </div>
@@ -154,7 +152,7 @@
                         <hr>
                     </div>
                 </div>
-                <div class='text-right position-relative' style="left: 20px; top: 250px;"><a class="btn btn-outline-warning mt-auto"><<<</a></div>
+                <div class='text-left position-relative' style="left: 20px; top: 250px;"><a class="btn btn-outline-warning mt-auto"><<<</a></div>
                 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                     <div class="col mb-5">
                         <div class="card h-100">

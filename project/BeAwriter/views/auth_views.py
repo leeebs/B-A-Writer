@@ -36,9 +36,44 @@ def login():
     
     return render_template('member/login.html',error=error)
 
-@bp.route('/register')
+@bp.route('/register/', methods=('GET', 'POST'))
 def register():
-    return 'register!'
+    error = None
+    if request.method == 'GET':
+        return render_template("member/register.html")
+    else:
+        id = request.form['id']
+        email = request.form['email']
+        password = request.form['pw']
+        re_password = request.form['re-password']
+        name = request.form['name']
+
+        val_id = Member.query.filter_by(member_id=id).first()
+        val_email = Member.query.filter_by(member_email=email).first()
+
+        if not(id and email and password and re_password and name):
+            error = "모든 정보를 입력해 주세요"
+        elif password != re_password:
+            error = "비밀번호가 일치하지 않습니다"
+        elif val_id:
+            error = "이미 사용 중인 아이디입니다"
+        elif val_email:
+            error = "이미 사용 중인 이메일입니다"
+
+        elif error is None:
+            m = Member()
+            m.member_id = id
+            m.member_email = email
+            m.member_password = password
+            # m.member_password = generate_password_hash(password) 암호화 저장 나중에 로그인 비밀번호 비교도 함께 수정
+            m.member_name = name
+
+            db.session.add(m)
+            db.session.commit()
+            return redirect(url_for('main.index'))
+
+    return render_template("member/register.html", error=error)
+
 
 @bp.before_app_request
 def load_logged_in_user():

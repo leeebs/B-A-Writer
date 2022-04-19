@@ -6,12 +6,9 @@ from werkzeug.utils import redirect
 from BeAwriter import db
 from BeAwriter.models import *
 
+
 bp = Blueprint('main', __name__, url_prefix='/')
 
 @bp.route('/')
 def index():
-    return 'main!'
-
-@bp.route('/main')
-def main():
     return render_template('main/main.html')
