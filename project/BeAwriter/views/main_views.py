@@ -5,6 +5,6 @@ from BeAwriter.models import *
 
 bp = Blueprint('main', __name__, url_prefix='/')
 
-@bp.route('/main')
+@bp.route('/')
 def index():
     return render_template('main/main.html')
