@@ -30,11 +30,11 @@
                     <div class="col-6 text-center">
                         <form method="post" class="justify-content-center">
                             <h4 style="font-family: 'Jua', sans-serif;">동화를 써주세요!😊</h4>
-                            <p style="font-size:large;"><textarea rows=5 name='writecontent' id='writecontent' placeholder="동화 내용 입력하기" style="width:100%; border:solid 5px; border-color:blueviolet;"></textarea></p>
+                            <p style="font-size:large;"><textarea rows=5 name='writecontent' id='writecontent' placeholder="동화 내용 입력하기" style="width:100%; border:solid 5px; border-color:blueviolet;" autofocus></textarea></p>
                             <button id="btn1" class="btn btn-success mx-2" style="font-family: 'Jua', sans-serif;">동화에 바로 넣기</button>
                             <button class="btn btn-success mx-2" style="font-family: 'Jua', sans-serif;">도움받기</button> <!-- formaction="" -->
                             {% if msg %}
-                            <p id="msg" class="my-3" style="color:rgba(220, 20, 60, 0.5); font-family: 'Jua', sans-serif;">{{msg}}</p>
+                            <p class="my-3" style="color:rgba(220, 20, 60, 0.5); font-family: 'Jua', sans-serif;">{{msg}}</p>
                             {% endif %}
                         </form>
                     </div>
@@ -75,8 +75,9 @@
                     dataType: "JSON",
                     contentType: "application/json",
                     success: function(data){
-                        $("#makedcontent").text(data['origindata']+' '+data['inputdata'])
-                        $("#writecontent").val('')
+                        $("#makedcontent").text(data['origindata']+' '+data['inputdata']);
+                        $("#writecontent").val('');
+                        $('#writecontent').focus();
                     },
                     error: function(request, status, error){
                         alert('ajax error:['+status+']['+error+']')
@@ -96,15 +97,28 @@
                     data: JSON.stringify(postdata),
                     dataType: "JSON",
                     contentType: "application/json",
-                    success: function(bookn){
-                        var num = bookn['bookn'];
-                        location.href="/book/cover/"+num
+                    success: function(book){
+                        if (book['con']!=undefined){
+                            var num = book['bookn'];
+                            location.href="/book/cover/"+num
+                        }
+                        else{
+                            alert('내용을 입력해주세요.')
+                        }
                     },
                     error: function(request, status, error){
                         alert('ajax error:['+status+']['+error+']')
                     }
                 })
             });
-        </script>
 
+            $(document).ready(function() {
+                $("#writecontent").keydown(function(key) {
+                    if (key.keyCode == 13) {
+                        $("#btn1").click();
+                    }
+                });
+            });
+        </script>
+        
         {% endblock %}

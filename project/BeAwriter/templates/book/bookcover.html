@@ -28,11 +28,10 @@
         <header class="bg-warning py-5">
             <div class="container px-4 px-lg-5 my-5">
                 <div class="text-center text-white">
-                    <p class="display-4 fw-bolder nav-link" href="#!" style="color:blueviolet; font-family: 'Jua', sans-serif;">🎇나만의 동화책 표지 만들기🎇</p>
+                    <p class="display-4 fw-bolder nav-link" style="color:blueviolet; font-family: 'Jua', sans-serif;">🎇나만의 동화책 표지 만들기🎇</p>
                     <p class="lead fw-normal text-white mb-0" style="font-family: 'Jua', sans-serif;">
-                        이제 나만의 책 표지를 만들어 보아요~
+                        이제 나만의 책 제목과 표지를 만들어 보아요~
                         <br>직접 만든 책 표지를 올려주세요!
-                        <br>450x300 사이즈가 예쁘게 보여요 :)
                     </p>
                 </div>
             </div>
@@ -40,27 +39,78 @@
         <!-- Section-->
         <section class="py-5">
             <div class="container px-4 px-lg-5 mt-5">
-                <div class="row my-5">
-                    <div class="col-1"></div>
-                    <div class="col-10 text-center">
-                        <form action="{{url_for('book.cover', book_no=book_no)}}" method="post"
-                            enctype="multipart/form-data">
-                            <input type="file" name ="file" style="font-family: 'Jua', sans-serif;"/>
-                            <input class="btn btn-success" type="submit" style="font-family: 'Jua', sans-serif;"/>
-                        </form>
+                {% if not isTitle %}
+                    <div class="row my-5">
+                        <div class="col-2"></div>
+                        <div class="col-8 text-center">
+                            <form class="form-inline" role="form" method="post" action="{{url_for('book.cover', book_no=book_no)}}">
+                                <input type="title" name='title' class="form-control mb-4" style="font-family: 'Jua', sans-serif;" placeholder="동화 제목을 만들어 주세요">
+                                <button type="submit" class="btn btn-success" style="font-family: 'Jua', sans-serif;">제목 결정하기</button>
+                            </form>
+                        </div>
                     </div>
-                </div>
-                {% if msg %}
-                <p class="text-center" style="color:rgba(220, 20, 60, 0.5); font-family: 'Jua', sans-serif;">{{msg}}</p>
+                    {% if msg1 %}
+                    <div class="row my-5">
+                        <div class="col-2"></div>
+                        <div class="col-8 text-center">
+                            <p class="text-center" style="color:rgba(220, 20, 60, 0.5); font-family: 'Jua', sans-serif;">{{msg1}}</p>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                {% else %}
+                    <div class="row my-5">
+                        <div class="col-2"></div>
+                        <div class="col-8 text-center">
+                            <form action="{{url_for('book.cover', book_no=book_no)}}" method="post"
+                                enctype="multipart/form-data">
+                                <div class="row mt-5 mb-4 justify-content-center">
+                                    <img src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" style="width: 450px; height: 300px;" id="img" />
+                                </div>
+                                <input type="file" id="input_img" name ="file" style="font-family: 'Jua', sans-serif;"/>
+                                <input class="btn btn-success" type="submit" style="font-family: 'Jua', sans-serif;"/>
+                            </form>
+                        </div>
+                    </div>
+                    {% if msg %}
+                    <div class="row my-5">
+                        <div class="col-2"></div>
+                        <div class="col-8 text-center">
+                            <p class="text-center" style="color:rgba(220, 20, 60, 0.5); font-family: 'Jua', sans-serif;">
+                                {% for m in msg %}
+                                    {{m}}<br>
+                                {% endfor %}
+                            </p>
+                            <a href="{{url_for('main.index')}}" class="btn btn-success text-center" style="font-family: 'Jua', sans-serif;">생략하기</a>
+                        </div>
+                    </div>
+                    {% endif %}
+                    
                 {% endif %}
-                <div class="row">
-                    <div class="col-4"></div>
-                    <div class="col-4 mt-5 text-center">
-                        <a href="{{url_for('main.index')}}" class="btn btn-success" style="font-family: 'Jua', sans-serif;">생략하기</a>
-                        <!-- 동화생성페이지로 수정 -->
-                    </div>
-                </div>
             </div>
         </section>
         
+        <script>
+            function readImage(input) {
+                if (input.files && input.files[0]) {
+                    const reader = new FileReader();
+                    
+                    reader.onload = (e) => {
+                        const previewImage = document.getElementById('img');
+                        previewImage.src = e.target.result;
+                    }
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+            // 이벤트 리스너
+            document.getElementById('input_img').addEventListener('change', (e) => {
+                var thumbext = document.getElementById('input_img').value; //파일을 추가한 input 박스의 값
+                thumbext = thumbext.slice(thumbext.indexOf(".") + 1).toLowerCase(); //파일 확장자를 잘라내고, 비교를 위해 소문자로
+                if(thumbext != "jpg" && thumbext != "png" &&  thumbext != "gif" &&  thumbext != "bmp"){
+                    alert('표지는 이미지 파일(jpg, png, gif, bmp)만 등록 가능합니다.');
+                    location.href="{{url_for('book.cover', book_no=book_no)}}"
+                }
+                readImage(e.target);
+            });
+        </script>
         {% endblock %}
