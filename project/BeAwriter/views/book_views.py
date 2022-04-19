@@ -47,3 +47,10 @@ def bookstar():
     return render_template("/book/bookstar.html", error=error)
 
 
+@bp.route('/readbook')
+def readbook():
+
+
+        return render_template("/book/readbook.html")
+
+
