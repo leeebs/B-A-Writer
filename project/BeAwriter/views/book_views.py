@@ -1,9 +1,15 @@
-from flask import Blueprint, render_template, url_for, request, g, jsonify
+from flask import Blueprint, render_template, url_for, request, g, jsonify, session
 from werkzeug.utils import redirect, secure_filename
 import json
 
 from BeAwriter import db
 from BeAwriter.models import *
+
+import speech_recognition as sr 
+from gtts import gTTS 
+import os 
+import time
+import playsound
 
 bp = Blueprint('book', __name__, url_prefix='/book')
 
@@ -60,22 +66,36 @@ def cover(book_no):
             
     return render_template('book/bookcover.html', msg=msg, book_no=book_no)
 
-@bp.route('/bookstar', methods=('GET','POST'))
-def bookstar():
-    error = None
-
+@bp.route('/bookstar/<int:book_no>/', methods=('GET','POST'))
+def bookstar(book_no):
+    sb = Storybook.query.get(book_no)
     if request.method == 'POST':
-        try:
             request.form['rating']
             VALUE = request.form['rating']
-            star = Rating(rating_no=1,
-                            member_no=2,
-                            book_no=3,
+            star = Rating(
+                            member_no=g.user.member_no,
+                            book_no=sb.book_no,
                             rating=int(VALUE))
             db.session.add(star)
             db.session.commit()
             return redirect(url_for('main.index'))
-        except: 
-            error ="평점을 매겨주세요!"
-         
-    return render_template("/book/bookstar.html", error=error)
+
+    return render_template("/book/bookstar.html")
+
+
+
+@bp.route('/speaker')
+def speaker():
+    text = '안녕하세요 11조 화이팅'
+    # tts=gTTS(text=text, lang='ko')
+    # filename='voice.mp3'
+    # tts.save(filename)
+    return playsound.playsound(text)
+    
+@bp.route('/readbook')
+def readbook():
+    return render_template("/book/readbook.html")
+
+@bp.route('/test')
+def test():
+    return render_template("test.html")

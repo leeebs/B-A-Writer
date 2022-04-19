@@ -30,8 +30,8 @@ def qnawrite():
     return render_template("/qna/FAQ_write.html", error=error)
 
 
-@bp.route('/list/')
-def QnA_list():
+@bp.route('/qnalist')
+def qnalist():
     page = request.args.get('page', type=int, default=1)
     kw = request.args.get('kw', type=str, default='')
     question_list = Question.query.order_by(Question.ques_date.desc())

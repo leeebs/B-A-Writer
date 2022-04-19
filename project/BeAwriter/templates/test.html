@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block content %}
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-light bg-warning">
+            <div class="container px-4 px-lg-5">
+                <a class="navbar-brand" href="#!" style="color:blueviolet; font-family: 'Jua', sans-serif;"><b>B a writer</b></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!" style="color:blueviolet; font-family: 'Jua', sans-serif;">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#!" style="color:blueviolet; font-family: 'Jua', sans-serif;">QnA</a></li>
+                    </ul>
+            
+                    <form class="d-flex">
+                        <button class="btn btn-success" type="submit" style="font-family: 'Jua', sans-serif;">로그인</button>
+                        <button class="btn btn-success" type="submit" style="margin-left: 15px; font-family: 'Jua', sans-serif;">회원가입</button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+
+
+        <!-- Section-->
+        <section class="py-5">
+            <div class="container px-4 px-lg-5 mt-4">
+                <div class="row mb-5 mt-2">
+                    <img src="{{ url_for('static', filename='assets/bookimg1.PNG') }}") style="width:450px; height:300px; margin:auto;">
+                </div>
+                <div class="row text-center"><h2>나비의 꿈</h2></div>
+                    <form action="{{ url_for('book.speaker') }}" method="POST">
+                        <div class="row text-center"> 
+                            <button onclick="play()" style="border: none; background-color:#fff;"><img src="{{ url_for('static', filename='assets/speaker.png') }}" style="width:50px; height:50px;"></button>
+                        </div>
+                        <div class="row">
+                            <div class="col-1"></div>
+                            <div class="col-10 justify-content-center">
+                                <p class="text-center" style="border: solid 5px; border-color:#8a2be2; border-radius:0%; padding:50px; font-size:large; line-height:180%;">
+                                    어느 들에 어여쁜 나비가 한 마리 살고 있었습니다. 나비는 날마다 아침 때부터 꽃밭에서 동산으로, 동산에서 꽃밭으로 따뜻한 봄볕을 쪼이고 날아다니면서 온종일 춤을 추어, 여러 가지 꽃들을 위로해 주며 지내었습니다.
+                                </p>
+                            </div>
+                        </div>
+                    </form>
+                <div class="text-center my-3">
+                    <button class="btn btn-success" onclick= "location.href='/book/bookstar.html'" type="submit" style="font-family: 'Jua', sans-serif;">다 읽었어요!</button>
+                </div>
+            </div>
+        </section>
+        {% endblock %}
+<!-- page trainsiton.. 책넘기는효과.. jquery? -->
