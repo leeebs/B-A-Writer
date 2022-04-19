@@ -56,7 +56,7 @@
                                     <a class="nav-link" style="color: black; margin: auto; text-align: center;" href="{{ url_for('qna.QnA', question_no=question.question_no) }}">{{ question.ques_title }}</a>
                                     
                                 </td>
-                                <td style="vertical-align:middle;">{{ question.member_no }}</td>
+                                <td style="vertical-align:middle;">{{ question.member.member_name }}</td>
                                 <td style="vertical-align:middle;">{{ question.ques_date|datetime }}</td>
                             </tr>
                             {% endfor %}
