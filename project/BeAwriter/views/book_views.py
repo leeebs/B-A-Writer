@@ -102,4 +102,14 @@ def bookstar():
         except: 
             error ="평점을 매겨주세요!"
          
+
+          
     return render_template("/book/bookstar.html", error=error)
+
+
+@bp.route('/readbook/<int:book_no>/')
+def readbook(book_no):
+    book = Storybook.query.get_or_404(book_no)
+    return render_template("/book/readbook.html", book=book)
+
+

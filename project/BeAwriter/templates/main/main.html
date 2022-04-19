@@ -19,6 +19,7 @@
                     <a href="{{url_for('auth.login')}}" class="btn btn-success" style="font-family: 'Jua', sans-serif;">로그인</a>
                     <a href="{{url_for('auth.register')}}" class="btn btn-success" style="margin-left: 15px; font-family: 'Jua', sans-serif;">회원가입</a>
                     {% endif %}
+                    
                 </div>
             </div>
         </nav>
@@ -41,7 +42,8 @@
                         <hr>
                     </div>
                 </div>
-                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                <div class='text-left position-relative' style="left: 20px; top: 250px;"><a class="btn btn-outline-warning mt-auto"><<<</a></div>
+                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center" style="text-align:center">
                     <div class="col mb-5">
                         <div class="card h-100">
                             <!-- Sale badge-->
@@ -67,7 +69,11 @@
                             </div>
                             <!-- Product actions-->
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-warning mt-auto" href="#">보러가기</a></div>
+                                <div class="text-center"><a class="btn btn-outline-warning mt-auto"
+                                    {% if g.user %} href = "/readbook"
+                                    {% else %} href="{{url_for('auth.login')}}"
+                                    {% endif %}>보러가기</a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -96,7 +102,11 @@
                             </div>
                             <!-- Product actions-->
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-warning mt-auto" href="#">보러가기</a></div>
+                                <div class="text-center"><a class="btn btn-outline-warning mt-auto"
+                                    {% if g.user %} href = "/readbook"
+                                    {% else %} href="{{url_for('auth.login')}}"
+                                    {% endif %}>보러가기</a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -125,7 +135,11 @@
                             </div>
                             <!-- Product actions-->
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-warning mt-auto" href="#">보러가기</a></div>
+                                <div class="text-center"><a class="btn btn-outline-warning mt-auto"
+                                    {% if g.user %} href = "/readbook"
+                                    {% else %} href="{{url_for('auth.login')}}"
+                                    {% endif %}>보러가기</a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -163,7 +177,11 @@
                             </div>
                             <!-- Product actions-->
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-warning mt-auto" href="#">보러가기</a></div>
+                                <div class="text-center"><a class="btn btn-outline-warning mt-auto"
+                                    {% if g.user %} href = "/readbook"
+                                    {% else %} href="{{url_for('auth.login')}}"
+                                    {% endif %}>보러가기</a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -192,7 +210,11 @@
                             </div>
                             <!-- Product actions-->
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-warning mt-auto" href="#">보러가기</a></div>
+                                <div class="text-center"><a class="btn btn-outline-warning mt-auto"
+                                    {% if g.user %} href = "/readbook"
+                                    {% else %} href="{{url_for('auth.login')}}"
+                                    {% endif %}>보러가기</a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -221,16 +243,23 @@
                             </div>
                             <!-- Product actions-->
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-warning mt-auto" href="#">보러가기</a></div>
+                                <div class="text-center"><a class="btn btn-outline-warning mt-auto"
+                                    {% if g.user %} href = "/readbook"
+                                    {% else %} href="{{url_for('auth.login')}}"
+                                    {% endif %}>보러가기</a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div class='text-right position-relative' style="right: -1150px; bottom: 200px;"><a class="btn btn-outline-warning mt-auto">>>></a></div>
             </div>
             <div class="row">
                 <div class="col-10"></div>
                 <div class="col-2 mb-3">
-                    <button class="btn btn-success" type="submit" style="font-family: 'Jua', sans-serif;">더 보러가기</button>    
+                    <button class="btn btn-success" type="submit" style="font-family: 'Jua', sans-serif;">
+                        <a href="/list.booklist">더 보러가기</a>
+                    </button>    
                 </div>
             </div>
         </section>
