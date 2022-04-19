@@ -28,10 +28,13 @@
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                         <li class="nav-item"><a class="nav-link active" aria-current="page" href="/main" style="color:blueviolet; font-family: 'Jua', sans-serif;">Home</a></li>
                     </ul>
-                    <form class="d-flex">
-                        <button class="btn btn-success" type="submit" onclick="location.href='../login'" style="font-family: 'Jua', sans-serif;">로그인</button>
-                        <button class="btn btn-success" type="submit" onclick="location.href='/register'" style="margin-left: 15px; font-family: 'Jua', sans-serif;">회원가입</button>
-                    </form>
+                    {% if g.user %}
+                    <span class="mx-5" style="font-family: 'Jua', sans-serif;">{{ g.user.member_name }}님 안녕하세요!👋🏻</span>
+                    <a href="{{url_for('auth.logout')}}" class="btn btn-success" style="font-family: 'Jua', sans-serif;">로그아웃</a>
+                    {% else %}
+                    <a href="{{url_for('auth.login')}}" class="btn btn-success" style="font-family: 'Jua', sans-serif;">로그인</a>
+                    <a href="{{url_for('auth.register')}}" class="btn btn-success" style="margin-left: 15px; font-family: 'Jua', sans-serif;">회원가입</a>
+                    {% endif %}
                 </div>
             </div>
         </nav>

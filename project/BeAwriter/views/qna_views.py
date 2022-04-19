@@ -40,14 +40,14 @@ def QnA_list():
     question_list = Question.query.order_by(Question.ques_date.desc())
     if kw:
         search = '%%{}%%'.format(kw)
-        sub_query = db.session.query(QuestionComment.question_no, QuestionComment.comment_con, Member.member_id) \
+        sub_query = db.session.query(QuestionComment.question_no, QuestionComment.comment_con, Member.member_id, Member.member_name) \
             .join(Member, QuestionComment.member_no == Member.member_no).subquery()
         question_list = question_list \
             .join(Member) \
             .outerjoin(sub_query, sub_query.c.question_no == Question.question_no) \
             .filter(Question.ques_title.ilike(search) |  # 질문 제목
                     Question.ques_con.ilike(search) |  # 질문 내용
-                    Member.member_id.ilike(search) |  # 질문 작성자
+                    Member.member_name.ilike(search) |  # 질문 작성자
                     sub_query.c.comment_con.ilike(search)   # 답변 내용
              ) \
             .distinct()

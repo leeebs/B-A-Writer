@@ -13,6 +13,7 @@ class Member(db.Model):
     
 class Storybook(db.Model):
     book_no = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
+    book_title = db.Column(db.String(50), nullable=False)
     book_con = db.Column(db.Text, nullable=False)
     book_date = db.Column(db.DateTime(), server_default=func.now(), nullable=False)
     member_no = db.Column(db.Integer,
