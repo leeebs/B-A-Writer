@@ -47,10 +47,9 @@ def bookstar():
     return render_template("/book/bookstar.html", error=error)
 
 
-@bp.route('/readbook')
-def readbook():
-
-
-        return render_template("/book/readbook.html")
+@bp.route('/readbook/<int:book_no>/')
+def readbook(book_no):
+    book = Storybook.query.get_or_404(book_no)
+        return render_template("/book/readbook.html", book=book)
 
 
