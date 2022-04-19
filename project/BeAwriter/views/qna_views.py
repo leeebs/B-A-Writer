@@ -16,15 +16,13 @@ def qnawrite():
         TITLE = request.form['title']
         CONTENT = request.form['content']
         if not TITLE:
-            error = "문의제목을 입력해주세요."
+            error = "문의 제목을 입력해주세요."
         elif not CONTENT:
-            error = "문의내용을 입력해주세요."
+            error = "문의 하실 내용을 입력해주세요."
         else:
-            question = Question(question_no=4,
-                                    ques_title=TITLE,
-                                    ques_con=CONTENT,
-                                    
-                                    member_no = 4)
+            question = Question(ques_title=TITLE,
+                                ques_con=CONTENT,
+                                member_no=g.user.member_no)
             db.session.add(question)
             db.session.commit()
             return redirect(url_for('qna.qnalist'))
@@ -32,9 +30,8 @@ def qnawrite():
     return render_template("/qna/FAQ_write.html", error=error)
 
 
-
-@bp.route('/list/')
-def QnA_list():
+@bp.route('/qnalist')
+def qnalist():
     page = request.args.get('page', type=int, default=1)
     kw = request.args.get('kw', type=str, default='')
     question_list = Question.query.order_by(Question.ques_date.desc())

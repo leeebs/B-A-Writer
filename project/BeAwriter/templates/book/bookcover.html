@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+        {% extends 'base.html' %}
         {% block content %}
 
         <!-- Navigation-->
@@ -19,6 +19,7 @@
                     <a href="{{url_for('auth.login')}}" class="btn btn-success" style="font-family: 'Jua', sans-serif;">로그인</a>
                     <a href="{{url_for('auth.register')}}" class="btn btn-success" style="margin-left: 15px; font-family: 'Jua', sans-serif;">회원가입</a>
                     {% endif %}
+                    
                 </div>
             </div>
         </nav>
@@ -29,7 +30,7 @@
                 <div class="text-center text-white">
                     <p class="display-4 fw-bolder nav-link" href="#!" style="color:blueviolet; font-family: 'Jua', sans-serif;">🎇나만의 동화책 표지 만들기🎇</p>
                     <p class="lead fw-normal text-white mb-0" style="font-family: 'Jua', sans-serif;">
-                        먼저 나만의 책 표지를 만들어 보아요~
+                        이제 나만의 책 표지를 만들어 보아요~
                         <br>직접 만든 책 표지를 올려주세요!
                         <br>450x300 사이즈가 예쁘게 보여요 :)
                     </p>
@@ -42,7 +43,7 @@
                 <div class="row my-5">
                     <div class="col-1"></div>
                     <div class="col-10 text-center">
-                        <form action="{{url_for('book.cover')}}" method="post"
+                        <form action="{{url_for('book.cover', book_no=book_no)}}" method="post"
                             enctype="multipart/form-data">
                             <input type="file" name ="file" style="font-family: 'Jua', sans-serif;"/>
                             <input class="btn btn-success" type="submit" style="font-family: 'Jua', sans-serif;"/>
