@@ -33,9 +33,11 @@ class Rating(db.Model):
     rating = db.Column(db.Integer, nullable=False)
     
 class Image(db.Model):
-    img_no = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
+    # img_no = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
     book_no = db.Column(db.Integer,
                         db.ForeignKey('storybook.book_no', ondelete='CASCADE'),
+                        primary_key=True,
+                        autoincrement=True,
                         nullable=False)
     img_path = db.Column(db.String(500), nullable=False)
     
