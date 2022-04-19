@@ -31,7 +31,7 @@ def qnawrite():
 
 
 @bp.route('/list/')
-def QnA_list():
+def qnalist():
     page = request.args.get('page', type=int, default=1)
     kw = request.args.get('kw', type=str, default='')
     question_list = Question.query.order_by(Question.ques_date.desc())

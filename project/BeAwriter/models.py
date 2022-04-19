@@ -13,6 +13,7 @@ class Member(db.Model):
     
 class Storybook(db.Model):
     book_no = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
+    book_title = db.Column(db.String(50), nullable=False)
     book_con = db.Column(db.Text, nullable=False)
     book_date = db.Column(db.DateTime(timezone=True), server_default=func.now(), nullable=False)
     member_no = db.Column(db.Integer,
@@ -32,9 +33,11 @@ class Rating(db.Model):
     rating = db.Column(db.Integer, nullable=False)
     
 class Image(db.Model):
-    img_no = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
+    # img_no = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
     book_no = db.Column(db.Integer,
                         db.ForeignKey('storybook.book_no', ondelete='CASCADE'),
+                        primary_key=True,
+                        autoincrement=True,
                         nullable=False)
     img_path = db.Column(db.String(500), nullable=False)
     

@@ -30,35 +30,59 @@ def req():
 @bp.route('/save', methods=['POST'])
 def save():
     data = request.get_json()
-    sb = Storybook(book_con=data['alldata'],
-                   member_no=g.user.member_no)
-    db.session.add(sb)
-    db.session.commit()
-    bookn = { 'bookn' : sb.book_no }          
-    return jsonify(bookn)
+    temp = "temp"
+    if data['alldata']:
+        sb = Storybook(book_con=data['alldata'],
+                    member_no=g.user.member_no,
+                    book_title=temp)
+        db.session.add(sb)
+        db.session.commit()
+        book = { 'bookn' : sb.book_no,
+                'con' : sb.book_con }   
+    else:
+        book = {}        
+    return jsonify(book)
 
 
 @bp.route('/cover/<int:book_no>/', methods=('GET','POST'))
 def cover(book_no):
-    msg = None       
+    msg1 = None
+    msg = []  
     sb = Storybook.query.get(book_no)
-    
+    title = None
+    isTitle = None
+    if sb.book_title=="temp":
+        isTitle = False
+    else:
+        isTitle = True
+
     if request.method == 'POST':
-        f = request.files['file']
-        if not f:
-            msg = "파일을 넣고 제출 버튼을 눌러주세요."
+        if not isTitle and sb.book_title=="temp":
+            title = request.form['title']
+            if not title:
+                msg1 = '제목을 입력해주세요!'
+            else:
+                sb.book_title = title
+                db.session.commit()
+                isTitle = True
+                return render_template('book/bookcover.html', msg=msg, msg1=msg1, book_no=book_no, isTitle=isTitle)
+        
         else:
-            file_name = secure_filename(f.filename)
-            f.save(file_name)
-            img = Image(book_no=sb.book_no,
-                        img_path=file_name)
-            db.session.add(img)
-            db.session.commit() 
-            
-        if msg is None:
+            f = request.files['file']
+            if not f:
+                msg = ["파일을 넣고 제출 버튼을 눌러주세요.","생략 하시려면 생략하기 버튼을 눌러주세요."]
+            else:
+                file_name = secure_filename(f.filename)
+                f.save(file_name)
+                img = Image(book_no=sb.book_no,
+                            img_path=file_name)
+                db.session.add(img)
+                db.session.commit()
+
+        if len(msg)==0 and msg1 is None:
             return redirect(url_for('main.index')) #동화읽는페이지로 수정
             
-    return render_template('book/bookcover.html', msg=msg, book_no=book_no)
+    return render_template('book/bookcover.html', msg=msg, msg1=msg1, book_no=book_no, isTitle=isTitle)
 
 @bp.route('/bookstar', methods=('GET','POST'))
 def bookstar():
