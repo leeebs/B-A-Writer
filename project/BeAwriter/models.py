@@ -49,6 +49,7 @@ class Question(db.Model):
     member_no = db.Column(db.Integer,
                           db.ForeignKey('member.member_no', ondelete='CASCADE'),
                           nullable=False)
+    member = db.relationship('Member', backref=db.backref("question"))                      
     
 class QuestionComment(db.Model):
     comment_no = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
