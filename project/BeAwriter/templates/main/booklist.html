@@ -8,7 +8,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                         <li class="nav-item"><a class="nav-link active" aria-current="page" href="{{url_for('main.index')}}" style="color:blueviolet; font-family: 'Jua', sans-serif;">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/qnalist" style="color:blueviolet; font-family: 'Jua', sans-serif;">QnA</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{url_for('qna.qnalist')}}" style="color:blueviolet; font-family: 'Jua', sans-serif;">QnA</a></li>
                     </ul>
                     {% if g.user %}
                     <span class="mx-5" style="font-family: 'Jua', sans-serif;">{{ g.user.member_name }}님 안녕하세요!👋🏻</span>
@@ -38,18 +38,57 @@
                         <li style="list-style:none;" class="dropdown">
                             <a class="dropdown-toggle btn btn-success" id="filterDropdown" href="#" style="font-family: 'Jua', sans-serif; color:#fff;" role="button" data-bs-toggle="dropdown" aria-expanded="false">정렬</a>
                             <ul class="dropdown-menu" aria-labelledby="filterDropdown">
-                                <li><a class="dropdown-item" href="#!">별점순</a></li>
-                                <li><a class="dropdown-item" href="#!">최신순</a></li>
-                                <li><hr class="dropdown-divider" /></li>
-                                <li><a class="dropdown-item" href="#!">카테고리1</a></li>
-                                <li><a class="dropdown-item" href="#!">카테고리2</a></li>
+                                <li><a class="dropdown-item" href="{{url_for('main.booklist')}}">별점순</a></li>
+                                <li><a class="dropdown-item" href="{{url_for('main.booklist')}}">최신순</a></li>
+                                <li><a class="dropdown-item" href="{{url_for('main.booklist')}}">내가만든동화</a></li>
                             </ul>
                         </li>
                     </div>
                 </div>
-                <h3>선택한 필터명</h3>
+                <h3>
+                    선택한 필터명
+                </h3>
                 <hr>
                 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center mt-4">
+                    {% if book_list %}
+                        {% for list in book_list.items %}
+                        <div class="col mb-5">
+                            <div class="card h-100">
+                                <!-- Product image-->
+                                <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+                                <!-- Product details-->
+                                <div class="card-body p-4">
+                                    <div class="text-center">
+                                        <!-- Product name-->
+                                        <h5 class="fw-bolder">{{list.book_title}}</h5>
+                                        <!-- Product reviews-->
+                                        <div class="d-flex justify-content-center small text-warning mb-2">
+                                            <div class="bi-star-fill"></div>
+                                            <div class="bi-star-fill"></div>
+                                            <div class="bi-star-fill"></div>
+                                            <div class="bi-star-fill"></div>
+                                            <div class="bi-star-fill"></div>
+                                        </div>
+                                        <!-- Product price-->
+                                        <p>
+                                            제목 : {{list.book_title}}
+                                            <br>
+                                            작가 : {{list.member_name}}
+                                        </p>
+                                    </div>
+                                </div>
+                                <!-- Product actions-->
+                                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                    <div class="text-center"><a class="btn btn-outline-warning mt-auto"
+                                        {% if g.user %} href="{{url_for('book.readbook')}}"
+                                        {% else %} href="{{url_for('auth.login')}}"
+                                        {% endif %}>보러가기</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% else %}
                     <div class="col mb-5">
                         <div class="card h-100">
                             <!-- Product image-->
@@ -58,7 +97,7 @@
                             <div class="card-body p-4">
                                 <div class="text-center">
                                     <!-- Product name-->
-                                    <h5 class="fw-bolder">Special Item</h5>
+                                    <h5 class="fw-bolder">없음</h5>
                                     <!-- Product reviews-->
                                     <div class="d-flex justify-content-center small text-warning mb-2">
                                         <div class="bi-star-fill"></div>
@@ -69,210 +108,34 @@
                                     </div>
                                     <!-- Product price-->
                                     <p>
-                                        작가 : 안서연
+                                        제목 : 없음
                                         <br>
-                                        키워드 : 공룡, 화산, 사람
+                                        작가 : 없음
                                     </p>
                                 </div>
                             </div>
                             <!-- Product actions-->
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                                 <div class="text-center"><a class="btn btn-outline-warning mt-auto"
-                                    {% if g.user %} href = "/readbook"
+                                    {% if g.user %} href="{{url_for('book.make')}}"
                                     {% else %} href="{{url_for('auth.login')}}"
-                                    {% endif %}>보러가기</a>
+                                    {% endif %}>나도 만들기</a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col mb-5">
-                        <div class="card h-100">
-                            <!-- Product image-->
-                            <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-                            <!-- Product details-->
-                            <div class="card-body p-4">
-                                <div class="text-center">
-                                    <!-- Product name-->
-                                    <h5 class="fw-bolder">Special Item</h5>
-                                    <!-- Product reviews-->
-                                    <div class="d-flex justify-content-center small text-warning mb-2">
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                    </div>
-                                    <!-- Product price-->
-                                    <p>
-                                        작가 : 안서연
-                                        <br>
-                                        키워드 : 공룡, 화산, 사람
-                                    </p>
-                                </div>
-                            </div>
-                            <!-- Product actions-->
-                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-warning mt-auto"
-                                    {% if g.user %} href = "/readbook"
-                                    {% else %} href="{{url_for('auth.login')}}"
-                                    {% endif %}>보러가기</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col mb-5">
-                        <div class="card h-100">
-                            <!-- Product image-->
-                            <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-                            <!-- Product details-->
-                            <div class="card-body p-4">
-                                <div class="text-center">
-                                    <!-- Product name-->
-                                    <h5 class="fw-bolder">Special Item</h5>
-                                    <!-- Product reviews-->
-                                    <div class="d-flex justify-content-center small text-warning mb-2">
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                    </div>
-                                    <!-- Product price-->
-                                    <p>
-                                        작가 : 안서연
-                                        <br>
-                                        키워드 : 공룡, 화산, 사람
-                                    </p>
-                                </div>
-                            </div>
-                            <!-- Product actions-->
-                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-warning mt-auto"
-                                    {% if g.user %} href = "/readbook"
-                                    {% else %} href="{{url_for('auth.login')}}"
-                                    {% endif %}>보러가기</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-                    <div class="col mb-5">
-                        <div class="card h-100">
-                            <!-- Product image-->
-                            <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-                            <!-- Product details-->
-                            <div class="card-body p-4">
-                                <div class="text-center">
-                                    <!-- Product name-->
-                                    <h5 class="fw-bolder">Special Item</h5>
-                                    <!-- Product reviews-->
-                                    <div class="d-flex justify-content-center small text-warning mb-2">
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                    </div>
-                                    <!-- Product price-->
-                                    <p>
-                                        작가 : 안서연
-                                        <br>
-                                        키워드 : 공룡, 화산, 사람
-                                    </p>
-                                </div>
-                            </div>
-                            <!-- Product actions-->
-                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-warning mt-auto"
-                                    {% if g.user %} href = "/readbook"
-                                    {% else %} href="{{url_for('auth.login')}}"
-                                    {% endif %}>보러가기</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col mb-5">
-                        <div class="card h-100">
-                            <!-- Product image-->
-                            <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-                            <!-- Product details-->
-                            <div class="card-body p-4">
-                                <div class="text-center">
-                                    <!-- Product name-->
-                                    <h5 class="fw-bolder">Special Item</h5>
-                                    <!-- Product reviews-->
-                                    <div class="d-flex justify-content-center small text-warning mb-2">
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                    </div>
-                                    <!-- Product price-->
-                                    <p>
-                                        작가 : 안서연
-                                        <br>
-                                        키워드 : 공룡, 화산, 사람
-                                    </p>
-                                </div>
-                            </div>
-                            <!-- Product actions-->
-                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-warning mt-auto"
-                                    {% if g.user %} href = "/readbook"
-                                    {% else %} href="{{url_for('auth.login')}}"
-                                    {% endif %}>보러가기</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col mb-5">
-                        <div class="card h-100">
-                            <!-- Product image-->
-                            <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-                            <!-- Product details-->
-                            <div class="card-body p-4">
-                                <div class="text-center">
-                                    <!-- Product name-->
-                                    <h5 class="fw-bolder">Special Item</h5>
-                                    <!-- Product reviews-->
-                                    <div class="d-flex justify-content-center small text-warning mb-2">
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                    </div>
-                                    <!-- Product price-->
-                                    <p>
-                                        작가 : 안서연
-                                        <br>
-                                        키워드 : 공룡, 화산, 사람
-                                    </p>
-                                    <p></p>
-                                </div>
-                            </div>
-                            <!-- Product actions-->
-                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-warning mt-auto"
-                                    {% if g.user %} href = "/readbook"
-                                    {% else %} href="{{url_for('auth.login')}}"
-                                    {% endif %}>보러가기</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {% endif %}
                 </div>
             </div>
+
             <div class="row">
                 <div class="col">
 					<ul class="pagination justify-content-center">
                         <!-- 이전 페이지 -->
                         {% if book_list.has_prev %}
-						<li class="page-item"><a class="page-link" href="?page={{book_list.prev_num}}" style="background-color:blueviolet; color:#fff; font-family: 'Jua', sans-serif;">Previous</a></li>
+						<li class="page-item"><a class="page-link" data-page="?page={{book_list.prev_num}}" href ="javascript:void(0)" style="background-color:blueviolet; color:#fff; font-family: 'Jua', sans-serif;">Previous</a></li>
 						{% else %}
-                        <li class="page-item"><a class="page-link" href="#" style="background-color:blueviolet; color:#fff; font-family: 'Jua', sans-serif;">Previous</a></li>
+                        <li class="page-item"><a class="page-link" tabindex="-1" aria-disabled="true" href="javascript:void(0)" style="background-color:blueviolet; color:#fff; font-family: 'Jua', sans-serif;">Previous</a></li>
                         {% endif %}
 
                         {% for page_num in book_list.iter_pages() %}
@@ -280,18 +143,18 @@
                                 {% if page_num != book_list.page %}
                                 <li class="page-item"><a class="page-link" href="?page={{page_num}}" style="background-color:blueviolet; color:#fff; font-family: 'Jua', sans-serif;">{{page_num}}</a></li>
                                 {% else %}
-                                <li class="page-item"><a class="page-link" href="#" style="background-color:blueviolet; color:#fff; font-family: 'Jua', sans-serif;">{{page_num}}</a></li>
+                                <li class="page-item"><a class="page-link" href="javascript:void(0)" style="background-color:blueviolet; color:#fff; font-family: 'Jua', sans-serif;">{{page_num}}</a></li>
                                 {% endif %}
                             {% else %}
-                            <li class="page-item"><a class="page-link" href="#" style="background-color:blueviolet; color:#fff; font-family: 'Jua', sans-serif;">...</a></li>
+                            <li class="disabled"><a class="page-link" href="javascript:void(0)" style="background-color:blueviolet; color:#fff; font-family: 'Jua', sans-serif;">...</a></li>
                             {% endif %}
                         {% endfor %}
 
                         <!-- 다음 페이지-->
                         {% if book_list.has_next %}
-						<li class="page-item"><a class="page-link" href="?page={{book_list.next_num}}" style="background-color:blueviolet; color:#fff; font-family: 'Jua', sans-serif;">Next</a></li>
+						<li class="page-item"><a class="page-link" data-page="?page={{book_list.next_num}}" href="javascript:void(0)" style="background-color:blueviolet; color:#fff; font-family: 'Jua', sans-serif;">Next</a></li>
                         {% else %}
-                        <li class="page-item"><a class="page-link" href="#" style="background-color:blueviolet; color:#fff; font-family: 'Jua', sans-serif;">Next</a></li>
+                        <li class="page-item disabled"><a class="page-link" tabindex="-1" aria-disabled="true" href="javascript:void(0)" style="background-color:blueviolet; color:#fff; font-family: 'Jua', sans-serif;">Next</a></li>
                         {% endif %}
 					</ul>
 				</div>
