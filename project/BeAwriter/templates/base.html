@@ -19,6 +19,19 @@
         <!-- font-family: 'Jua', sans-serif; -->
         <!-- Ajax -->
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <!-- sound -->
+        <audio id='audio_play' src="{{ url_for('static', filename='voice.mp3') }}"></audio><!--db에서 파일경로가져오기 아님 진자로 받아서--> 
+        <script type="text/javascript"> 
+            function play() { 
+                var audio = document.getElementById('audio_play'); 
+                if (audio.paused) { 
+                    audio.play(); 
+                }else{ 
+                    audio.pause(); 
+                    audio.currentTime = 0 
+                } 
+            } 
+            </script>
     </head>
     <body>
 

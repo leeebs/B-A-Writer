@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, url_for, request, g, jsonify
 from werkzeug.utils import redirect, secure_filename
 import json
-
+from gtts import gTTS 
 from BeAwriter import db
 from BeAwriter.models import *
 
@@ -107,9 +107,20 @@ def bookstar():
     return render_template("/book/bookstar.html", error=error)
 
 
-@bp.route('/readbook/<int:book_no>/')
-def readbook(book_no):
-    book = Storybook.query.get_or_404(book_no)
-    return render_template("/book/readbook.html", book=book)
+@bp.route('/mp3', methods=('GET','POST'))
+def mp3():
+    text = '11조 하위'# 현재동화책 story content 불러오기
+    tts=gTTS(text=text, lang='ko')
+    filename='voice.mp3' #현재 동화책 제목으로 파일이름 지정하면될듯 f스트링으로 
+    tts.save('../project/BeAwriter/static/'+filename)
+    return render_template("/book/readbook.html")
+
+# @bp.route('/readbook/<int:book_no>/')
+# def readbook(book_no):
+#     book = Storybook.query.get_or_404(book_no)
+#     return render_template("/book/readbook.html", book=book)
 
 
+@bp.route('/readbook')
+def readbook():
+    return render_template("/book/readbook.html")
