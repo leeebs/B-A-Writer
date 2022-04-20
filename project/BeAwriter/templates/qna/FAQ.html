@@ -52,39 +52,76 @@
                     <h3>문의내용</h3>
                     <hr>
                 </div>
-                <div class="row mb-5">
+                <div class="row mb-1">
                     <div class="col-1"></div>
                     <div class="col-10 justify-content-center">
-                        <p class="text-center" style="border: solid 5px; border-color:#8a2be2; border-radius:0%; padding:30px; font-size:large; line-height:120%;">
-                        ㅋㅋㅋ영근님 댓글 화이팅하세요~ 댓글화이팅! 
+                        <p class="text-left" style="border: solid 3px; border-color:#8a2be2; border-radius:0%; padding:10px; font-size:large; line-height:120%;">
+                            {{ question.ques_title }}
                         </p>
                     </div>
                 </div>
+                <div class="row mb-1">
+                    <div class="col-1"></div>
+                    <div class="col-10 justify-content-center">
+                        <p class="text-left" style="border: solid 3px; border-color:#8a2be2; border-radius:0%; padding:10px; font-size:large; line-height:120%;">
+                             {{ question.ques_con }}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="row mb-1">
+                  
+                    <div class="col-11"><a href="{{ url_for('qna.modify', question_no=question.question_no) }}" class="btn btn-success mt-3" style="float:right; font-family: 'Jua', sans-serif;">수정</a></div>
+                   
+                </div>
+
                 <div class="row">
                     <h3>댓글</h3>
                     <hr>
                 </div>
+                <ul>
+                    {% for questioncomment in question.questioncomment_set %}
                 <div class="row">
                     <div class="col-1"></div>
                     <div class="col-10 justify-content-center">
                         <div class="card mb-2">
                             <div class="card-header">
-                                <p style="color: blueviolet; font-family: 'Jua', sans-serif;"><b>운영자</b><br>2022-04-14 13:03</p>
+                                <p style="color: blueviolet; font-family: 'Jua', sans-serif;"><b>운영자</b><br>{{ questioncomment.comment_date }}</p>
                             </div>
                             <div class="card-body">
-                                <p style="font-family: 'Jua', sans-serif;">화이팅~~</p>
+                                <p style="font-family: 'Jua', sans-serif;">{{ questioncomment.comment_con }}</p>
+                                <a href="{{ url_for('qna.answerdelete', question_comment_no=questioncomment.comment_no) }}" class="btn btn-success mt-3" style="float:right; font-family: 'Jua', sans-serif;">삭제</a>
                             </div>
                         </div>
                     </div>
                 </div>
+                {% endfor %}
+                </ul>
                 <div class="row">
                     <div class="col-1"></div>
                     <div class="col-10 justify-content-center">
                         <!-- 댓글 쓸때 -->
                         <div class="card mb-2">
                             <div class="card-body">
-                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" style="border-color:#ffc107;"></textarea>
-                                <button type="button" class="btn btn-success mt-3" onClick="javascript:addReply();" style="float:right; font-family: 'Jua', sans-serif;">답변 작성하기</button>
+                                <form action="{{ url_for('qna.answerwrite', question_no=question.question_no) }}" method="post">
+                                    {{ form.csrf_token }}
+                                    <!-- 오류표시 Start -->
+                                    {% if form.errors %}
+                                    <div class="alert alert-danger" role="alert">
+                                        {% for field, errors in form.errors.items() %}
+                                        <strong>{{ form[field].label }}</strong>
+                                        <ul>
+                                            {% for error in errors %}
+                                            <li>{{ error }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                        {% endfor %}
+                                    </div>
+                                    {% endif %}
+                                    <!-- 오류표시 End -->
+                                    <textarea name="content" class="form-control" id="content" rows="3" style="border-color:#ffc107;"></textarea>
+                                    <button type="submit"class="btn btn-success mt-3" onClick="javascript:addReply();" style="float:right; font-family: 'Jua', sans-serif;">답변 작성하기</button>
+                                </form>
                             </div>
                         </div>
                     </div>
