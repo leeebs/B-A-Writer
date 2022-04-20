@@ -1,38 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>B a writer</title>
-        <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="static/assets/favicon.ico" />
-        <!-- Bootstrap icons-->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
-        <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet" />
-        <!-- Font -->
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
-        <!-- font-family: 'Jua', sans-serif; -->
-    </head>
-    <body>
+        {% extends 'base.html' %}
+        {% block content %}
+
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-light bg-warning">
             <div class="container px-4 px-lg-5">
-                <a class="navbar-brand" href="#!" style="color:blueviolet; font-family: 'Jua', sans-serif;"><b>B a writer</b></a>
+                <a class="navbar-brand" href="{{url_for('main.index')}}" style="color:blueviolet; font-family: 'Jua', sans-serif;"><b>B a writer</b></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="/main" style="color:blueviolet; font-family: 'Jua', sans-serif;">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/qna/list" style="color:blueviolet; font-family: 'Jua', sans-serif;">QnA</a></li>
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="{{url_for('main.index')}}" style="color:blueviolet; font-family: 'Jua', sans-serif;">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{url_for('qna.qnalist')}}" style="color:blueviolet; font-family: 'Jua', sans-serif;">QnA</a></li>
                     </ul>
-                    <form class="d-flex">
-                        <button class="btn btn-success" type="submit" style="font-family: 'Jua', sans-serif;">로그인</button>
-                        <button class="btn btn-success" type="submit" style="margin-left: 15px; font-family: 'Jua', sans-serif;">회원가입</button>
-                    </form>
+
+                    {% if g.user %}
+                    <span class="mx-5" style="font-family: 'Jua', sans-serif;">{{ g.user.member_name }}님 안녕하세요!👋🏻</span>
+                    <a href="{{url_for('auth.logout')}}" class="btn btn-success" style="font-family: 'Jua', sans-serif;">로그아웃</a>
+                    {% else %}
+                    <a href="{{url_for('auth.login')}}" class="btn btn-success" style="font-family: 'Jua', sans-serif;">로그인</a>
+                    <a href="{{url_for('auth.register')}}" class="btn btn-success" style="margin-left: 15px; font-family: 'Jua', sans-serif;">회원가입</a>
+                    {% endif %}
                 </div>
             </div>
         </nav>
@@ -42,33 +28,79 @@
                 <div class="row mb-5 mt-2">
                     <img src="{{ url_for('static', filename='assets/bookimg1.PNG') }}" style="width:450px; height:300px; margin:auto;">
                 </div>
-                <div class="row text-center"><h2>{{book.book_title}}</h2></div>
+                <div class="row text-center" style="font-family: 'Gowun Batang', serif;"><h2>{{book.book_title}}</h2></div>
                 <div class="row text-center">
-                    <button type="'button" style="border: none; background-color:#fff;"><img src="{{ url_for('static', filename='assets/speaker.png') }}" style="width:50px; height:50px;"></button>
-                </div>
-                <div class="row">
-                    <div class="col-1"></div>
-                    <div class="col-10 justify-content-center">
-                        
-                        <p class="text-center" style="border: solid 5px; border-color:#8a2be2; border-radius:0%; padding:50px; font-size:large; line-height:180%;">
-                            {{ book.book_con }}
-                        </p>
+                    <div class="col-5"></div>
+                    <div class="col-2">
+                        <button type="'button" style="border: none; border-radius:30%; background-color:#ffc107;"><img src="{{ url_for('static', filename='assets/speaker.png') }}" style="width:40px; height:40px;"></button>
                     </div>
+                </div>
+                <div class="text-center mt-5">
+                    <p style="color: rgba(128, 128, 128, 0.5); font-family: 'Jua', sans-serif;">페이지를 넘겨보세요! 방향키사용도 가능합니다.</p>
+                </div>
+                <div class="row mb-5">
+                    <hr>
+                    <div class="col-1"></div>
+                    <div id="my" class="col-10 justify-content-center">
+                        <!-- <div id="mybook" style="font-size:large; line-height:180%; font-family: 'Gowun Batang', serif;">
+                            {% for s in storyArray[0] %}
+                            <div>
+                                {{s}}
+                            </div>
+                            {% endfor %}
+                        </div> -->
+                    </div>
+                    <hr>
                 </div>
                 <div class="text-center my-3">
                     <button onclick="location.href='/book/bookstar'" class="btn btn-success" type="submit" style="font-family: 'Jua', sans-serif;">다 읽었어요!</button>
                 </div>
             </div>
         </section>
-        <!-- Footer-->
-        <footer class="py-5 bg-warning">
-            <div class="container"><p class="m-0 text-center text-white" style="font-family: 'Jua', sans-serif;">Copyright &copy; B a writer 2022</p></div>
-        </footer>
-        <!-- Bootstrap core JS-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Core theme JS-->
-        <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
-    </body>
-</html>
 
-<!-- page trainsiton.. 책넘기는효과.. jquery? -->
+        <script>
+            function setHTML(){
+                var windowWidth = $( window ).width();
+                if(windowWidth < 768) {
+                    /* 220 */
+                    $('#my').html('<div id="mybook" style="font-size:large; line-height:180%; font-family: \'Gowun Batang\', serif;">{% for s in storyArray[0] %}<div>{{s}}</div>{% endfor %}</div>').trigger("create");
+                }
+                else if(windowWidth < 992) {
+                    /* 320 */
+                    $('#my').html('<div id="mybook" style="font-size:large; line-height:180%; font-family: \'Gowun Batang\', serif;">{% for s in storyArray[1] %}<div>{{s}}</div>{% endfor %}</div>');
+                }
+                else if(windowWidth < 1200) {
+                    /* 420 */
+                    $('#my').html('<div id="mybook" style="font-size:large; line-height:180%; font-family: \'Gowun Batang\', serif;">{% for s in storyArray[2] %}<div>{{s}}</div>{% endfor %}</div>');
+                }
+                else if(windowWidth < 1400) {
+                    /* 520 */
+                    $('#my').html('<div id="mybook" style="font-size:large; line-height:180%; font-family: \'Gowun Batang\', serif;">{% for s in storyArray[3] %}<div>{{s}}</div>{% endfor %}</div>');
+                }
+                else {
+                    /* 620 */
+                    $('#my').html('<div id="mybook" style="font-size:large; line-height:180%; font-family: \'Gowun Batang\', serif;">{% for s in storyArray[4] %}<div>{{s}}</div>{% endfor %}</div>');
+                }
+            }
+
+            $( document ).ready( function() {
+                setHTML();
+                $( window ).resize( function() {
+                //    setHTML();
+                    document.location.reload();
+                });
+            });
+
+            $(document).ready(function(){
+                $('#mybook').booklet({
+                   shadows: false,
+                   pageNumbers: false,
+                   keyboard: true,
+                   width:  '100%',
+                   height: 600,
+                   pagePadding: 5
+                });
+               });
+        </script>
+
+        {% endblock %}

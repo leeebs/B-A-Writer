@@ -80,7 +80,7 @@ def cover(book_no):
                 db.session.commit()
 
         if len(msg)==0 and msg1 is None:
-            return redirect(url_for('main.index')) #동화읽는페이지로 수정
+            return redirect(url_for('book.readbook', book_no=book_no)) #동화읽는페이지로 수정
             
     return render_template('book/bookcover.html', msg=msg, msg1=msg1, book_no=book_no, isTitle=isTitle)
 
@@ -110,6 +110,21 @@ def bookstar():
 @bp.route('/readbook/<int:book_no>/')
 def readbook(book_no):
     book = Storybook.query.get_or_404(book_no)
-    return render_template("/book/readbook.html", book=book)
+    
+    content = book.book_con
+    DIVN = [220, 320, 420, 520, 620]
+    storyArray = []
+    for divn in DIVN:
+        story = []
+        a = 0
+        b = divn
+        for _ in range(len(content)//divn):
+            story.append(content[a:b])
+            a += divn
+            b += divn
+        story.append(content[a:len(content)])
+        storyArray.append(story)
+    
+    return render_template("/book/readbook.html", book=book, storyArray=storyArray, sa1=storyArray[1], sa2=storyArray[2])
 
 
