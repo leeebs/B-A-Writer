@@ -36,12 +36,11 @@ def create_app():
     admin.add_view(ModelView(models.QuestionComment, db.session))
     
     # 블루프린트
-    from .views import main_views, auth_views, qna_views, book_views, list_views
+    from .views import main_views, auth_views, qna_views, book_views
     app.register_blueprint(main_views.bp)
     app.register_blueprint(auth_views.bp)
     app.register_blueprint(book_views.bp)
     app.register_blueprint(qna_views.bp)
-    app.register_blueprint(list_views.bp)
 
     # 필터
     from filter import format_datetime
