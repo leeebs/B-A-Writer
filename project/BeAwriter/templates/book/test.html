@@ -29,9 +29,9 @@
                     <img src="{{ url_for('static', filename='assets/bookimg1.PNG') }}") style="width:450px; height:300px; margin:auto;">
                 </div>
                 <div class="row text-center"><h2>나비의 꿈</h2></div>
-                    <form action="{{ url_for('book.speaker') }}" method="POST">
+      
                         <div class="row text-center"> 
-                            <button onclick="play()" style="border: none; background-color:#fff;"><img src="{{ url_for('static', filename='assets/speaker.png') }}" style="width:50px; height:50px;"></button>
+                            <button onclick = "play()" type="submit" style="border: none; background-color:#fff;"><img src="{{ url_for('static', filename='assets/speaker.png') }}" style="width:50px; height:50px;"></button>
                         </div>
                         <div class="row">
                             <div class="col-1"></div>
@@ -41,10 +41,13 @@
                                 </p>
                             </div>
                         </div>
+                    <form name="myform" id="myform" method="post" action="{{ url_for('book.mp3') }}">
+                        <div class="text-center my-3">
+                            <button class="btn btn-success" type="submit" style="font-family: 'Jua', sans-serif;">다 읽었어요!</button>
+                        </div>
                     </form>
-                <div class="text-center my-3">
-                    <button class="btn btn-success" onclick= "location.href='/book/bookstar.html'" type="submit" style="font-family: 'Jua', sans-serif;">다 읽었어요!</button>
-                </div>
+
+        
             </div>
         </section>
         {% endblock %}
