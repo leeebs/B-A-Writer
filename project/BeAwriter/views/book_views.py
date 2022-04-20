@@ -43,7 +43,6 @@ def save():
         book = {}        
     return jsonify(book)
 
-
 @bp.route('/cover/<int:book_no>/', methods=('GET','POST'))
 def cover(book_no):
     msg1 = None
@@ -73,7 +72,7 @@ def cover(book_no):
                 msg = ["파일을 넣고 제출 버튼을 눌러주세요.","생략 하시려면 생략하기 버튼을 눌러주세요."]
             else:
                 file_name = secure_filename(f.filename)
-                f.save(file_name)
+                f.save('/static/image/'+ file_name)
                 img = Image(book_no=sb.book_no,
                             img_path=file_name)
                 db.session.add(img)
@@ -110,6 +109,8 @@ def bookstar():
 @bp.route('/readbook/<int:book_no>/')
 def readbook(book_no):
     book = Storybook.query.get_or_404(book_no)
-    return render_template("/book/readbook.html", book=book)
+    image = Image.query.get_or_404(book_no)
+
+    return render_template("/book/readbook.html", book=book, image=image)
 
 
