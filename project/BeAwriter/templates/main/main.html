@@ -56,6 +56,7 @@
                                 <div class="card-body p-4">
                                     <div class="text-center">
                                         <!-- Product name-->
+                                        <h5 class="fw-bolder">{{smalllist.book_no}}</h5>
                                         <h5 class="fw-bolder">{{smalllist.book_title}}</h5>
                                         <!-- Product reviews-->
                                         <div class="d-flex justify-content-center small text-warning mb-2">
@@ -72,7 +73,7 @@
                                 <!-- Product actions-->
                                 <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                                     <div class="text-center"><a class="btn btn-outline-warning mt-auto"
-                                        {% if g.user %} href="{{url_for('book.readbook')}}"
+                                        {% if g.user %} href="{{url_for('book.make')}}"
                                         {% else %} href="{{url_for('auth.login')}}"
                                         {% endif %}>보러가기</a>
                                     </div>
@@ -138,6 +139,7 @@
                                 <div class="card-body p-4">
                                     <div class="text-center">
                                         <!-- Product name-->
+                                        <h5 class="fw-bolder">{{smalllist.book_no}}</h5>
                                         <h5 class="fw-bolder">{{smalllist.book_title}}</h5>
                                         <!-- Product reviews-->
                                         <div class="d-flex justify-content-center small text-warning mb-2">
@@ -154,7 +156,7 @@
                                 <!-- Product actions-->
                                 <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                                     <div class="text-center"><a class="btn btn-outline-warning mt-auto"
-                                        {% if g.user %}href="{{url_for('book.readbook')}}"
+                                        {% if g.user %}href="{{url_for('book.make')}}"
                                         {% else %} href="{{url_for('auth.login')}}"
                                         {% endif %}>보러가기</a>
                                     </div>
