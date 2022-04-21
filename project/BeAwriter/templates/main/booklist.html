@@ -38,8 +38,8 @@
                         <li style="list-style:none;" class="dropdown">
                             <a class="dropdown-toggle btn btn-success" id="filterDropdown" href="#" style="font-family: 'Jua', sans-serif; color:#fff;" role="button" data-bs-toggle="dropdown" aria-expanded="false">정렬</a>
                             <ul class="dropdown-menu" aria-labelledby="filterDropdown">
-                                <li><a class="dropdown-item" href="{{url_for('main.booklist')}}">별점순</a></li>
-                                <li><a class="dropdown-item" href="{{url_for('main.booklist')}}">최신순</a></li>
+                                <li><a class="dropdown-item" href="{{url_for('main.starlist')}}">별점순</a></li>
+                                <li><a class="dropdown-item" href="{{url_for('main.booklist')}}">오래된순</a></li>
                                 <li><a class="dropdown-item" href="{{url_for('main.booklist')}}">내가만든동화</a></li>
                             </ul>
                         </li>
@@ -72,9 +72,9 @@
                                         </div>
                                         <!-- Product price-->
                                         <p>
-                                            제목 : {{list.book_title}}
-                                            <br>
                                             작가 : {{list.member_name}}
+                                            <br>
+                                            출판 : {{list.book_date}}
                                         </p>
                                     </div>
                                 </div>
