@@ -1,7 +1,7 @@
-from flask import Blueprint, render_template, url_for, request, g, jsonify
+from flask import Blueprint, render_template, url_for, request, g, jsonify, current_app
 from werkzeug.utils import redirect, secure_filename
 import json
-
+import os
 from BeAwriter import db
 from BeAwriter.models import *
 
@@ -72,7 +72,7 @@ def cover(book_no):
                 msg = ["파일을 넣고 제출 버튼을 눌러주세요.","생략 하시려면 생략하기 버튼을 눌러주세요."]
             else:
                 file_name = secure_filename(f.filename)
-                f.save('/static/image/'+ file_name)
+                f.save('../project/BeAwriter/static/image/'+ file_name)              
                 img = Image(book_no=sb.book_no,
                             img_path=file_name)
                 db.session.add(img)
