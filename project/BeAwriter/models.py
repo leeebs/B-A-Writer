@@ -19,6 +19,7 @@ class Storybook(db.Model):
     member_no = db.Column(db.Integer,
                           db.ForeignKey('member.member_no', ondelete='CASCADE'),
                           nullable=False)
+    speak_path = db.Column(db.String(500), nullable=True)
     
 class Rating(db.Model):
     member_no = db.Column(db.Integer,
@@ -41,8 +42,8 @@ class Image(db.Model):
     
 class Question(db.Model):
     question_no = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
-    ques_title = db.Column(db.String(50), nullable=False)
-    ques_con = db.Column(db.String(1000), nullable=False)
+    subject = db.Column(db.String(50), nullable=False)
+    content = db.Column(db.Text(), nullable=False)
     ques_date = db.Column(db.DateTime(timezone=True), server_default=func.now(), nullable=False)
     member_no = db.Column(db.Integer,
                           db.ForeignKey('member.member_no', ondelete='CASCADE'),
@@ -54,5 +55,5 @@ class QuestionComment(db.Model):
     member_no = db.Column(db.Integer, db.ForeignKey('member.member_no', ondelete='CASCADE'), nullable=False)
     question_no = db.Column(db.Integer, db.ForeignKey('question.question_no', ondelete='CASCADE'), nullable=False)
     question = db.relationship('Question', backref=db.backref('questioncomment_set'))
-    comment_con = db.Column(db.String(200), nullable=False)
+    content = db.Column(db.String(200), nullable=False)
     comment_date = db.Column(db.DateTime(timezone=True), server_default=func.now(), nullable=False)

@@ -31,6 +31,7 @@
         <!-- Section-->
         <div class="container px-4 px-lg-5 my-5">
             <button class="btn btn-success" type="submit" onclick="location.href='/qna/qnawrite'" style="float: right; font-family: 'Jua', sans-serif;">문의하기</button>
+            
         </div>
         <section class="py-5">
             <div class="row mt-5">
@@ -53,7 +54,7 @@
                             <tr class="text-center">
                                 <td scope="row" style="vertical-align:middle;">{{ question_list.total - ((question_list.page-1) * question_list.per_page) - loop.index0 }}</td>
                                 <td class="text-start">
-                                    <a class="nav-link" style="color: black; margin: auto; text-align: center;" href="{{ url_for('qna.QnA', question_no=question.question_no) }}">{{ question.ques_title }}</a>
+                                    <a class="nav-link" style="color: black; margin: auto; text-align: center;" href="{{ url_for('qna.QnA', question_no=question.question_no) }}">{{ question.subject }}</a>
                                     
                                 </td>
                                 <td style="vertical-align:middle;">{{ question.member.member_name }}</td>
@@ -105,13 +106,13 @@
               {% if page_num != question_list.page %}
 
               <li class="page-item">
-                <a class="page-link" href="?page={{ page_num }}" style="background-color:blueviolet; color:#fff; font-family: 'Jua', sans-serif;">{{ page_num }}</a>
+                <a class="page-link" href="?page={{ page_num }}" style="background-color:blueviolet; color:#fff; font-family: 'Jua', sans-serif; border-color:#fff;">{{ page_num }}</a>
               </li>
 
               {% else %}
               
               <li class="page-item active" aria-current="page">
-                <a class="page-link" href="javascript:void(0)" style="background-color:blueviolet; color:#fff; font-family: 'Jua', sans-serif;">{{ page_num }}</a>
+                <a class="page-link" href="javascript:void(0)" style="background-color:blueviolet; color:#fff; font-family: 'Jua', sans-serif; border-color:#fff;">{{ page_num }}</a>
               </li>
 
               {% endif %}

@@ -4,17 +4,21 @@
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-light bg-warning">
             <div class="container px-4 px-lg-5">
-                <a class="navbar-brand" href="#!" style="color:blueviolet; font-family: 'Jua', sans-serif;"><b>B a writer</b></a>
+                <a class="navbar-brand" href="{{url_for('main.index')}}" style="color:blueviolet; font-family: 'Jua', sans-serif;"><b>B a writer</b></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!" style="color:blueviolet; font-family: 'Jua', sans-serif;">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!" style="color:blueviolet; font-family: 'Jua', sans-serif;">QnA</a></li>
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="{{url_for('main.index')}}" style="color:blueviolet; font-family: 'Jua', sans-serif;">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{url_for('qna.qnalist')}}" style="color:blueviolet; font-family: 'Jua', sans-serif;">QnA</a></li>
                     </ul>
-                    <form class="d-flex">
-                        <button class="btn btn-success" type="submit" style="font-family: 'Jua', sans-serif;">로그인</button>
-                        <button class="btn btn-success" type="submit" style="margin-left: 15px; font-family: 'Jua', sans-serif;">회원가입</button>
-                    </form>
+
+                    {% if g.user %}
+                    <span class="mx-5" style="font-family: 'Jua', sans-serif;">{{ g.user.member_name }}님 안녕하세요!👋🏻</span>
+                    <a href="{{url_for('auth.logout')}}" class="btn btn-success" style="font-family: 'Jua', sans-serif;">로그아웃</a>
+                    {% else %}
+                    <a href="{{url_for('auth.login')}}" class="btn btn-success" style="font-family: 'Jua', sans-serif;">로그인</a>
+                    <a href="{{url_for('auth.register')}}" class="btn btn-success" style="margin-left: 15px; font-family: 'Jua', sans-serif;">회원가입</a>
+                    {% endif %}
                 </div>
             </div>
         </nav>
@@ -22,7 +26,7 @@
         <header class="bg-warning py-5">
             <div class="container px-4 px-lg-5">
                 <div class="text-center text-white">
-                    <a class="display-4 fw-bolder nav-link" href="#!" style="color:blueviolet; font-family: 'Jua', sans-serif;">나도 만들기</a>
+                    <a class="display-4 fw-bolder nav-link" href="{{url_for('book.make')}}" style="color:blueviolet; font-family: 'Jua', sans-serif;">나도 만들기</a>
                     <p class="lead fw-normal text-white mb-0" style="font-family: 'Jua', sans-serif;">상상의 나래를 펼쳐 보아요!</p>
                 </div>
             </div>
@@ -30,7 +34,7 @@
         <!-- Section-->
         <section class="py-5">
             <div class="container px-4 px-lg-5 mt-5">
-                <div class="row text-center"><h2>동화제목</h2></div>
+                <div class="row text-center"><h2>{{book.book_title}}</h2></div>
                 <div class="row my-5 text-center">
                     <form name="myform" id="myform" method="post" action="{{ url_for('book.bookstar', book_no=book_no) }}">
                         <fieldset>

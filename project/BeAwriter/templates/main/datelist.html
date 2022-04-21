@@ -1,4 +1,4 @@
-        {% extends 'base.html' %}
+{% extends 'base.html' %}
         {% block content %}
 
         <!-- Navigation-->
@@ -39,9 +39,9 @@
                         <li style="list-style:none;" class="dropdown">
                             <a class="dropdown-toggle btn btn-success" id="filterDropdown" href="#" style="font-family: 'Jua', sans-serif; color:#fff;" role="button" data-bs-toggle="dropdown" aria-expanded="false">정렬</a>
                             <ul class="dropdown-menu" aria-labelledby="filterDropdown">
-                                <li><a class="dropdown-item" href="{{url_for('main.booklist')}}">별점순</a></li>
-                                <li><a class="dropdown-item" href="{{url_for('main.booklist')}}">최신순</a></li>
-                                <li><a class="dropdown-item" href="{{url_for('main.booklist')}}">내가만든동화</a></li>
+                                <li><a class="dropdown-item" href="{{url_for('main.datelist')}}">별점순</a></li>
+                                <li><a class="dropdown-item" href="{{url_for('main.datelist')}}">오래된순</a></li>
+                                <li><a class="dropdown-item" href="{{url_for('main.mylist')}}">내가만든동화</a></li>
                             </ul>
                         </li>
                     </div>
@@ -49,7 +49,7 @@
                 <div class="row">
                     <div class="col-1"></div>
                     <div class="col-10">
-                        <h3>선택한 필터명</h3>
+                        <h3>동화 오래된 순</h3>
                         <hr>
                     </div>
                 </div>
@@ -76,16 +76,16 @@
                                         </div>
                                         <!-- Product price-->
                                         <p>
-                                            제목 : {{list.book_title}}
+                                            작가 : {{book_mem_name[loop.index0]}}
                                             <br>
-                                            작가 : {{list.member_name}}
+                                            출판 : {{list.book_date|datetime}}
                                         </p>
                                     </div>
                                 </div>
                                 <!-- Product actions-->
                                 <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                                     <div class="text-center"><a class="btn btn-outline-warning mt-auto"
-                                        {% if g.user %} href="{{url_for('book.make')}}"
+                                        {% if g.user %} href="{{url_for('book.readbook', book_no = list.book_no)}}"
                                         {% else %} href="{{url_for('auth.login')}}"
                                         {% endif %}>보러가기</a>
                                     </div>
