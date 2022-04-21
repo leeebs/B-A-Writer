@@ -83,7 +83,7 @@ def cover(book_no):
                 db.session.commit()
 
         if len(msg)==0 and msg1 is None:
-            return redirect(url_for('book.readbook', book_no=book_no)) #동화읽는페이지로 수정
+            return redirect(url_for('book.readbook', book_no=book_no))
             
     return render_template('book/bookcover.html', msg=msg, msg1=msg1, book_no=book_no, isTitle=isTitle)
 
@@ -112,7 +112,7 @@ def bookstar(book_no):
 @bp.route('/readbook/<int:book_no>/')
 def readbook(book_no):
     book = Storybook.query.get_or_404(book_no)
-    image = Image.query.get_or_404(book_no)
+    image = Image.query.get(book_no)
     content = book.book_con
     #audio_path = book.speak_path
     DIVN = [220, 320, 420, 520, 620]
