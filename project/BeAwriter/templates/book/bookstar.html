@@ -31,6 +31,8 @@
                 </div>
             </div>
         </header>
+
+        {% if not isIt %}
         <!-- Section-->
         <section class="py-5">
             <div class="container px-4 px-lg-5 mt-5">
@@ -55,8 +57,19 @@
                     <p style="color:rgba(220, 20, 60, 0.5); font-family: 'Jua', sans-serif;">{{error}}</p>
                     {% endif %}
                 </div>
-               
             </div>
         </section>
+        {% else %}
+        <section class="py-5">
+            <div class="container px-4 px-lg-5 mt-5">
+                <br>
+                <div class="row text-center" style="font-family: 'Jua', sans-serif;">
+                    <h3>이미 별점을 주셨네요!</h3>
+                </div>
+                <div class="text-center" style="font-family: 'Jua', sans-serif; font-size:large;">내 점수는 <span style="color:#ffc107; font-size:xx-large;">{{isIt.rating}}</span> 점입니다.</div>
+                <br><br>
+            </div>
+        </section>
+        {% endif %}
                 
         {% endblock %}

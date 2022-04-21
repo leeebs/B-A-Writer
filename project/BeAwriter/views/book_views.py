@@ -5,6 +5,7 @@ from gtts import gTTS
 from BeAwriter import db
 from BeAwriter.models import *
 from datetime import datetime
+from sqlalchemy import and_
 
 bp = Blueprint('book', __name__, url_prefix='/book')
 
@@ -107,9 +108,13 @@ def bookstar(book_no):
             error = "평점을 매겨주세요!"
     
         if error is None:
-            return redirect(url_for('main.index'))    
+            return redirect(url_for('main.index'))
+    
+    else:
+        isIt = Rating.query.filter(and_(Rating.member_no==g.user.member_no,
+                                        Rating.book_no==book_no)).first()
           
-    return render_template("/book/bookstar.html", error=error, book_no=book_no, book=book)
+    return render_template("/book/bookstar.html", error=error, book_no=book_no, book=book, isIt=isIt)
 
 
 @bp.route('/readbook/<int:book_no>/')
