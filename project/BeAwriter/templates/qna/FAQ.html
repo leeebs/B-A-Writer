@@ -35,24 +35,28 @@
         <!-- Section-->
         <section class="py-5">
             <div class="container px-4 px-lg-5 mt-5">
-                <div class="row">
-                    <h3>문의내용</h3>
-                    <hr>
-                </div>
-                <div class="row mb-1">
+                <div class="row" style="font-family: 'Gowun Batang', serif;">
                     <div class="col-1"></div>
-                    <div class="col-10 justify-content-center">
-                        <td style="vertical-align:middle;">{{ question.ques_date|datetime }}</td>
-                        <p class="text-left" style="border: solid 3px; border-color:#8a2be2; border-radius:0%; padding:10px; font-size:large; line-height:120%; font-family: 'Jua', sans-serif;" readonly>
-                            제목: {{ question.subject }}
-                        </p>
+                    <div class="col-10">
+                        <h3>문의 내용</h3>
+                        <hr>
                     </div>
                 </div>
-                <div class="row mb-1">
+                
+                <div class="row">
                     <div class="col-1"></div>
                     <div class="col-10 justify-content-center">
-                        <textarea class="text-left" wrap='hard' rows='10' style="width:100%; border:1;overflow:visible;text-overflow:ellipsis; border: solid 3px; border-color:#8a2be2; border-radius:0%; padding:10px; font-size:large; line-height:120%; font-family: 'Jua', sans-serif;" readonly>내용: {{ question.content }}
-                        </textarea>
+                        <div class="card mb-2">
+                            <div class="card-header">
+                                <p class="text-left" style="padding:10px; font-size:large; font-family: 'Jua', sans-serif;">
+                                    {{ question.subject }}
+                                </p>
+                                <p style="font-family: 'Gowun Batang', serif; font-size:small; text-align:right;">{{ question.ques_date|datetime }}</p>
+                            </div>
+                            <div class="card-body">
+                                <textarea class="text-left" wrap='hard' rows='8'style="width:100%; overflow:visible;text-overflow:ellipsis; border: solid 0px; border-color:#8a2be2; border-radius:0%; padding:10px; font-size:large; line-height:120%; font-family: 'Jua', sans-serif;" readonly>{{ question.content }}</textarea>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 
@@ -60,15 +64,18 @@
                     
                     <div class="col-11">
                         {% if g.user.member_no == question.member_no %}
-                        <a href="{{ url_for('qna.questiondelete', question_no=question.question_no) }}" class="btn btn-success mt-3" style="float:right; font-family: 'Jua', sans-serif;">삭제</a>
-                        <a href="{{ url_for('qna.modify', question_no=question.question_no) }}" class="btn btn-success mt-3" style="float:right; font-family: 'Jua', sans-serif;">수정</a>
+                        <a href="{{ url_for('qna.questiondelete', question_no=question.question_no) }}" class="btn btn-success mx-2 mt-3" style="float:right; font-family: 'Jua', sans-serif;">삭제</a>
+                        <a href="{{ url_for('qna.modify', question_no=question.question_no) }}" class="btn btn-success mx-2 mt-3" style="float:right; font-family: 'Jua', sans-serif;">수정</a>
                         {% endif %}
                     </div>
                 </div>
                 
-                <div class="row">
-                    <h3>댓글</h3>
-                    <hr>
+                <div class="row" style="font-family: 'Gowun Batang', serif;">
+                    <div class="col-1"></div>
+                    <div class="col-10">
+                        <h3>댓글</h3>
+                        <hr>
+                    </div>
                 </div>
                 <ul>
                     {% for questioncomment in question.questioncomment_set %}

@@ -106,13 +106,13 @@
               {% if page_num != question_list.page %}
 
               <li class="page-item">
-                <a class="page-link" href="?page={{ page_num }}" style="background-color:blueviolet; color:#fff; font-family: 'Jua', sans-serif;">{{ page_num }}</a>
+                <a class="page-link" href="?page={{ page_num }}" style="background-color:blueviolet; color:#fff; font-family: 'Jua', sans-serif; border-color:#fff;">{{ page_num }}</a>
               </li>
 
               {% else %}
               
               <li class="page-item active" aria-current="page">
-                <a class="page-link" href="javascript:void(0)" style="background-color:blueviolet; color:#fff; font-family: 'Jua', sans-serif;">{{ page_num }}</a>
+                <a class="page-link" href="javascript:void(0)" style="background-color:blueviolet; color:#fff; font-family: 'Jua', sans-serif; border-color:#fff;">{{ page_num }}</a>
               </li>
 
               {% endif %}

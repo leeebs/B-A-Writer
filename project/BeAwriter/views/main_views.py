@@ -30,7 +30,7 @@ def index():
     book_date = []
     for book in star_list:
         member = Member.query.get(book.member_no)
-        book = Storybook.query.get(Storybook.member_no)
+        book = Storybook.query.get(book.member_no)
         star_mem_name.append(member.member_name)
         book_title.append(book.book_title)
         book_date.append(book.book_date)
