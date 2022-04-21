@@ -19,6 +19,7 @@ class Storybook(db.Model):
     member_no = db.Column(db.Integer,
                           db.ForeignKey('member.member_no', ondelete='CASCADE'),
                           nullable=False)
+    speak_path = db.Column(db.String(500), nullable=True)
     
 class Rating(db.Model):
     member_no = db.Column(db.Integer,
