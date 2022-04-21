@@ -73,7 +73,7 @@
                                         </div>
                                         <!-- Product price-->
                                         <p>
-                                            작가 : {{smalllist.member_name}}
+                                            작가 : {{book_mem_name[loop.index0]}}
                                             <br>
                                             출판 : {{smalllist.book_date}}
                                         </p>
@@ -159,7 +159,7 @@
                                     <div class="text-center">
                                         <!-- Product name-->
                                         <h5 class="fw-bolder">{{smalllist.book_no}}</h5>
-                                        <h5 class="fw-bolder">{{smalllist.book_title}}</h5>
+                                        <h5 class="fw-bolder">{{book_title[loop.index0]}}</h5>
                                         <!-- Product reviews-->
                                         <div class="d-flex justify-content-center small text-warning mb-2">
                                             <div class="bi-star-fill"></div>
@@ -170,9 +170,9 @@
                                         </div>
                                         <!-- Product price-->
                                         <p>
-                                            작가 : {{smalllist.member_name}}
+                                            작가 : {{star_mem_name[loop.index0]}}
                                             <br>
-                                            날짜 : {{smalllist.book_date}}
+                                            날짜 : {{book_date[loop.index0]}}
                                         </p>
                                     </div>
                                 </div>

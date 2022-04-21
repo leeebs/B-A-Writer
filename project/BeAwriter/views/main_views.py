@@ -13,76 +13,58 @@ bp = Blueprint('main', __name__, url_prefix='/')
 def index():
     page = request.args.get('page', type=int, default=1)
     book_list = Storybook.query.order_by(Storybook.book_date.desc())
-    # book_list = 
+    book_mem_name = []
+    for book in book_list:
+        member = Member.query.get(book.member_no)
+        book_mem_name.append(member.member_name)
+
+    book_list = book_list.paginate(page, per_page=3)
+
 
     star_list = Rating.query.order_by(Rating.rating.desc())
-    sub_query = db.session.query(Rating.book_no, Storybook.book_title, Member.member_name, Rating.rating, Member.member_no)\
-            .join(Rating, Member, Storybook.book_no == Rating.book_no, Storybook.member_no == Member.member_no).subquery()
-    star_list = star_list.join(Member, Storybook)\
-        .outerjoin(sub_query, sub_query.c.book_no == Storybook.book_no, sub_query.c.member_no == Member.member_no)\
-        .filter(Storybook.book_no |
-                Storybook.book_title |
-                Member.member_name |
-                Rating.rating).distinct()
+    star_mem_name = []
+    book_title = []
+    book_date = []
+    for book in star_list:
+        member = Member.query.get(book.member_no)
+        book = Storybook.query.get(Storybook.member_no)
+        star_mem_name.append(member.member_name)
+        book_title.append(book.book_title)
+        book_date.append(book.book_date)
+
     star_list = star_list.paginate(page, per_page=3)
 
-    return render_template('main/main.html', book_list=book_list, page = page)
+    return render_template('main/main.html', book_list=book_list, page = page, book_mem_name = book_mem_name, book_title=book_title, book_date = book_date, star_mem_name = star_mem_name)
 
+# 기본 화면
 @bp.route('/booklist')
 def booklist():
     page = request.args.get('page', type=int, default=1)
-    kw = request.args.get('kw', type=str, default='')
-    book_list = Storybook.query.order_by(Storybook.book_no)
-    if kw:
-        search = '%%{}%%'.format(kw)
-        sub_query = db.session.query(Storybook.book_no, Storybook.book_title, Member.member_name, Storybook.book_date)\
-            .join(Member, Storybook.member_no == Member.member_no).subquery()
-        book_list = book_list.join(Member)\
-            .outerjoin(sub_query, sub_query.c.member_no == Storybook.member_no)\
-            .filter(Storybook.book_no.ilike(search) |
-                    Storybook.book_title.ilike(search) |
-                    Member.member_name.ilike(search)|
-                    Storybook.book_date.ilike(search)).distinct()
+    book_list = Storybook.query.order_by(Storybook.book_date.asc())
+    book_mem_name = []
+    for book in book_list:
+        member = Member.query.get(book.member_no)
+        book_mem_name.append(member.member_name)
     book_list = book_list.paginate(page, per_page=10)
-    return render_template('main/booklist.html', book_list=book_list, page=page, kw=kw)
-
-# 오래된순
-@bp.route('/datelist')
-def datelist():
-    page = request.args.get('page', type=int, default=1)
-    kw = request.args.get('kw', type=str, default='')
-    book_list = Storybook.query.order_by(Storybook.book_date.desc())
-    if kw:
-        search = '%%{}%%'.format(kw)
-        sub_query = db.session.query(Storybook.book_no, Storybook.book_title, Member.member_name, Storybook.book_date)\
-            .join(Member, Storybook.member_no == Member.member_no).subquery()
-        book_list = book_list.join(Member)\
-            .outerjoin(sub_query, sub_query.c.member_no == Storybook.member_no)\
-            .filter(Storybook.book_no.ilike(search) |
-                    Storybook.book_title.ilike(search) |
-                    Member.member_name.ilike(search)|
-                    Storybook.book_date.ilike(search)).distinct()
-    book_list = book_list.paginate(page, per_page=10)
-    return render_template('main/booklist.html', book_list=book_list, page=page, kw=kw)
+    return render_template('main/booklist.html', book_list=book_list, page=page, book_mem_name=book_mem_name)
 
 # 별점
 @bp.route('/starlist')
 def starlist():
     page = request.args.get('page', type=int, default=1)
-    kw = request.args.get('kw', type=str, default='')
     star_list = Rating.query.order_by(Rating.rating.desc())
-    if kw:
-        search = '%%{}%%'.format(kw)
-        sub_query = db.session.query(Rating.book_no, Storybook.book_title, Member.member_name, Rating.rating)\
-            .join(Rating, Member, Storybook.book_no == Rating.book_no, Storybook.member_no == Member.member_no).subquery()
-        star_list = star_list.join(Member, Storybook)\
-            .outerjoin(sub_query, sub_query.c.book_no == Storybook.book_no, sub_query.c.member_no == Member.member_no)\
-            .filter(Storybook.book_no.ilike(search) |
-                    Storybook.book_title.ilike(search) |
-                    Member.member_name.ilike(search) |
-                    Rating.rating.ilike(search)).distinct()
+    star_mem_name = []
+    book_title = []
+    book_date = []
+    for book in star_list:
+        member = Member.query.get(book.member_no)
+        book = Storybook.query.get(Storybook.member_no)
+        star_mem_name.append(member.member_name)
+        book_title.append(book.book_title)
+        book_date.append(book.book_date)
+
     star_list = star_list.paginate(page, per_page=10)
-    return render_template('main/booklist.html', star_list=star_list, page=page, kw=kw)
+    return render_template('main/booklist.html', star_list=star_list, page=page)
 
 # 내가 만든
 # @bp.route('/mylist')
