@@ -41,7 +41,7 @@
                             <ul class="dropdown-menu" aria-labelledby="filterDropdown">
                                 <li><a class="dropdown-item" href="{{url_for('main.datelist')}}">별점순</a></li>
                                 <li><a class="dropdown-item" href="{{url_for('main.datelist')}}">오래된순</a></li>
-                                <li><a class="dropdown-item" href="{{url_for('main.datelist')}}">내가만든동화</a></li>
+                                <li><a class="dropdown-item" href="{{url_for('main.mylist')}}">내가만든동화</a></li>
                             </ul>
                         </li>
                     </div>
@@ -78,7 +78,7 @@
                                         <p>
                                             작가 : {{book_mem_name[loop.index0]}}
                                             <br>
-                                            출판 : {{list.book_date}}
+                                            출판 : {{list.book_date|datetime}}
                                         </p>
                                     </div>
                                 </div>

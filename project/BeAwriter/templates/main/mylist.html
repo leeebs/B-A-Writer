@@ -40,7 +40,7 @@
                             <a class="dropdown-toggle btn btn-success" id="filterDropdown" href="#" style="font-family: 'Jua', sans-serif; color:#fff;" role="button" data-bs-toggle="dropdown" aria-expanded="false">정렬</a>
                             <ul class="dropdown-menu" aria-labelledby="filterDropdown">
                                 <li><a class="dropdown-item" href="{{url_for('main.starlist')}}">별점순</a></li>
-                                <li><a class="dropdown-item" href="{{url_for('main.booklist')}}">오래된순</a></li>
+                                <li><a class="dropdown-item" href="{{url_for('main.datelist')}}">오래된순</a></li>
                                 <li><a class="dropdown-item" href="{{url_for('main.mylist')}}">내가만든동화</a></li>
                             </ul>
                         </li>
@@ -54,8 +54,8 @@
                     </div>
                 </div>
                 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center mt-4">
-                    {% if book_list %}
-                        {% for list in book_list.items %}
+                    {% if my_list %}
+                        {% for list in my_list.items %}
                         <div class="col mb-5">
                             <div class="card h-100">
                                 <!-- Product image-->
@@ -78,7 +78,7 @@
                                         <p>
                                             작가 : {{book_mem_name[loop.index0]}}
                                             <br>
-                                            출판 : {{list.book_date}}
+                                            출판 : {{list.book_date|datetime}}
                                         </p>
                                     </div>
                                 </div>
@@ -137,15 +137,15 @@
                 <div class="col">
 					<ul class="pagination justify-content-center">
                         <!-- 이전 페이지 -->
-                        {% if book_list.has_prev %}
-						<li class="page-item"><a class="page-link" data-page="?page={{book_list.prev_num}}" href ="javascript:void(0)" style="background-color:blueviolet; color:#fff; font-family: 'Jua', sans-serif;">Previous</a></li>
+                        {% if my_list.has_prev %}
+						<li class="page-item"><a class="page-link" data-page="?page={{my_list.prev_num}}" href ="javascript:void(0)" style="background-color:blueviolet; color:#fff; font-family: 'Jua', sans-serif;">Previous</a></li>
 						{% else %}
                         <li class="page-item"><a class="page-link" tabindex="-1" aria-disabled="true" href="javascript:void(0)" style="background-color:blueviolet; color:#fff; font-family: 'Jua', sans-serif;">Previous</a></li>
                         {% endif %}
 
-                        {% for page_num in book_list.iter_pages() %}
+                        {% for page_num in my_list.iter_pages() %}
                             {% if page_num %}
-                                {% if page_num != book_list.page %}
+                                {% if page_num != my_list.page %}
                                 <li class="page-item"><a class="page-link" href="?page={{page_num}}" style="background-color:blueviolet; color:#fff; font-family: 'Jua', sans-serif;">{{page_num}}</a></li>
                                 {% else %}
                                 <li class="page-item"><a class="page-link" href="javascript:void(0)" style="background-color:blueviolet; color:#fff; font-family: 'Jua', sans-serif;">{{page_num}}</a></li>
@@ -156,8 +156,8 @@
                         {% endfor %}
 
                         <!-- 다음 페이지-->
-                        {% if book_list.has_next %}
-						<li class="page-item"><a class="page-link" data-page="?page={{book_list.next_num}}" href="javascript:void(0)" style="background-color:blueviolet; color:#fff; font-family: 'Jua', sans-serif;">Next</a></li>
+                        {% if my_list.has_next %}
+						<li class="page-item"><a class="page-link" data-page="?page={{my_list.next_num}}" href="javascript:void(0)" style="background-color:blueviolet; color:#fff; font-family: 'Jua', sans-serif;">Next</a></li>
                         {% else %}
                         <li class="page-item disabled"><a class="page-link" tabindex="-1" aria-disabled="true" href="javascript:void(0)" style="background-color:blueviolet; color:#fff; font-family: 'Jua', sans-serif;">Next</a></li>
                         {% endif %}
