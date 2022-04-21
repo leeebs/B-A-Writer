@@ -51,8 +51,7 @@
                 <div class="row mb-1">
                     <div class="col-1"></div>
                     <div class="col-10 justify-content-center">
-                        <textarea class="text-left" wrap='hard' cols = "100" style="border: solid 3px; border-color:#8a2be2; border-radius:0%; padding:10px; font-size:large; line-height:120%; font-family: 'Jua', sans-serif;" readonly>
-                             내용: {{ question.content }}
+                        <textarea class="text-left" wrap='hard' rows='10' style="width:100%; border:1;overflow:visible;text-overflow:ellipsis; border: solid 3px; border-color:#8a2be2; border-radius:0%; padding:10px; font-size:large; line-height:120%; font-family: 'Jua', sans-serif;" readonly>내용: {{ question.content }}
                         </textarea>
                     </div>
                 </div>
@@ -81,7 +80,7 @@
                                 <p style="color: blueviolet; font-family: 'Jua', sans-serif;"><b>운영자</b><br>{{ questioncomment.comment_date|datetime }}</p>
                             </div>
                             <div class="card-body">
-                                <p style="font-family: 'Jua', sans-serif;">{{ questioncomment.comment_con }}</p>
+                                <p style="font-family: 'Jua', sans-serif;">{{ questioncomment.content }}</p>
                                 {% if g.user.member_type == 1 %}
                                 <a href="{{ url_for('qna.answerdelete', question_comment_no=questioncomment.comment_no) }}" class="btn btn-success mt-3" style="float:right; font-family: 'Jua', sans-serif;">삭제</a>
                                 {% endif %}
