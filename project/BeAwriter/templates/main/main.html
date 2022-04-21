@@ -44,11 +44,10 @@
                 </div>
 
                 {% if book_list %}
-                <div class='text-left position-relative' style="left: 20px; top: 250px;"><a class="btn btn-outline-warning mt-auto"><<<</a></div>
+                <div class='text-left position-relative' style="left: 20px; top: 340px;"><a class="btn btn-outline-warning mt-auto"><<<</a></div>
                 {% endif %}
 
-                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center" style="text-align:center">
-
+                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                     {% if book_list %}
                         {% for smalllist in book_list.items %}
                         <div class="col mb-5">
@@ -75,14 +74,14 @@
                                         <p>
                                             작가 : {{book_mem_name[loop.index0]}}
                                             <br>
-                                            출판 : {{smalllist.book_date}}
+                                            날짜 : {{smalllist.book_date|datetime}}
                                         </p>
                                     </div>
                                 </div>
                                 <!-- Product actions-->
                                 <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                                     <div class="text-center"><a class="btn btn-outline-warning mt-auto"
-                                        {% if g.user %} href="{{url_for('book.make')}}"
+                                        {% if g.user %}href="{{ url_for('book.readbook', book_no=smalllist.book_no) }}"
                                         {% else %} href="{{url_for('auth.login')}}"
                                         {% endif %}>보러가기</a>
                                     </div>
@@ -136,7 +135,7 @@
                 <div class="row">
                     <div class="col-1"></div>
                     <div class="col-10">
-                        <h3>별점순 모아모기</h3>
+                        <h3>별점순 모아보기</h3>
                         <hr>
                     </div>
                 </div>
@@ -179,7 +178,7 @@
                                 <!-- Product actions-->
                                 <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                                     <div class="text-center"><a class="btn btn-outline-warning mt-auto"
-                                        {% if g.user %}href="{{url_for('book.make')}}"
+                                        {% if g.user %}href="{{url_for('book.readbook', book_no = smalllist.book_no)}}"
                                         {% else %} href="{{url_for('auth.login')}}"
                                         {% endif %}>보러가기</a>
                                     </div>
@@ -234,7 +233,7 @@
             <div class="row">
                 <div class="col-10"></div>
                 <div class="col-2 mb-3">
-                    <a href="{{url_for('main.booklist')}}" class="btn btn-success" style="font-family: 'Jua', sans-serif;">더 보러가기</a>    
+                    <a href="{{url_for('main.datelist')}}" class="btn btn-success" style="font-family: 'Jua', sans-serif;">더 보러가기</a>    
                 </div>
             </div>
         </section>
