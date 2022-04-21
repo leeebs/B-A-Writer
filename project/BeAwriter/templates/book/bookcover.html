@@ -44,7 +44,7 @@
                         <div class="col-2"></div>
                         <div class="col-8 text-center">
                             <form class="form-inline" role="form" method="post" action="{{url_for('book.cover', book_no=book_no)}}">
-                                <input type="title" name='title' class="form-control mb-4" style="font-family: 'Jua', sans-serif;" placeholder="동화 제목을 만들어 주세요">
+                                <input type="title" name='title' class="form-control mb-4" placeholder="동화 제목을 만들어 주세요">
                                 <button type="submit" class="btn btn-success" style="font-family: 'Jua', sans-serif;">제목 결정하기</button>
                             </form>
                         </div>
@@ -81,7 +81,7 @@
                                     {{m}}<br>
                                 {% endfor %}
                             </p>
-                            <a href="{{url_for('main.index')}}" class="btn btn-success text-center" style="font-family: 'Jua', sans-serif;">생략하기</a>
+                            <a href="{{url_for('book.readbook', book_no=book_no)}}" class="btn btn-success text-center" style="font-family: 'Jua', sans-serif;">생략하기</a>
                         </div>
                     </div>
                     {% endif %}

@@ -2,6 +2,8 @@ from flask import Flask, session
 # from flask_session import Session
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
+from flask_admin import Admin
+from flask_admin.contrib.sqla import ModelView
 
 import config
 
@@ -17,13 +19,21 @@ def create_app():
     # 세션
     app.config['SESSION_TYPE'] = 'memcached'
     app.config['SECRET_KEY'] = 'super secret key'
-    # sess.init_app(app)
     
     # ORM
     db.init_app(app)
     migrate.init_app(app, db)
     # 모델
     from . import models
+    
+        # 관리자 페이지    
+    app.config['FLASK_ADMIN_SWATCH'] = 'Simplex'
+    admin = Admin(app, name='B a writer', template_mode='bootstrap3')
+    admin.add_view(ModelView(models.Member, db.session))
+    admin.add_view(ModelView(models.Storybook, db.session))
+    admin.add_view(ModelView(models.Image, db.session))
+    admin.add_view(ModelView(models.Question, db.session))
+    admin.add_view(ModelView(models.QuestionComment, db.session))
     
     # 블루프린트
     from .views import main_views, auth_views, qna_views, book_views
