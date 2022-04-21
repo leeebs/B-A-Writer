@@ -21,19 +21,17 @@ class Storybook(db.Model):
                           nullable=False)
     
 class Rating(db.Model):
-    rating_no = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
     member_no = db.Column(db.Integer,
                           db.ForeignKey('member.member_no', ondelete='CASCADE'),
-                          unique=True,
+                          primary_key=True,
                           nullable=False)
     book_no = db.Column(db.Integer,
                         db.ForeignKey('storybook.book_no', ondelete='CASCADE'),
-                        unique=True,
+                        primary_key=True,
                         nullable=False)
     rating = db.Column(db.Integer, nullable=False)
     
 class Image(db.Model):
-    # img_no = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
     book_no = db.Column(db.Integer,
                         db.ForeignKey('storybook.book_no', ondelete='CASCADE'),
                         primary_key=True,
