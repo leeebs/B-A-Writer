@@ -53,9 +53,8 @@
                     <hr>
                 </div>
                 <div class="text-center my-3">
-                    <button onclick="location.href='/book/bookstar'" class="btn btn-success" type="submit" style="font-family: 'Jua', sans-serif;">다 읽었어요!</button>
+                    <a href="{{url_for('book.bookstar', book_no=book_no)}}" class="btn btn-success" style="margin-left: 15px; font-family: 'Jua', sans-serif;">다 봤어요!</a>
                 </div>
-            </div>
         </section>
 
         <script>

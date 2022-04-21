@@ -74,7 +74,7 @@ def cover(book_no):
             f = request.files['file']
             if not f:
                 msg = ["파일을 넣고 제출 버튼을 눌러주세요.","생략 하시려면 생략하기 버튼을 눌러주세요."]
-            else:                
+            else:
                 extension=f.filename.split('.')[-1]
                 filename=f'{g.user.member_no}_{sb.book_no}.{extension}'
                 f.save('../project/BeAwriter/static/image/'+ filename)              
@@ -88,27 +88,26 @@ def cover(book_no):
             
     return render_template('book/bookcover.html', msg=msg, msg1=msg1, book_no=book_no, isTitle=isTitle)
 
-@bp.route('/bookstar', methods=('GET','POST'))
-def bookstar():
+@bp.route('/bookstar/<int:book_no>', methods=('GET','POST'))
+def bookstar(book_no):
     error = None
-
+    
     if request.method == 'POST':
         try:
-            request.form['rating']
             VALUE = request.form['rating']
-            star = Rating(rating_no=1,
-                            member_no=2,
-                            book_no=3,
-                            rating=int(VALUE))
+            star = Rating(member_no=g.user.member_no,
+                          book_no=book_no,
+                          rating=int(VALUE))
             db.session.add(star)
             db.session.commit()
-            return redirect(url_for('main.index'))
-        except: 
-            error ="평점을 매겨주세요!"
-         
-
+            
+        except:
+            error = "평점을 매겨주세요!"
+    
+        if error is None:
+            return redirect(url_for('main.index'))    
           
-    return render_template("/book/bookstar.html", error=error)
+    return render_template("/book/bookstar.html", error=error, book_no=book_no)
 
 
 @bp.route('/readbook/<int:book_no>/')
@@ -129,7 +128,7 @@ def readbook(book_no):
         story.append(content[a:len(content)])
         storyArray.append(story)
     
-    return render_template("/book/readbook.html", book=book, storyArray=storyArray, sa1=storyArray[1], sa2=storyArray[2], image=image)
+    return render_template("/book/readbook.html", book=book, storyArray=storyArray, sa1=storyArray[1], sa2=storyArray[2], image=image,  book_no=book_no)
    
 
 
