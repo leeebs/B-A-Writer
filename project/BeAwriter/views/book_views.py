@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, url_for, request, g, jsonify
 from werkzeug.utils import redirect, secure_filename
 import json
-
+from gtts import gTTS 
 from BeAwriter import db
 from BeAwriter.models import *
 
@@ -38,7 +38,11 @@ def save():
         db.session.add(sb)
         db.session.commit()
         book = { 'bookn' : sb.book_no,
-                'con' : sb.book_con }   
+                'con' : sb.book_con }
+        text = sb.book_con# 현재동화책 story content 불러오기
+        tts=gTTS(text=text, lang='ko')
+        filename=str(g.user.member_no)+'_'+str(sb.book_no)+'.mp3' #현재 동화책 제목으로 파일이름 지정하면될듯 f스트링으로 
+        tts.save('../project/BeAwriter/static/'+filename)
     else:
         book = {}        
     return jsonify(book)
