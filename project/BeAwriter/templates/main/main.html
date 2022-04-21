@@ -42,8 +42,13 @@
                         <hr>
                     </div>
                 </div>
+
+                {% if book_list %}
                 <div class='text-left position-relative' style="left: 20px; top: 250px;"><a class="btn btn-outline-warning mt-auto"><<<</a></div>
+                {% endif %}
+
                 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center" style="text-align:center">
+
                     {% if book_list %}
                         {% for smalllist in book_list.items %}
                         <div class="col mb-5">
@@ -67,7 +72,11 @@
                                             <div class="bi-star-fill"></div>
                                         </div>
                                         <!-- Product price-->
-                                        작가 : {{smalllist.member_name}}
+                                        <p>
+                                            작가 : {{book_mem_name[loop.index0]}}
+                                            <br>
+                                            출판 : {{smalllist.book_date}}
+                                        </p>
                                     </div>
                                 </div>
                                 <!-- Product actions-->
@@ -81,6 +90,7 @@
                             </div>
                         </div>
                         {% endfor %}
+
                     {% else %}
                     <div class="col mb-5">
                         <div class="card h-100">
@@ -116,8 +126,13 @@
                         </div>
                     </div>
                     {% endif %}
+
                 </div>
+
+                {% if book_list %}
                 <div class='text-right position-relative' style="right: -1150px; bottom: 200px;"><a class="btn btn-outline-warning mt-auto">>>></a></div>
+                {% endif %}
+
                 <div class="row">
                     <div class="col-1"></div>
                     <div class="col-10">
@@ -125,7 +140,11 @@
                         <hr>
                     </div>
                 </div>
+
+                {% if star_list %}
                 <div class='text-left position-relative' style="left: 20px; top: 250px;"><a class="btn btn-outline-warning mt-auto"><<<</a></div>
+                {% endif %}
+
                 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                     {% if star_list %}
                         {% for smalllist in star_list.items %}
@@ -140,7 +159,7 @@
                                     <div class="text-center">
                                         <!-- Product name-->
                                         <h5 class="fw-bolder">{{smalllist.book_no}}</h5>
-                                        <h5 class="fw-bolder">{{smalllist.book_title}}</h5>
+                                        <h5 class="fw-bolder">{{book_title[loop.index0]}}</h5>
                                         <!-- Product reviews-->
                                         <div class="d-flex justify-content-center small text-warning mb-2">
                                             <div class="bi-star-fill"></div>
@@ -150,7 +169,11 @@
                                             <div class="bi-star-fill"></div>
                                         </div>
                                         <!-- Product price-->
-                                        작가 : {{smalllist.member_name}}
+                                        <p>
+                                            작가 : {{star_mem_name[loop.index0]}}
+                                            <br>
+                                            날짜 : {{book_date[loop.index0]}}
+                                        </p>
                                     </div>
                                 </div>
                                 <!-- Product actions-->
@@ -164,6 +187,7 @@
                             </div>
                         </div>
                         {% endfor %}
+
                     {% else %}
                     <div class="col mb-5">
                         <div class="card h-100">
@@ -199,8 +223,13 @@
                         </div>
                     </div>
                     {% endif %}
+
                 </div>
+
+                {% if star_list %}
                 <div class='text-right position-relative' style="right: -1150px; bottom: 200px;"><a class="btn btn-outline-warning mt-auto">>>></a></div>
+                {% endif %}
+
             </div>
             <div class="row">
                 <div class="col-10"></div>
