@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, url_for, request, g, jsonify, current_app
 from werkzeug.utils import redirect, secure_filename
 import json
-import os
+from gtts import gTTS 
 from BeAwriter import db
 from BeAwriter.models import *
 
@@ -38,7 +38,11 @@ def save():
         db.session.add(sb)
         db.session.commit()
         book = { 'bookn' : sb.book_no,
-                'con' : sb.book_con }   
+                'con' : sb.book_con }
+        text = sb.book_con# 현재동화책 story content 불러오기
+        tts=gTTS(text=text, lang='ko')
+        filename=str(g.user.member_no)+'_'+str(sb.book_no)+'.mp3' #현재 동화책 제목으로 파일이름 지정하면될듯 f스트링으로 
+        tts.save('../project/BeAwriter/static/'+filename)
     else:
         book = {}        
     return jsonify(book)
@@ -79,7 +83,7 @@ def cover(book_no):
                 db.session.commit()
 
         if len(msg)==0 and msg1 is None:
-            return redirect(url_for('main.index')) #동화읽는페이지로 수정
+            return redirect(url_for('book.readbook', book_no=book_no)) #동화읽는페이지로 수정
             
     return render_template('book/bookcover.html', msg=msg, msg1=msg1, book_no=book_no, isTitle=isTitle)
 
@@ -110,7 +114,21 @@ def bookstar():
 def readbook(book_no):
     book = Storybook.query.get_or_404(book_no)
     image = Image.query.get_or_404(book_no)
-
-    return render_template("/book/readbook.html", book=book, image=image)
+    content = book.book_con
+    DIVN = [220, 320, 420, 520, 620]
+    storyArray = []
+    for divn in DIVN:
+        story = []
+        a = 0
+        b = divn
+        for _ in range(len(content)//divn):
+            story.append(content[a:b])
+            a += divn
+            b += divn
+        story.append(content[a:len(content)])
+        storyArray.append(story)
+    
+    return render_template("/book/readbook.html", book=book, storyArray=storyArray, sa1=storyArray[1], sa2=storyArray[2], image=image)
+   
 
 

@@ -1,6 +1,7 @@
-from flask import Blueprint, render_template, url_for, request, session, g
+from flask import Blueprint, render_template, url_for, request, session, g, flash
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import redirect, secure_filename
+from BeAwriter.forms import QuestionForm, AnswerForm
 
 from BeAwriter import db
 from BeAwriter.models import *
@@ -8,26 +9,19 @@ from datetime import datetime
 
 bp = Blueprint('qna', __name__, url_prefix='/qna')
 
-@bp.route('/qnawrite',  methods=('GET','POST'))
+
+@bp.route('/qnawrite/', methods=('GET', 'POST'))
 def qnawrite():
-    error = None
-    if request.method == 'POST':
-
-        TITLE = request.form['title']
-        CONTENT = request.form['content']
-        if not TITLE:
-            error = "문의 제목을 입력해주세요."
-        elif not CONTENT:
-            error = "문의 하실 내용을 입력해주세요."
-        else:
-            question = Question(ques_title=TITLE,
-                                ques_con=CONTENT,
-                                member_no=g.user.member_no)
-            db.session.add(question)
-            db.session.commit()
-            return redirect(url_for('qna.qnalist'))
-
-    return render_template("/qna/FAQ_write.html", error=error)
+    form = QuestionForm()
+    if request.method == 'POST' and form.validate_on_submit():
+        question = Question(subject=form.subject.data,
+                                content=form.content.data,
+                                member_no=g.user.member_no,
+                                ques_date = datetime.now(timezone('Asia/Seoul')) )
+        db.session.add(question)
+        db.session.commit()
+        return redirect(url_for('qna.qnalist'))
+    return render_template("/qna/FAQ_write.html", form=form)
 
 
 @bp.route('/qnalist')
@@ -42,8 +36,8 @@ def qnalist():
         question_list = question_list \
             .join(Member) \
             .outerjoin(sub_query, sub_query.c.question_no == Question.question_no) \
-            .filter(Question.ques_title.ilike(search) |  # 질문 제목
-                    Question.ques_con.ilike(search) |  # 질문 내용
+            .filter(Question.subject.ilike(search) |  # 질문 제목
+                    Question.content.ilike(search) |  # 질문 내용
                     Member.member_name.ilike(search) |  # 질문 작성자
                     sub_query.c.comment_con.ilike(search)   # 답변 내용
              ) \
@@ -53,5 +47,52 @@ def qnalist():
 
 @bp.route('/<int:question_no>/')
 def QnA(question_no):
+    form = AnswerForm()
     question = Question.query.get_or_404(question_no)
-    return render_template('qna/FAQ.html', question=question)
+    return render_template('qna/FAQ.html', question=question, form=form)
+
+@bp.route('/answerwrite/<int:question_no>', methods=('POST',))
+def answerwrite(question_no):
+    form = AnswerForm()
+    question = Question.query.get_or_404(question_no)
+    content = request.form['content']
+    if form.validate_on_submit():
+        answer = QuestionComment(content=content, comment_date=datetime.now(timezone('Asia/Seoul')), member_no=g.user.member_no)
+        question.questioncomment_set.append(answer)
+        db.session.commit()
+        return redirect(url_for('qna.QnA', question_no= question_no))
+    return render_template('qna/FAQ.html', question=question, form=form)
+
+
+@bp.route('/modify/<int:question_no>', methods=('GET', 'POST'))
+def modify(question_no):
+    question = Question.query.get_or_404(question_no)
+    if request.method == 'POST':  # POST 요청
+        form = QuestionForm()
+        if form.validate_on_submit():
+            form.populate_obj(question)
+            db.session.commit()
+            return redirect(url_for('qna.QnA', question_no=question_no))
+    else:  # GET 요청
+        form = QuestionForm(obj=question)
+    return render_template("/qna/FAQ_write.html", form=form)
+
+
+@bp.route('/answerdelete/<int:question_comment_no>')
+def answerdelete(question_comment_no):
+    answer = QuestionComment.query.get_or_404(question_comment_no)
+    question_no = answer.question.question_no
+    db.session.delete(answer)
+    db.session.commit()
+    return redirect(url_for('qna.QnA', question_no=question_no))
+
+@bp.route('/questiondelete/<int:question_no>')
+# @login_required
+def questiondelete(question_no):
+    question = Question.query.get_or_404(question_no)
+    # if g.user != question.member_no:
+    #     flash('삭제권한이 없습니다')
+    #     return redirect(url_for('qna.QnA', question_no=question_no))
+    db.session.delete(question)
+    db.session.commit()
+    return redirect(url_for('qna.qnalist'))

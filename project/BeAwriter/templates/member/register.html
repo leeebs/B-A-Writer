@@ -1,73 +1,49 @@
-{% extends 'base.html' %}
-{% block content %}
+        {% extends 'base.html' %}
+        {% block content %}
 
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>B a writer</title>
-        <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="static/assets/favicon.ico" />
-        <!-- Bootstrap icons-->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
-        <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="static/css/styles.css" rel="stylesheet" />
-        <!-- Font -->
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
-        <!-- font-family: 'Jua', sans-serif; -->
-    </head>
-<script>
-    function check_pw(){
+        <script>
+            function check_pw(){
 
-        var pw = document.getElementById('pw').value;
-        var SC = ["!","@","#","$","%"];
-        var check_SC = 0;
+                var pw = document.getElementById('pw').value;
+                var SC = ["!","@","#","$","%"];
+                var check_SC = 0;
 
-        if(pw.length < 6 || pw.length>16){
-            window.alert('비밀번호는 6글자 이상, 16글자 이하만 이용 가능합니다.');
-            document.getElementById('pw').value='';
-        }
-        for(var i=0;i<SC.length;i++){
-            if(pw.indexOf(SC[i]) != -1){
-                check_SC = 1;
+                if(pw.length < 6 || pw.length>16){
+                    window.alert('비밀번호는 6글자 이상, 16글자 이하만 이용 가능합니다.');
+                    document.getElementById('pw').value='';
+                }
+                for(var i=0;i<SC.length;i++){
+                    if(pw.indexOf(SC[i]) != -1){
+                        check_SC = 1;
+                    }
+                }
+                if(check_SC == 0){
+                    window.alert('!,@,#,$,% 의 특수문자가 들어가 있지 않습니다.')
+                    document.getElementById('pw').value='';
+                }
+
             }
-        }
-        if(check_SC == 0){
-            window.alert('!,@,#,$,% 의 특수문자가 들어가 있지 않습니다.')
-            document.getElementById('pw').value='';
-        }
 
-    }
-
-</script>
-    <body>
+        </script>
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-light bg-warning">
             <div class="container px-4 px-lg-5">
-                <a class="navbar-brand" href="#!" style="color:blueviolet; font-family: 'Jua', sans-serif;"><b>B a writer</b></a>
+                <a class="navbar-brand" href="{{url_for('main.index')}}" style="color:blueviolet; font-family: 'Jua', sans-serif;"><b>B a writer</b></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!" style="color:blueviolet; font-family: 'Jua', sans-serif;">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!" style="color:blueviolet; font-family: 'Jua', sans-serif;">QnA</a></li>
-                        <!-- <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#!">All Products</a></li>
-                                <li><hr class="dropdown-divider" /></li>
-                                <li><a class="dropdown-item" href="#!">Popular Items</a></li>
-                                <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
-                            </ul>
-                        </li> -->
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="{{url_for('main.index')}}" style="color:blueviolet; font-family: 'Jua', sans-serif;">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{url_for('qna.qnalist')}}" style="color:blueviolet; font-family: 'Jua', sans-serif;">QnA</a></li>
                     </ul>
-                    <form class="d-flex">
-                        <button class="btn btn-success" type="submit" style="font-family: 'Jua', sans-serif;">로그인</button>
-                    </form>
+
+                    {% if g.user %}
+                    <span class="mx-5" style="font-family: 'Jua', sans-serif;">{{ g.user.member_name }}님 안녕하세요!👋🏻</span>
+                    <a href="{{url_for('auth.logout')}}" class="btn btn-success" style="font-family: 'Jua', sans-serif;">로그아웃</a>
+                    {% else %}
+                    <a href="{{url_for('auth.login')}}" class="btn btn-success" style="font-family: 'Jua', sans-serif;">로그인</a>
+                    <a href="{{url_for('auth.register')}}" class="btn btn-success" style="margin-left: 15px; font-family: 'Jua', sans-serif;">회원가입</a>
+                    {% endif %}
+
                 </div>
             </div>
         </nav>
@@ -96,14 +72,5 @@
                 </div>
             </div>
         </header>
-        <!-- Footer-->
-        <footer class="py-3 bg-warning">
-            <div class="container"><p class="m-0 text-center text-white" style="font-family: 'Jua', sans-serif;">Copyright &copy; B a writer 2022</p></div>
-        </footer>
-        <!-- Bootstrap core JS-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Core theme JS-->
-        <script src="static/js/scripts.js"></script>
-    </body>
-</html>
-{% endblock %}
+        
+        {% endblock %}
