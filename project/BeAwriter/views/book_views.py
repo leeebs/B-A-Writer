@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, url_for, request, g, jsonify
+from flask import Blueprint, render_template, url_for, request, g, jsonify, current_app
 from werkzeug.utils import redirect, secure_filename
 import json
 from gtts import gTTS 
@@ -47,7 +47,6 @@ def save():
         book = {}        
     return jsonify(book)
 
-
 @bp.route('/cover/<int:book_no>/', methods=('GET','POST'))
 def cover(book_no):
     msg1 = None
@@ -77,7 +76,7 @@ def cover(book_no):
                 msg = ["파일을 넣고 제출 버튼을 눌러주세요.","생략 하시려면 생략하기 버튼을 눌러주세요."]
             else:
                 file_name = secure_filename(f.filename)
-                f.save(file_name)
+                f.save('../project/BeAwriter/static/image/'+ file_name)              
                 img = Image(book_no=sb.book_no,
                             img_path=file_name)
                 db.session.add(img)
@@ -114,7 +113,7 @@ def bookstar():
 @bp.route('/readbook/<int:book_no>/')
 def readbook(book_no):
     book = Storybook.query.get_or_404(book_no)
-    
+    image = Image.query.get_or_404(book_no)
     content = book.book_con
     DIVN = [220, 320, 420, 520, 620]
     storyArray = []
@@ -129,6 +128,7 @@ def readbook(book_no):
         story.append(content[a:len(content)])
         storyArray.append(story)
     
-    return render_template("/book/readbook.html", book=book, storyArray=storyArray, sa1=storyArray[1], sa2=storyArray[2])
+    return render_template("/book/readbook.html", book=book, storyArray=storyArray, sa1=storyArray[1], sa2=storyArray[2], image=image)
+   
 
 
