@@ -1,4 +1,4 @@
-        {% extends 'base.html' %}
+{% extends 'base.html' %}
         {% block content %}
 
         <!-- Navigation-->
@@ -41,7 +41,7 @@
                             <ul class="dropdown-menu" aria-labelledby="filterDropdown">
                                 <li><a class="dropdown-item" href="{{url_for('main.starlist')}}">별점순</a></li>
                                 <li><a class="dropdown-item" href="{{url_for('main.booklist')}}">오래된순</a></li>
-                                <li><a class="dropdown-item" href="{{url_for('main.booklist')}}">내가만든동화</a></li>
+                                <li><a class="dropdown-item" href="{{url_for('main.mylist')}}">내가만든동화</a></li>
                             </ul>
                         </li>
                     </div>
@@ -49,7 +49,7 @@
                 <div class="row">
                     <div class="col-1"></div>
                     <div class="col-10">
-                        <h3>선택한 필터명</h3>
+                        <h3>평점 높은 동화</h3>
                         <hr>
                     </div>
                 </div>
@@ -85,7 +85,7 @@
                                 <!-- Product actions-->
                                 <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                                     <div class="text-center"><a class="btn btn-outline-warning mt-auto"
-                                        {% if g.user %} href="{{url_for('book.make')}}"
+                                        {% if g.user %} href="{{url_for('book.readbook', book_no = list.book_no)}}"
                                         {% else %} href="{{url_for('auth.login')}}"
                                         {% endif %}>보러가기</a>
                                     </div>

@@ -4,6 +4,7 @@ import json
 from gtts import gTTS 
 from BeAwriter import db
 from BeAwriter.models import *
+from datetime import datetime
 
 bp = Blueprint('book', __name__, url_prefix='/book')
 
@@ -34,7 +35,8 @@ def save():
     if data['alldata']:
         sb = Storybook(book_con=data['alldata'],
                     member_no=g.user.member_no,
-                    book_title=temp)
+                    book_title=temp,
+                    book_date = datetime.now(timezone('Asia/Seoul')))
         db.session.add(sb)
         db.session.commit()
         book = { 'bookn' : sb.book_no,
