@@ -90,7 +90,8 @@ def cover(book_no):
 @bp.route('/bookstar/<int:book_no>', methods=('GET','POST'))
 def bookstar(book_no):
     error = None
-    
+    book = None
+
     if request.method == 'POST':
         try:
             VALUE = request.form['rating']
@@ -100,13 +101,15 @@ def bookstar(book_no):
             db.session.add(star)
             db.session.commit()
             
+            book = Storybook.query.get(book_no)
+            
         except:
             error = "평점을 매겨주세요!"
     
         if error is None:
             return redirect(url_for('main.index'))    
           
-    return render_template("/book/bookstar.html", error=error, book_no=book_no)
+    return render_template("/book/bookstar.html", error=error, book_no=book_no, book=book)
 
 
 @bp.route('/readbook/<int:book_no>/')

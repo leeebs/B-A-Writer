@@ -30,7 +30,7 @@
         <!-- Section-->
         <section class="py-5">
             <div class="container px-4 px-lg-5 mt-5">
-                <div class="row text-center"><h2>동화제목</h2></div>
+                <div class="row text-center"><h2>{{book.book_title}}</h2></div>
                 <div class="row my-5 text-center">
                     <form name="myform" id="myform" method="post" action="{{ url_for('book.bookstar', book_no=book_no) }}">
                         <fieldset>
