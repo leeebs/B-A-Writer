@@ -74,11 +74,12 @@ def cover(book_no):
             f = request.files['file']
             if not f:
                 msg = ["파일을 넣고 제출 버튼을 눌러주세요.","생략 하시려면 생략하기 버튼을 눌러주세요."]
-            else:
-                file_name = secure_filename(f.filename)
-                f.save('../project/BeAwriter/static/image/'+ file_name)              
+            else:                
+                extension=f.filename.split('.')[-1]
+                filename=f'{g.user.member_no}_{sb.book_no}.{extension}'
+                f.save('../project/BeAwriter/static/image/'+ filename)              
                 img = Image(book_no=sb.book_no,
-                            img_path=file_name)
+                            img_path=filename)
                 db.session.add(img)
                 db.session.commit()
 
