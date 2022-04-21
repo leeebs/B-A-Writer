@@ -34,15 +34,14 @@ def save():
     if data['alldata']:
         sb = Storybook(book_con=data['alldata'],
                     member_no=g.user.member_no,
-                    book_title=temp)
+                    book_title=temp,
+                    #speaker_path=sb.book_con
+                    )
         db.session.add(sb)
         db.session.commit()
         book = { 'bookn' : sb.book_no,
                 'con' : sb.book_con }
-        text = sb.book_con# 현재동화책 story content 불러오기
-        tts=gTTS(text=text, lang='ko')
-        filename=str(g.user.member_no)+'_'+str(sb.book_no)+'.mp3' #현재 동화책 제목으로 파일이름 지정하면될듯 f스트링으로 
-        tts.save('../project/BeAwriter/static/'+filename)
+
     else:
         book = {}        
     return jsonify(book)
@@ -116,8 +115,17 @@ def readbook(book_no):
     book = Storybook.query.get_or_404(book_no)
     
     content = book.book_con
+    #audio_path = book.speak_path
     DIVN = [220, 320, 420, 520, 620]
     storyArray = []
+
+    
+    tts=gTTS(text=content, lang='ko')
+    filename=str(g.user.member_no)+'_'+str(book.book_no)+'.mp3' #현재 동화책 제목으로 파일이름 지정하면될듯 f스트링으로 
+    tts.save('../project/BeAwriter/static/'+filename)
+    book.speak_path = filename
+    db.session.commit()
+
     for divn in DIVN:
         story = []
         a = 0
@@ -129,6 +137,6 @@ def readbook(book_no):
         story.append(content[a:len(content)])
         storyArray.append(story)
     
-    return render_template("/book/readbook.html", book=book, storyArray=storyArray, sa1=storyArray[1], sa2=storyArray[2])
+    return render_template("/book/readbook.html", book=book, storyArray=storyArray, sa1=storyArray[1], sa2=storyArray[2], audio_path=filename)
 
 
