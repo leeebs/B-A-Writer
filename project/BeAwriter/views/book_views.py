@@ -92,7 +92,8 @@ def cover(book_no):
 def bookstar(book_no):
     error = None
     book = None
-
+    isIt = None
+    
     if request.method == 'POST':
         try:
             VALUE = request.form['rating']
@@ -103,6 +104,15 @@ def bookstar(book_no):
             db.session.commit()
             
             book = Storybook.query.get(book_no)
+            
+            if book.avg == 0:
+                book.avg = VALUE
+            else:
+                book_avg = Rating.query.with_entities(Rating.book_no, func.avg(Rating.rating))\
+                                 .filter(book.book_no == Rating.book_no)\
+                                 .group_by(Rating.book_no).first()[1]
+                book.avg = book_avg
+            db.session.commit()
             
         except:
             error = "평점을 매겨주세요!"

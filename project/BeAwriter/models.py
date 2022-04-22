@@ -20,7 +20,7 @@ class Storybook(db.Model):
                           db.ForeignKey('member.member_no', ondelete='CASCADE'),
                           nullable=False)
     speak_path = db.Column(db.String(500), nullable=True)
-    avg = db.Column(db.Float, nullable=True)
+    avg = db.Column(db.Float, nullable=True, server_default='0')
     
 class Rating(db.Model):
     rating_no = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
