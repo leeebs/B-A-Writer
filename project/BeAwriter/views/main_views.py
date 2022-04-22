@@ -13,10 +13,8 @@ bp = Blueprint('main', __name__, url_prefix='/')
 
 @bp.route('/')
 def index():
-    rati = Rating.query.group_by(Rating.book_no).where(Rating.member_no == Member.member_no, Rating.book_no == Storybook.book_no)
-    num = rati.count()
-    sum = db.session.query(db.func.sum(rati.rating)).first()[0]
-    total = sum / num
+    rati = Rating.query.group_by(Rating.book_no).where(Rating.book_no==Storybook.book_no, Rating.member_no==Member.member_no)
+    total = db.session.query(db.func.sum(rati.rating)).first()[0] / db.session.query(db.func.count(rati)).first()
 
     page = request.args.get('page', type=int, default=1)
     book_list = Storybook.query.order_by(Storybook.book_date.desc())
