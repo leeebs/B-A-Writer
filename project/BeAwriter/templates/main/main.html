@@ -43,10 +43,6 @@
                     </div>
                 </div>
 
-                <!-- {% if book_list %}
-                <div class='text-left position-relative' style="left: 20px; top: 340px;"><a class="btn btn-outline-warning mt-auto"><<<</a></div>
-                {% endif %} -->
-
                 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                     {% if book_list %}
                         {% for smalllist in book_list.items %}
@@ -68,11 +64,9 @@
                                         <h5 class="fw-bolder" style="font-family: 'Gowun Batang', serif;">{{smalllist.book_title}}</h5>
                                         <!-- Product reviews-->
                                         <div class="d-flex justify-content-center small text-warning mb-2">
-                                            <div class="bi-star-fill"></div>
-                                            <div class="bi-star-fill"></div>
-                                            <div class="bi-star-fill"></div>
-                                            <div class="bi-star-fill"></div>
-                                            <div class="bi-star-fill"></div>
+                                            {% for i in rate %}
+                                                <div class="bi-star-fill"></div>
+                                            {% endfor %}
                                         </div>
                                         <!-- Product price-->
                                         <p style="font-family: 'Gowun Batang', serif;">
@@ -132,9 +126,12 @@
 
                 </div>
 
+<<<<<<< HEAD
                 <!-- {% if book_list %}
                 <div class='text-right position-relative' style="right: -1150px; bottom: 200px;"><a class="btn btn-outline-warning mt-auto">>>></a></div>
                 {% endif %} -->
+=======
+>>>>>>> 1c5c16406351f99e3b2dac4668c503cbbd10dcf5
 
                 <div class="row" style="font-family: 'Gowun Batang', serif;">
                     <div class="col-1"></div>
@@ -144,9 +141,12 @@
                     </div>
                 </div>
 
+<<<<<<< HEAD
                 <!-- {% if star_list %}
                 <div class='text-left position-relative' style="left: 20px; top: 250px;"><a class="btn btn-outline-warning mt-auto"><<<</a></div>
                 {% endif %} -->
+=======
+>>>>>>> 1c5c16406351f99e3b2dac4668c503cbbd10dcf5
 
                 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                     {% if star_list %}
@@ -156,11 +156,21 @@
                                 <!-- Sale badge-->
                                 <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">1st</div>
                                 <!-- Product image-->
+<<<<<<< HEAD
                                 {% if book_img_path[loop.index0] %}
                                 <img class="card-img-top" src="{{ url_for('static', filename='image/'+ book_img_path[loop.index0]) }}" alt="..." />
                                 {% else %}
                                 <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
                                 {% endif %}
+=======
+                                <div class="row mb-5 mt-2">
+                                    {% if image %}              
+                                    <img src="{{ url_for('static', filename='image/'+ image.img_path) }}" style="width:450px; height:300px; margin:auto;">
+                                    {% else %}                    
+                                    <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+                                    {% endif %}                  
+                                </div>
+>>>>>>> 1c5c16406351f99e3b2dac4668c503cbbd10dcf5
                                 <!-- Product details-->
                                 <div class="card-body p-4">
                                     <div class="text-center">
@@ -169,17 +179,19 @@
                                         <h5 class="fw-bolder" style="font-family: 'Gowun Batang', serif;">{{book_title[loop.index0]}}</h5>
                                         <!-- Product reviews-->
                                         <div class="d-flex justify-content-center small text-warning mb-2">
-                                            <div class="bi-star-fill"></div>
-                                            <div class="bi-star-fill"></div>
-                                            <div class="bi-star-fill"></div>
-                                            <div class="bi-star-fill"></div>
-                                            <div class="bi-star-fill"></div>
+                                            {% for i in smalllist.rating %}
+                                                <div class="bi-star-fill"></div>
+                                            {% endfor %}
                                         </div>
                                         <!-- Product price-->
                                         <p style="font-family: 'Gowun Batang', serif;">
                                             작가 : {{star_mem_name[loop.index0]}}
                                             <br>
+<<<<<<< HEAD
                                             {{book_date[loop.index0]}}
+=======
+                                            날짜 : {{book_date[loop.index0]|datetime}}
+>>>>>>> 1c5c16406351f99e3b2dac4668c503cbbd10dcf5
                                         </p>
                                     </div>
                                 </div>
@@ -233,10 +245,13 @@
 
                 </div>
 
+<<<<<<< HEAD
                 <!-- {% if star_list %}
                 <div class='text-right position-relative' style="right: -1150px; bottom: 200px;"><a class="btn btn-outline-warning mt-auto">>>></a></div>
                 {% endif %} -->
 
+=======
+>>>>>>> 1c5c16406351f99e3b2dac4668c503cbbd10dcf5
             </div>
             <div class="row">
                 <div class="col-10"></div>

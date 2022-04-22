@@ -11,7 +11,6 @@
                         <li class="nav-item"><a class="nav-link active" aria-current="page" href="{{url_for('main.index')}}" style="color:blueviolet; font-family: 'Jua', sans-serif;">Home</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{url_for('qna.qnalist')}}" style="color:blueviolet; font-family: 'Jua', sans-serif;">QnA</a></li>
                     </ul>
-
                     {% if g.user %}
                     <span class="mx-5" style="font-family: 'Jua', sans-serif;">{{ g.user.member_name }}님 안녕하세요!👋🏻</span>
                     <a href="{{url_for('auth.logout')}}" class="btn btn-success" style="font-family: 'Jua', sans-serif;">로그아웃</a>

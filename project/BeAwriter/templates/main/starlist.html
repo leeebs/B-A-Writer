@@ -54,31 +54,35 @@
                     </div>
                 </div>
                 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center mt-4">
-                    {% if book_list %}
-                        {% for list in book_list.items %}
+                    {% if star_list %}
+                        {% for list in star_list.items %}
                         <div class="col mb-5">
                             <div class="card h-100">
                                 <!-- Product image-->
-                                <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+
+                                    {% if image %}              
+                                    <img src="{{ url_for('static', filename='image/'+ image.img_path) }}" style="width:450px; height:300px; margin:auto;">
+                                    {% else %}                    
+                                    <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+                                    {% endif %}                  
+
                                 <!-- Product details-->
                                 <div class="card-body p-4">
                                     <div class="text-center">
                                         <!-- Product name-->
-                                        <h5 class="fw-bolder" style="font-family: 'Gowun Batang', serif;">{{list.book_no}}</h5>
-                                        <h5 class="fw-bolder" style="font-family: 'Gowun Batang', serif;">{{list.book_title}}</h5>
+                                        <h5 class="fw-bolder">{{book_no[loop.index0]}}</h5>
+                                        <h5 class="fw-bolder">{{book_title[loop.index0]}}</h5>
                                         <!-- Product reviews-->
                                         <div class="d-flex justify-content-center small text-warning mb-2">
-                                            <div class="bi-star-fill"></div>
-                                            <div class="bi-star-fill"></div>
-                                            <div class="bi-star-fill"></div>
-                                            <div class="bi-star-fill"></div>
-                                            <div class="bi-star-fill"></div>
+                                            {% for i in list.rating %}
+                                                <div class="bi-star-fill"></div>
+                                            {% endfor %}
                                         </div>
                                         <!-- Product price-->
                                         <p style="font-family: 'Gowun Batang', serif;">
                                             작가 : {{book_mem_name[loop.index0]}}
                                             <br>
-                                            {{list.book_date|datetime}}
+                                            출판 : {{book_date[loop.index0]|datetime}}
                                         </p>
                                     </div>
                                 </div>
