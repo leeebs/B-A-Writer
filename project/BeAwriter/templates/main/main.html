@@ -43,10 +43,6 @@
                     </div>
                 </div>
 
-                {% if book_list %}
-                <div class='text-left position-relative' style="left: 20px; top: 340px;"><a class="btn btn-outline-warning mt-auto"><<<</a></div>
-                {% endif %}
-
                 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                     {% if book_list %}
                         {% for smalllist in book_list.items %}
@@ -55,7 +51,13 @@
                                 <!-- Sale badge-->
                                 <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">1st</div>
                                 <!-- Product image-->
-                                <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+
+                                    {% if image %}              
+                                    <img src="{{ url_for('static', filename='image/'+ image.img_path) }}" style="width:450px; height:300px; margin:auto;">
+                                    {% else %}                    
+                                    <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+                                    {% endif %}                  
+ 
                                 <!-- Product details-->
                                 <div class="card-body p-4">
                                     <div class="text-center">
@@ -64,11 +66,9 @@
                                         <h5 class="fw-bolder">{{smalllist.book_title}}</h5>
                                         <!-- Product reviews-->
                                         <div class="d-flex justify-content-center small text-warning mb-2">
-                                            <div class="bi-star-fill"></div>
-                                            <div class="bi-star-fill"></div>
-                                            <div class="bi-star-fill"></div>
-                                            <div class="bi-star-fill"></div>
-                                            <div class="bi-star-fill"></div>
+                                            {% for i in rate %}
+                                                <div class="bi-star-fill"></div>
+                                            {% endfor %}
                                         </div>
                                         <!-- Product price-->
                                         <p>
@@ -128,9 +128,6 @@
 
                 </div>
 
-                {% if book_list %}
-                <div class='text-right position-relative' style="right: -1150px; bottom: 200px;"><a class="btn btn-outline-warning mt-auto">>>></a></div>
-                {% endif %}
 
                 <div class="row">
                     <div class="col-1"></div>
@@ -140,9 +137,6 @@
                     </div>
                 </div>
 
-                {% if star_list %}
-                <div class='text-left position-relative' style="left: 20px; top: 250px;"><a class="btn btn-outline-warning mt-auto"><<<</a></div>
-                {% endif %}
 
                 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                     {% if star_list %}
@@ -152,7 +146,13 @@
                                 <!-- Sale badge-->
                                 <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">1st</div>
                                 <!-- Product image-->
-                                <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+                                <div class="row mb-5 mt-2">
+                                    {% if image %}              
+                                    <img src="{{ url_for('static', filename='image/'+ image.img_path) }}" style="width:450px; height:300px; margin:auto;">
+                                    {% else %}                    
+                                    <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+                                    {% endif %}                  
+                                </div>
                                 <!-- Product details-->
                                 <div class="card-body p-4">
                                     <div class="text-center">
@@ -161,17 +161,15 @@
                                         <h5 class="fw-bolder">{{book_title[loop.index0]}}</h5>
                                         <!-- Product reviews-->
                                         <div class="d-flex justify-content-center small text-warning mb-2">
-                                            <div class="bi-star-fill"></div>
-                                            <div class="bi-star-fill"></div>
-                                            <div class="bi-star-fill"></div>
-                                            <div class="bi-star-fill"></div>
-                                            <div class="bi-star-fill"></div>
+                                            {% for i in smalllist.rating %}
+                                                <div class="bi-star-fill"></div>
+                                            {% endfor %}
                                         </div>
                                         <!-- Product price-->
                                         <p>
                                             작가 : {{star_mem_name[loop.index0]}}
                                             <br>
-                                            날짜 : {{book_date[loop.index0]}}
+                                            날짜 : {{book_date[loop.index0]|datetime}}
                                         </p>
                                     </div>
                                 </div>
@@ -224,10 +222,6 @@
                     {% endif %}
 
                 </div>
-
-                {% if star_list %}
-                <div class='text-right position-relative' style="right: -1150px; bottom: 200px;"><a class="btn btn-outline-warning mt-auto">>>></a></div>
-                {% endif %}
 
             </div>
             <div class="row">
