@@ -38,13 +38,13 @@
                 <div class="row" style="font-family: 'Gowun Batang', serif;">
                     <div class="col-1"></div>
                     <div class="col-10">
-                        <h3>최신순 모아보기</h3>
+                        <h3>최신 동화책</h3>
                         <hr>
                     </div>
                 </div>
 
                 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-                    {% if book_list %}
+                    {% if star_list %}
                         {% for smalllist in book_list.items %}
                         <div class="col mb-5">
                             <div class="card h-100">
@@ -63,16 +63,25 @@
                                         <h5 class="fw-bolder" style="font-family: 'Gowun Batang', serif;">{{smalllist.book_no}}</h5>
                                         <h5 class="fw-bolder" style="font-family: 'Gowun Batang', serif;">{{smalllist.book_title}}</h5>
                                         <!-- Product reviews-->
+                                        <!--
                                         <div class="d-flex justify-content-center small text-warning mb-2">
-                                            {% for i in rate %}
+                                            
+                                            {% for i in total %}
                                                 <div class="bi-star-fill"></div>
                                             {% endfor %}
+                                            
+                                            <p>
+                                                평균 평점 : {{rate}}
+                                            </p>
                                         </div>
+                                        -->
                                         <!-- Product price-->
                                         <p style="font-family: 'Gowun Batang', serif;">
                                             작가 : {{book_mem_name[loop.index0]}}
                                             <br>
-                                            {{smalllist.book_date|datetime}}
+                                            날짜 : {{smalllist.book_date|datetime}}
+                                            <br>
+                                            평균 평점 : {{book_rate[loop.index0]}}
                                         </p>
                                     </div>
                                 </div>
@@ -126,28 +135,15 @@
 
                 </div>
 
-<<<<<<< HEAD
-                <!-- {% if book_list %}
-                <div class='text-right position-relative' style="right: -1150px; bottom: 200px;"><a class="btn btn-outline-warning mt-auto">>>></a></div>
-                {% endif %} -->
-=======
->>>>>>> 1c5c16406351f99e3b2dac4668c503cbbd10dcf5
-
                 <div class="row" style="font-family: 'Gowun Batang', serif;">
+
+                <div class="row">
                     <div class="col-1"></div>
                     <div class="col-10">
-                        <h3>별점순 모아보기</h3>
+                        <h3>내가 별점 준 동화책</h3>
                         <hr>
                     </div>
                 </div>
-
-<<<<<<< HEAD
-                <!-- {% if star_list %}
-                <div class='text-left position-relative' style="left: 20px; top: 250px;"><a class="btn btn-outline-warning mt-auto"><<<</a></div>
-                {% endif %} -->
-=======
->>>>>>> 1c5c16406351f99e3b2dac4668c503cbbd10dcf5
-
                 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                     {% if star_list %}
                         {% for smalllist in star_list.items %}
@@ -156,42 +152,46 @@
                                 <!-- Sale badge-->
                                 <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">1st</div>
                                 <!-- Product image-->
-<<<<<<< HEAD
                                 {% if book_img_path[loop.index0] %}
                                 <img class="card-img-top" src="{{ url_for('static', filename='image/'+ book_img_path[loop.index0]) }}" alt="..." />
                                 {% else %}
                                 <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
                                 {% endif %}
-=======
                                 <div class="row mb-5 mt-2">
                                     {% if image %}              
                                     <img src="{{ url_for('static', filename='image/'+ image.img_path) }}" style="width:450px; height:300px; margin:auto;">
                                     {% else %}                    
                                     <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
                                     {% endif %}                  
+
                                 </div>
->>>>>>> 1c5c16406351f99e3b2dac4668c503cbbd10dcf5
+
                                 <!-- Product details-->
                                 <div class="card-body p-4">
                                     <div class="text-center">
                                         <!-- Product name-->
-                                        <h5 class="fw-bolder" style="font-family: 'Gowun Batang', serif;">{{smalllist.book_no}}</h5>
-                                        <h5 class="fw-bolder" style="font-family: 'Gowun Batang', serif;">{{book_title[loop.index0]}}</h5>
+                                        <h5 class="fw-bolder">{{smalllist.book_no}}</h5>
+                                        <h5 class="fw-bolder">{{star_book_title[loop.index0]}}</h5>
                                         <!-- Product reviews-->
+                                        <!--
                                         <div class="d-flex justify-content-center small text-warning mb-2">
-                                            {% for i in smalllist.rating %}
+                                            
+                                            {% for i in total %}
                                                 <div class="bi-star-fill"></div>
                                             {% endfor %}
+                                            
+                                            <p>
+                                                평균 평점 : {{rate}}
+                                            </p>
                                         </div>
+                                        -->
                                         <!-- Product price-->
                                         <p style="font-family: 'Gowun Batang', serif;">
                                             작가 : {{star_mem_name[loop.index0]}}
                                             <br>
-<<<<<<< HEAD
-                                            {{book_date[loop.index0]}}
-=======
-                                            날짜 : {{book_date[loop.index0]|datetime}}
->>>>>>> 1c5c16406351f99e3b2dac4668c503cbbd10dcf5
+                                            날짜 : {{star_book_date[loop.index0]|datetime}}
+                                            <br>
+                                            내가 준 점수 : {{star_rate[loop.index0]}}
                                         </p>
                                     </div>
                                 </div>
@@ -244,14 +244,6 @@
                     {% endif %}
 
                 </div>
-
-<<<<<<< HEAD
-                <!-- {% if star_list %}
-                <div class='text-right position-relative' style="right: -1150px; bottom: 200px;"><a class="btn btn-outline-warning mt-auto">>>></a></div>
-                {% endif %} -->
-
-=======
->>>>>>> 1c5c16406351f99e3b2dac4668c503cbbd10dcf5
             </div>
             <div class="row">
                 <div class="col-10"></div>

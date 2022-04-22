@@ -38,10 +38,10 @@
                     <div class="col-1 mb-3">
                         <li style="list-style:none;" class="dropdown">
                             <a class="dropdown-toggle btn btn-success" id="filterDropdown" href="#" style="font-family: 'Jua', sans-serif; color:#fff;" role="button" data-bs-toggle="dropdown" aria-expanded="false">정렬</a>
-                            <ul class="dropdown-menu" aria-labelledby="filterDropdown" style="font-family: 'Jua', sans-serif;">
-                                <li><a class="dropdown-item" href="{{url_for('main.starlist')}}">별점순</a></li>
-                                <li><a class="dropdown-item" href="{{url_for('main.datelist')}}">오래된순</a></li>
-                                <li><a class="dropdown-item" href="{{url_for('main.mylist')}}">내가만든동화</a></li>
+                            <ul class="dropdown-menu" aria-labelledby="filterDropdown">
+                                <li><a class="dropdown-item" href="{{url_for('main.starlist')}}">내가 별점 준 동화</a></li>
+                                <li><a class="dropdown-item" href="{{url_for('main.datelist')}}">오래된 동화</a></li>
+                                <li><a class="dropdown-item" href="{{url_for('main.mylist')}}">내가 만든 동화</a></li>
                             </ul>
                         </li>
                     </div>
@@ -70,21 +70,16 @@
                                 <div class="card-body p-4">
                                     <div class="text-center">
                                         <!-- Product name-->
-                                        <h5 class="fw-bolder" style="font-family: 'Gowun Batang', serif;">{{list.book_no}}</h5>
-                                        <h5 class="fw-bolder" style="font-family: 'Gowun Batang', serif;">{{list.book_title}}</h5>
-                                        <!-- Product reviews-->
-                                        <div class="d-flex justify-content-center small text-warning mb-2">
-                                            <div class="bi-star-fill"></div>
-                                            <div class="bi-star-fill"></div>
-                                            <div class="bi-star-fill"></div>
-                                            <div class="bi-star-fill"></div>
-                                            <div class="bi-star-fill"></div>
-                                        </div>
+                                        <h5 class="fw-bolder">{{list.book_no}}</h5>
+                                        <h5 class="fw-bolder">{{list.book_title}}</h5>
+                                        
                                         <!-- Product price-->
                                         <p style="font-family: 'Gowun Batang', serif;">
                                             작가 : {{book_mem_name[loop.index0]}}
                                             <br>
-                                            {{list.book_date|datetime}}
+                                            날짜 : {{list.book_date|datetime}}
+                                            <br>
+                                            평균 평점 : {{rate}}
                                         </p>
                                     </div>
                                 </div>
