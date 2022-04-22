@@ -20,16 +20,12 @@ def index():
     page = request.args.get('page', type=int, default=1)
     book_list = Storybook.query.order_by(Storybook.book_date.desc())
     book_mem_name = []
-    book_avg = []
 
     for book in book_list:
         member = Member.query.get(book.member_no)
         # rati = Rating.query.get(book.book_no)
         book_mem_name.append(member.member_name)
         # book_avg.append(db.session.query(func.avg(rati.rating)).group_by(rati.book_no).all())
-        book_avg = Rating.query.with_entities(Rating.book_no, func.avg(Rating.rating))\
-            .filter(book.book_no == Rating.book_no)\
-            .group_by(Rating.book_no).all()[0]
     book_list = book_list.paginate(page, per_page=3)
 
 
@@ -45,14 +41,11 @@ def index():
         star_mem_name.append(member.member_name)
         star_book_title.append(book.book_title)
         star_book_date.append(book.book_date)
-        star_avg = star.query.with_entities(func.avg(Rating.rating))\
-            .filter(book.book_no == star.book_no)\
-            .group_by(Rating.book_no).all()[0]
+        star_avg.append(book.avg)
 
     star_list = star_list.paginate(page, per_page=3)
 
-    return render_template('main/main.html', book_list=book_list, page = page, book_mem_name = book_mem_name, book_rate=book_avg,
-        star_list=star_list, star_mem_name=star_mem_name, star_book_title=star_book_title, star_book_date=star_book_date, star_rate=star_avg)
+    return render_template('main/main.html', book_list=book_list, page = page, book_mem_name = book_mem_name, star_list=star_list, star_mem_name=star_mem_name, star_book_title=star_book_title, star_book_date=star_book_date, star_rate=star_avg)
     # return render_template('main/main.html', star_list=star_list, star_mem_name=star_mem_name, star_book_title=star_book_title, star_book_date=star_book_date, star_rate=star_avg)
 
 # 기본 화면 _ 오래된 순으로 표시

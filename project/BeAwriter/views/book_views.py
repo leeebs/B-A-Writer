@@ -98,17 +98,24 @@ def bookstar(book_no):
                           book_no=book_no,
                           rating=int(VALUE))
             db.session.add(star)
+
+            book = Storybook.query.get(book_no)
+
+            if book.avg == 0:
+                book.avg = VALUE
+
+            else:
+                book_avg =db.session.query(func.avg(Rating.rating))\
+                    .join(Storybook)\
+                    .filter(Rating.book_no == book.book_no)
+                book.avg = book_avg
             db.session.commit()
             
         except:
             error = "평점을 매겨주세요!"
     
         if error is None:
-            star = Rating()
-            star.avg = Rating.query.with_entities(func.avg(Rating.rating))\
-            .filter(Storybook.book_no == Rating.book_no)\
-            .group_by(Rating.book_no).all()
-            return redirect(url_for('main.index'))    
+            return redirect(url_for('main.index'))
           
     return render_template("/book/bookstar.html", error=error, book_no=book_no)
 
