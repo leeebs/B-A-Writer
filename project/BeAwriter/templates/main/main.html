@@ -38,13 +38,13 @@
                 <div class="row">
                     <div class="col-1"></div>
                     <div class="col-10">
-                        <h3>최신순 모아보기</h3>
+                        <h3>최신 동화책</h3>
                         <hr>
                     </div>
                 </div>
 
                 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-                    {% if book_list %}
+                    {% if star_list %}
                         {% for smalllist in book_list.items %}
                         <div class="col mb-5">
                             <div class="card h-100">
@@ -65,16 +65,25 @@
                                         <h5 class="fw-bolder">{{smalllist.book_no}}</h5>
                                         <h5 class="fw-bolder">{{smalllist.book_title}}</h5>
                                         <!-- Product reviews-->
+                                        <!--
                                         <div class="d-flex justify-content-center small text-warning mb-2">
-                                            {% for i in rate %}
+                                            
+                                            {% for i in total %}
                                                 <div class="bi-star-fill"></div>
                                             {% endfor %}
+                                            
+                                            <p>
+                                                평균 평점 : {{rate}}
+                                            </p>
                                         </div>
+                                        -->
                                         <!-- Product price-->
                                         <p>
                                             작가 : {{book_mem_name[loop.index0]}}
                                             <br>
                                             날짜 : {{smalllist.book_date|datetime}}
+                                            <br>
+                                            평균 평점 : {{book_rate[loop.index0]}}
                                         </p>
                                     </div>
                                 </div>
@@ -127,17 +136,13 @@
                     {% endif %}
 
                 </div>
-
-
                 <div class="row">
                     <div class="col-1"></div>
                     <div class="col-10">
-                        <h3>별점순 모아보기</h3>
+                        <h3>내가 별점 준 동화책</h3>
                         <hr>
                     </div>
                 </div>
-
-
                 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                     {% if star_list %}
                         {% for smalllist in star_list.items %}
@@ -146,37 +151,46 @@
                                 <!-- Sale badge-->
                                 <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">1st</div>
                                 <!-- Product image-->
-                                <div class="row mb-5 mt-2">
+
                                     {% if image %}              
                                     <img src="{{ url_for('static', filename='image/'+ image.img_path) }}" style="width:450px; height:300px; margin:auto;">
                                     {% else %}                    
                                     <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
                                     {% endif %}                  
-                                </div>
+ 
                                 <!-- Product details-->
                                 <div class="card-body p-4">
                                     <div class="text-center">
                                         <!-- Product name-->
                                         <h5 class="fw-bolder">{{smalllist.book_no}}</h5>
-                                        <h5 class="fw-bolder">{{book_title[loop.index0]}}</h5>
+                                        <h5 class="fw-bolder">{{star_book_title[loop.index0]}}</h5>
                                         <!-- Product reviews-->
+                                        <!--
                                         <div class="d-flex justify-content-center small text-warning mb-2">
-                                            {% for i in smalllist.rating %}
+                                            
+                                            {% for i in total %}
                                                 <div class="bi-star-fill"></div>
                                             {% endfor %}
+                                            
+                                            <p>
+                                                평균 평점 : {{rate}}
+                                            </p>
                                         </div>
+                                        -->
                                         <!-- Product price-->
                                         <p>
                                             작가 : {{star_mem_name[loop.index0]}}
                                             <br>
-                                            날짜 : {{book_date[loop.index0]|datetime}}
+                                            날짜 : {{star_book_date[loop.index0]|datetime}}
+                                            <br>
+                                            내가 준 점수 : {{star_rate[loop.index0]}}
                                         </p>
                                     </div>
                                 </div>
                                 <!-- Product actions-->
                                 <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                                     <div class="text-center"><a class="btn btn-outline-warning mt-auto"
-                                        {% if g.user %}href="{{url_for('book.readbook', book_no = smalllist.book_no)}}"
+                                        {% if g.user %}href="{{ url_for('book.readbook', book_no=smalllist.book_no) }}"
                                         {% else %} href="{{url_for('auth.login')}}"
                                         {% endif %}>보러가기</a>
                                     </div>
@@ -222,7 +236,6 @@
                     {% endif %}
 
                 </div>
-
             </div>
             <div class="row">
                 <div class="col-10"></div>

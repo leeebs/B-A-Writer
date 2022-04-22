@@ -104,6 +104,10 @@ def bookstar(book_no):
             error = "평점을 매겨주세요!"
     
         if error is None:
+            star = Rating()
+            star.avg = Rating.query.with_entities(func.avg(Rating.rating))\
+            .filter(Storybook.book_no == Rating.book_no)\
+            .group_by(Rating.book_no).all()
             return redirect(url_for('main.index'))    
           
     return render_template("/book/bookstar.html", error=error, book_no=book_no)
