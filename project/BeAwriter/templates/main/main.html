@@ -27,7 +27,11 @@
         <header class="bg-warning py-5">
             <div class="container px-4 px-lg-5 my-5">
                 <div class="text-center text-white">
-                    <a class="display-4 fw-bolder nav-link" href="{{url_for('book.make')}}" style="color:blueviolet; font-family: 'Jua', sans-serif;">나도 만들기</a>
+                    <a class="display-4 fw-bolder nav-link" 
+                            {% if g.user %}href="{{ url_for('book.make')}}"
+                            {% else %} href="{{url_for('auth.login')}}"
+                            {% endif %}
+                        style="color:blueviolet; font-family: 'Jua', sans-serif;">나도 만들기</a>
                     <p class="lead fw-normal text-white mb-0" style="font-family: 'Jua', sans-serif;">상상의 나래를 펼쳐 보아요!</p>
                 </div>
             </div>
@@ -66,10 +70,10 @@
                                         <h5 class="fw-bolder">{{smalllist.book_title}}</h5>
                                         <!-- Product reviews-->
                                         <div class="d-flex justify-content-center small text-warning mb-2">
-                                            {% for _ in range(smalllist.avg | int) %}
+                                            {% for _ in range(book_rate[loop.index0] | int) %}
                                                 <div class="bi-star-fill"></div>
                                             {% endfor %}
-                                            ({{smalllist.rating}})
+                                            ({{book_rate[loop.index0]}})
                                         </div>                                       
                                         <!-- Product price-->
                                         <p style="font-family: 'Gowun Batang', serif;">
@@ -141,7 +145,7 @@
                                 <!-- Product actions-->
                                 <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                                     <div class="text-center"><a class="btn btn-outline-warning mt-auto"
-                                        {% if g.user %}href="{{ url_for('book.readbook', book_no=smalllist.book_no) }}"
+                                        {% if g.user %} href="{{ url_for('book.readbook', book_no=smalllist.book_no) }}"
                                         {% else %} href="{{url_for('auth.login')}}"
                                         {% endif %}>보러가기</a>
                                     </div>
