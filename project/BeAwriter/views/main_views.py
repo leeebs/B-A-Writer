@@ -27,6 +27,7 @@ def index():
     star_mem_name = []
     star_book_title=[]
     star_book_date=[]
+    star_rate=[]
     star_list = Rating.query.group_by(Rating.book_no)
     for star in star_list:
         member = Member.query.get(star.member_no)
@@ -34,11 +35,13 @@ def index():
         star_mem_name.append(member.member_name)
         star_book_title.append(book.book_title)
         star_book_date.append(book.book_date)
+        star_rate.append(book.avg)
 
     star_list = star_list.paginate(page, per_page=3)
 
-    return render_template('main/main.html', book_list=book_list, page = page, book_mem_name = book_mem_name, star_list=star_list, star_mem_name=star_mem_name, star_book_title=star_book_title, star_book_date=star_book_date)
-    # return render_template('main/main.html', star_list=star_list, star_mem_name=star_mem_name, star_book_title=star_book_title, star_book_date=star_book_date, star_rate=star_avg)
+    return render_template('main/main.html', book_list=book_list, page = page, book_mem_name = book_mem_name, 
+        star_list=star_list, star_mem_name=star_mem_name, star_book_title=star_book_title, star_book_date=star_book_date, star_rate=star_rate)
+   
 
 # 기본 화면 _ 오래된 순으로 표시
 @bp.route('/datelist')
