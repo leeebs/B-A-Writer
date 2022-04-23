@@ -45,8 +45,13 @@
                             <ul class="dropdown-menu" aria-labelledby="filterDropdown">
                                 <li><a class="dropdown-item" href="{{url_for('main.starlist')}}">상위 별점 동화</a></li>
                                 <li><a class="dropdown-item" href="{{url_for('main.datelist')}}">오래된 동화</a></li>
-                                <li><a class="dropdown-item" href="{{url_for('main.mylist')}}">내가 만든 동화</a></li>
-                                <li><a class="dropdown-item" href="{{url_for('main.mystarlist')}}">내가 별점 준 동화</a></li>
+                                <li><a class="dropdown-item" {% if g.user %}href="{{ url_for('main.mylist')}}"
+                                                            {% else %} href="{{url_for('auth.login')}}"
+                                                            {% endif %}>내가 만든 동화</a></li>
+                                <li><a class="dropdown-item" 
+                                    {% if g.user %}href="{{ url_for('main.mystarlist')}}"
+                                    {% else %} href="{{url_for('auth.login')}}"
+                                    {% endif %}>내가 별점 준 동화</a></li>
                             </ul>
                         </li>
                     </div>
