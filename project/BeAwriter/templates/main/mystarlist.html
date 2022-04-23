@@ -1,4 +1,4 @@
-        {% extends 'base.html' %}
+{% extends 'base.html' %}
         {% block content %}
 
         <!-- Navigation-->
@@ -11,7 +11,6 @@
                         <li class="nav-item"><a class="nav-link active" aria-current="page" href="{{url_for('main.index')}}" style="color:blueviolet; font-family: 'Jua', sans-serif;">Home</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{url_for('qna.qnalist')}}" style="color:blueviolet; font-family: 'Jua', sans-serif;">QnA</a></li>
                     </ul>
-
                     {% if g.user %}
                     <span class="mx-5" style="font-family: 'Jua', sans-serif;">{{ g.user.member_name }}님 안녕하세요!👋🏻</span>
                     <a href="{{url_for('auth.logout')}}" class="btn btn-success" style="font-family: 'Jua', sans-serif;">로그아웃</a>
@@ -19,12 +18,11 @@
                     <a href="{{url_for('auth.login')}}" class="btn btn-success" style="font-family: 'Jua', sans-serif;">로그인</a>
                     <a href="{{url_for('auth.register')}}" class="btn btn-success" style="margin-left: 15px; font-family: 'Jua', sans-serif;">회원가입</a>
                     {% endif %}
-                    
                 </div>
             </div>
         </nav>
         <!-- Header-->
-        <header class="bg-warning py-5">
+         <header class="bg-warning py-5">
             <div class="container px-4 px-lg-5 my-5">
                 <div class="text-center text-white">
                     <a class="display-4 fw-bolder nav-link" 
@@ -39,69 +37,28 @@
         <!-- Section-->
         <section class="py-5">
             <div class="container px-4 px-lg-5 mt-5">
-                <div class="row" style="font-family: 'Gowun Batang', serif;">
+                <div class="row">
+                    <div class="col-10"></div>
+                    <div class="col-1 mb-3">
+                        <li style="list-style:none;" class="dropdown">
+                            <a class="dropdown-toggle btn btn-success" id="filterDropdown" href="#" style="font-family: 'Jua', sans-serif; color:#fff;" role="button" data-bs-toggle="dropdown" aria-expanded="false">정렬</a>
+                            <ul class="dropdown-menu" aria-labelledby="filterDropdown">
+                                <li><a class="dropdown-item" href="{{url_for('main.starlist')}}">상위 별점 동화</a></li>
+                                <li><a class="dropdown-item" href="{{url_for('main.datelist')}}">오래된 동화</a></li>
+                                <li><a class="dropdown-item" href="{{url_for('main.mylist')}}">내가 만든 동화</a></li>
+                                <li><a class="dropdown-item" href="{{url_for('main.mystarlist')}}">내가 별점 준 동화</a></li>
+                            </ul>
+                        </li>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-1"></div>
                     <div class="col-10">
-                        <h3>최신 동화책</h3>
+                        <h3>내가 별점 준 동화</h3>
                         <hr>
                     </div>
                 </div>
-
-                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-                    {% if book_list %}
-                        {% for smalllist in book_list.items %}
-                        <div class="col mb-5">
-                            <div class="card h-100">
-                                <!-- Sale badge-->
-                                <!-- <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">1st</div> -->
-                                <!-- Product image-->
-                                {% if book_img_path[loop.index0] %}
-                                <img class="card-img-top" src="{{ url_for('static', filename='image/'+ book_img_path[loop.index0]) }}" alt="..." />
-                                {% else %}
-                                <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-                                {% endif %}
-                                <!-- Product details-->
-                                <div class="card-body p-4">
-                                    <div class="text-center mt-2">
-                                        <!-- Product name-->
-                                        <h5 class="fw-bolder" style="font-family: 'Gowun Batang', serif;">{{smalllist.book_no}}</h5>
-                                        <h5 class="fw-bolder" style="font-family: 'Gowun Batang', serif;">{{smalllist.book_title}}</h5>
-                                        <!-- Product reviews-->
-                                        <div class="d-flex justify-content-center small text-warning mb-2">
-                                            {% for _ in range(book_rate[loop.index0] | int) %}
-                                                <div class="bi-star-fill"></div>
-                                            {% endfor %}
-                                            ({{book_rate[loop.index0]}})
-                                        </div>                                       
-                                        <!-- Product price-->
-                                        <p style="font-family: 'Gowun Batang', serif;">
-                                            작가 : {{star_mem_name[loop.index0]}}
-                                            <br>
-                                            {{star_book_date[loop.index0]|datetime}}
-                                        </p>
-                                    </div>
-                                </div>
-                                <!-- Product actions-->
-                                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                    <div class="text-center" style="font-family: 'Jua', sans-serif;"><a class="btn btn-outline-warning mt-auto"
-                                        {% if g.user %}href="{{ url_for('book.readbook', book_no=smalllist.book_no) }}"
-                                        {% else %} href="{{url_for('auth.login')}}"
-                                        {% endif %}>보러가기</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        {% endfor %}
-                    {% endif %}
-                </div>
-                <div class="row" style="font-family: 'Gowun Batang', serif;">
-                    <div class="col-1"></div>
-                    <div class="col-10">
-                        <h3>내가 별점 준 동화책</h3>
-                        <hr>
-                    </div>
-                </div>
-                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center mt-4">
                     {% if star_list %}
                         {% for smalllist in star_list.items %}
                         <div class="col mb-5">
@@ -109,17 +66,19 @@
                                 <!-- Sale badge-->
                                 <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">1st</div>
                                 <!-- Product image-->
-                                {% if book_img_path[loop.index0] %}
-                                <img class="card-img-top" src="{{ url_for('static', filename='image/'+ book_img_path[loop.index0]) }}" alt="..." />
-                                {% else %}
-                                <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-                                {% endif %}
+
+                                    {% if image %}              
+                                    <img src="{{ url_for('static', filename='image/'+ image.img_path) }}" style="width:450px; height:300px; margin:auto;">
+                                    {% else %}                    
+                                    <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+                                    {% endif %}                  
+ 
                                 <!-- Product details-->
                                 <div class="card-body p-4">
                                     <div class="text-center">
                                         <!-- Product name-->
-                                        <h5 class="fw-bolder" style="font-family: 'Gowun Batang', serif;">{{smalllist.book_no}}</h5>
-                                        <h5 class="fw-bolder" style="font-family: 'Gowun Batang', serif;">{{star_book_title[loop.index0]}}</h5>
+                                        <h5 class="fw-bolder">{{smalllist.book_no}}</h5>
+                                        <h5 class="fw-bolder">{{star_book_title[loop.index0]}}</h5>
                                         <!-- Product reviews-->
                                         <div class="d-flex justify-content-center small text-warning mb-2">
                                             {% for _ in range(star_rate[loop.index0] | int) %}
@@ -139,8 +98,8 @@
                                 </div>
                                 <!-- Product actions-->
                                 <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                    <div class="text-center" style="font-family: 'Jua', sans-serif;"><a class="btn btn-outline-warning mt-auto"
-                                        {% if g.user %}href="{{url_for('book.readbook', book_no = smalllist.book_no)}}"
+                                    <div class="text-center"><a class="btn btn-outline-warning mt-auto"
+                                        {% if g.user %}href="{{ url_for('book.readbook', book_no=smalllist.book_no) }}"
                                         {% else %} href="{{url_for('auth.login')}}"
                                         {% endif %}>보러가기</a>
                                     </div>
@@ -149,15 +108,38 @@
                         </div>
                         {% endfor %}
                     {% endif %}
-
                 </div>
-            </div>
             <div class="row">
-                <div class="col-10"></div>
-                <div class="col-2 mb-3">
-                    <a href="{{url_for('main.datelist')}}" class="btn btn-success" style="font-family: 'Jua', sans-serif;">더 보러가기</a>    
-                </div>
+                <div class="col">
+					<ul class="pagination justify-content-center">
+                        <!-- 이전 페이지 -->
+                        {% if star_list.has_prev %}
+						<li class="page-item"><a class="page-link" data-page="?page={{star_list.prev_num}}" href ="javascript:void(0)" style="background-color:blueviolet; color:#fff; font-family: 'Jua', sans-serif;">Previous</a></li>
+						{% else %}
+                        <li class="page-item"><a class="page-link" tabindex="-1" aria-disabled="true" href="javascript:void(0)" style="background-color:blueviolet; color:#fff; font-family: 'Jua', sans-serif;">Previous</a></li>
+                        {% endif %}
+
+                        {% for page_num in star_list.iter_pages() %}
+                            {% if page_num %}
+                                {% if page_num != star_list.page %}
+                                <li class="page-item"><a class="page-link" href="?page={{page_num}}" style="background-color:blueviolet; color:#fff; font-family: 'Jua', sans-serif;">{{page_num}}</a></li>
+                                {% else %}
+                                <li class="page-item"><a class="page-link" href="javascript:void(0)" style="background-color:blueviolet; color:#fff; font-family: 'Jua', sans-serif;">{{page_num}}</a></li>
+                                {% endif %}
+                            {% else %}
+                            <li class="disabled"><a class="page-link" href="javascript:void(0)" style="background-color:blueviolet; color:#fff; font-family: 'Jua', sans-serif;">...</a></li>
+                            {% endif %}
+                        {% endfor %}
+
+                        <!-- 다음 페이지-->
+                        {% if star_list.has_next %}
+						<li class="page-item"><a class="page-link" data-page="?page={{star_list.next_num}}" href="javascript:void(0)" style="background-color:blueviolet; color:#fff; font-family: 'Jua', sans-serif;">Next</a></li>
+                        {% else %}
+                        <li class="page-item disabled"><a class="page-link" tabindex="-1" aria-disabled="true" href="javascript:void(0)" style="background-color:blueviolet; color:#fff; font-family: 'Jua', sans-serif;">Next</a></li>
+                        {% endif %}
+					</ul>
+				</div>
             </div>
         </section>
-        
+
         {% endblock %}

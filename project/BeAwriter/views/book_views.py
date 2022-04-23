@@ -4,6 +4,8 @@ import json
 from gtts import gTTS 
 from BeAwriter import db
 from BeAwriter.models import *
+from datetime import datetime
+from sqlalchemy import and_
 
 bp = Blueprint('book', __name__, url_prefix='/book')
 
@@ -35,8 +37,7 @@ def save():
         sb = Storybook(book_con=data['alldata'],
                     member_no=g.user.member_no,
                     book_title=temp,
-                    #speaker_path=sb.book_con
-                    )
+                    book_date = datetime.now(timezone('Asia/Seoul')))
         db.session.add(sb)
         db.session.commit()
         book = { 'bookn' : sb.book_no,
@@ -90,6 +91,8 @@ def cover(book_no):
 @bp.route('/bookstar/<int:book_no>', methods=('GET','POST'))
 def bookstar(book_no):
     error = None
+    book = None
+    isIt = None
     
     if request.method == 'POST':
         try:
@@ -98,15 +101,41 @@ def bookstar(book_no):
                           book_no=book_no,
                           rating=int(VALUE))
             db.session.add(star)
+
+            book = Storybook.query.get(book_no)
+
+            if book.avg == 0:
+                book.avg = VALUE
+
+            else:
+                book_avg =db.session.query(func.avg(Rating.rating))\
+                    .join(Storybook)\
+                    .filter(Rating.book_no == book.book_no)
+                book.avg = book_avg
+            db.session.commit()
+            
+            book = Storybook.query.get(book_no)
+            
+            if book.avg == 0:
+                book.avg = VALUE
+            else:
+                book_avg = Rating.query.with_entities(Rating.book_no, func.avg(Rating.rating))\
+                                 .filter(book.book_no == Rating.book_no)\
+                                 .group_by(Rating.book_no).first()[1]
+                book.avg = book_avg
             db.session.commit()
             
         except:
             error = "평점을 매겨주세요!"
     
         if error is None:
-            return redirect(url_for('main.index'))    
+            return redirect(url_for('main.index'))
+    
+    else:
+        isIt = Rating.query.filter(and_(Rating.member_no==g.user.member_no,
+                                        Rating.book_no==book_no)).first()
           
-    return render_template("/book/bookstar.html", error=error, book_no=book_no)
+    return render_template("/book/bookstar.html", error=error, book_no=book_no, book=book, isIt=isIt)
 
 
 @bp.route('/readbook/<int:book_no>/')
@@ -114,16 +143,15 @@ def readbook(book_no):
     book = Storybook.query.get_or_404(book_no)
     image = Image.query.get(book_no)
     content = book.book_con
-    #audio_path = book.speak_path
     DIVN = [220, 320, 420, 520, 620]
     storyArray = []
 
     
-    tts=gTTS(text=content, lang='ko')
-    filename=str(g.user.member_no)+'_'+str(book.book_no)+'.mp3' #현재 동화책 제목으로 파일이름 지정하면될듯 f스트링으로 
-    tts.save('../project/BeAwriter/static/'+filename)
-    book.speak_path = filename
-    db.session.commit()
+    # tts=gTTS(text=content, lang='ko')
+    # filename=str(g.user.member_no)+'_'+str(book.book_no)+'.mp3' #현재 동화책 제목으로 파일이름 지정하면될듯 f스트링으로 
+    # tts.save('../project/BeAwriter/static/'+filename)
+    # book.speak_path = filename
+    # db.session.commit()
 
     for divn in DIVN:
         story = []
@@ -136,7 +164,8 @@ def readbook(book_no):
         story.append(content[a:len(content)])
         storyArray.append(story)
     
-    return render_template("/book/readbook.html", book=book, storyArray=storyArray, sa1=storyArray[1], sa2=storyArray[2], image=image,  book_no=book_no, audio_path=filename)
+    # return render_template("/book/readbook.html", book=book, storyArray=storyArray, sa1=storyArray[1], sa2=storyArray[2], image=image,  book_no=book_no, audio_path=filename)
+    return render_template("/book/readbook.html", book=book, storyArray=storyArray, sa1=storyArray[1], sa2=storyArray[2], image=image,  book_no=book_no)
    
 
 
