@@ -56,7 +56,7 @@
                         </li>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row" style="font-family: 'Gowun Batang', serif;">
                     <div class="col-1"></div>
                     <div class="col-10">
                         <h3>내가 별점 준 동화</h3>
@@ -69,21 +69,19 @@
                         <div class="col mb-5">
                             <div class="card h-100">
                                 <!-- Sale badge-->
-                                <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">1st</div>
+                                <!-- <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">1st</div> -->
                                 <!-- Product image-->
-
                                 {% if book_img_path[loop.index0] %}
-                                <img class="card-img-top" src="{{ url_for('static', filename='image/'+ book_img_path[loop.index0]) }}" alt="..." />
+                                <img class="card-img-top" style="max-width:100%; height:180px" src="{{ url_for('static', filename='image/'+ book_img_path[loop.index0]) }}" alt="..." />
                                 {% else %}
-                                <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+                                <img class="card-img-top" style="max-width:100%; height:180px" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
                                 {% endif %}             
- 
                                 <!-- Product details-->
                                 <div class="card-body p-4">
                                     <div class="text-center">
                                         <!-- Product name-->
-                                        <h5 class="fw-bolder">{{smalllist.book_no}}</h5>
-                                        <h5 class="fw-bolder">{{star_book_title[loop.index0]}}</h5>
+                                        <h5 class="fw-bolder" style="font-family: 'Gowun Batang', serif;">{{smalllist.book_no}}</h5>
+                                        <h5 class="fw-bolder" style="font-family: 'Gowun Batang', serif;">{{star_book_title[loop.index0]}}</h5>
                                         <!-- Product reviews-->
                                         <div class="d-flex justify-content-center small text-warning mb-2">
                                             {% for _ in range(star_rate[loop.index0] | int) %}

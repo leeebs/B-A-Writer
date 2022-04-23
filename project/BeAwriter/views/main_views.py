@@ -40,7 +40,7 @@ def index():
     for star in star_list:
         member = Member.query.get(star.member_no)
         star_mem_name.append(member.member_name)
-        image = Image.query.get(book.book_no)
+        image = Image.query.get(star.book_no)
         if image:
             star_img_path.append(image.img_path)
         else:

@@ -71,17 +71,17 @@
                                 <!-- Product image-->
 
                                 {% if book_img_path[loop.index0] %}
-                                <img class="card-img-top" src="{{ url_for('static', filename='image/'+ book_img_path[loop.index0]) }}" alt="..." />
+                                <img class="card-img-top" style="max-width:100%; height:180px" src="{{ url_for('static', filename='image/'+ book_img_path[loop.index0]) }}" alt="..." />
                                 {% else %}
-                                <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+                                <img class="card-img-top" style="max-width:100%; height:180px" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
                                 {% endif %}            
 
                                 <!-- Product details-->
                                 <div class="card-body p-4">
                                     <div class="text-center">
                                         <!-- Product name-->
-                                        <h5 class="fw-bolder">{{list.book_no}}</h5>
-                                        <h5 class="fw-bolder">{{list.book_title}}</h5>
+                                        <h5 class="fw-bolder" style="font-family: 'Gowun Batang', serif;">{{list.book_no}}</h5>
+                                        <h5 class="fw-bolder" style="font-family: 'Gowun Batang', serif;">{{list.book_title}}</h5>
                                         <!-- Product reviews-->
                                         <div class="d-flex justify-content-center small text-warning mb-2">
                                             {% for _ in range(book_rate[loop.index0] | int) %}

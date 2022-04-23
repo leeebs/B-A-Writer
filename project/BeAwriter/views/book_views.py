@@ -145,15 +145,16 @@ def readbook(book_no):
     content = book.book_con
     DIVN = [220, 320, 420, 520, 620]
     storyArray = []
-
     
-    tts=gTTS(text=content, lang='ko')
     filename=str(book.book_no)+'.mp3'
-    audio_path = '../project/BeAwriter/static/audio/'+filename
-    tts.save(audio_path)
-    book.speak_path = audio_path
     audio = 'audio/'+filename
-    db.session.commit()
+    if not book.speak_path:
+        tts=gTTS(text=content, lang='ko')
+        audio_path = '../project/BeAwriter/static/audio/'+filename
+        tts.save(audio_path)
+        
+        book.speak_path = audio_path
+        db.session.commit()
 
     for divn in DIVN:
         story = []
