@@ -147,11 +147,13 @@ def readbook(book_no):
     storyArray = []
 
     
-    # tts=gTTS(text=content, lang='ko')
-    # filename=str(g.user.member_no)+'_'+str(book.book_no)+'.mp3' #현재 동화책 제목으로 파일이름 지정하면될듯 f스트링으로 
-    # tts.save('../project/BeAwriter/static/'+filename)
-    # book.speak_path = filename
-    # db.session.commit()
+    tts=gTTS(text=content, lang='ko')
+    filename=str(book.book_no)+'.mp3'
+    audio_path = '../project/BeAwriter/static/audio/'+filename
+    tts.save(audio_path)
+    book.speak_path = audio_path
+    audio = 'audio/'+filename
+    db.session.commit()
 
     for divn in DIVN:
         story = []
@@ -164,8 +166,7 @@ def readbook(book_no):
         story.append(content[a:len(content)])
         storyArray.append(story)
     
-    # return render_template("/book/readbook.html", book=book, storyArray=storyArray, sa1=storyArray[1], sa2=storyArray[2], image=image,  book_no=book_no, audio_path=filename)
-    return render_template("/book/readbook.html", book=book, storyArray=storyArray, sa1=storyArray[1], sa2=storyArray[2], image=image,  book_no=book_no)
-   
+    return render_template("/book/readbook.html", book=book, storyArray=storyArray, sa1=storyArray[1], sa2=storyArray[2], image=image,  book_no=book_no, audio=audio)
+    
 
 
