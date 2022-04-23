@@ -70,11 +70,11 @@
                             <div class="card h-100">
                                 <!-- Product image-->
 
-                                    {% if image %}              
-                                    <img src="{{ url_for('static', filename='image/'+ image.img_path) }}" style="width:450px; height:300px; margin:auto;">
-                                    {% else %}                    
-                                    <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-                                    {% endif %}                  
+                                {% if book_img_path[loop.index0] %}
+                                <img class="card-img-top" src="{{ url_for('static', filename='image/'+ book_img_path[loop.index0]) }}" alt="..." />
+                                {% else %}
+                                <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+                                {% endif %}            
 
                                 <!-- Product details-->
                                 <div class="card-body p-4">
