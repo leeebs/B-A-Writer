@@ -25,7 +25,11 @@
          <header class="bg-warning py-5">
             <div class="container px-4 px-lg-5 my-5">
                 <div class="text-center text-white">
-                    <a class="display-4 fw-bolder nav-link" href="{{url_for('book.make')}}" style="color:blueviolet; font-family: 'Jua', sans-serif;">나도 만들기</a>
+                    <a class="display-4 fw-bolder nav-link" 
+                            {% if g.user %}href="{{ url_for('book.make')}}"
+                            {% else %} href="{{url_for('auth.login')}}"
+                            {% endif %}
+                        style="color:blueviolet; font-family: 'Jua', sans-serif;">나도 만들기</a>
                     <p class="lead fw-normal text-white mb-0" style="font-family: 'Jua', sans-serif;">상상의 나래를 펼쳐 보아요!</p>
                 </div>
             </div>
@@ -39,9 +43,10 @@
                         <li style="list-style:none;" class="dropdown">
                             <a class="dropdown-toggle btn btn-success" id="filterDropdown" href="#" style="font-family: 'Jua', sans-serif; color:#fff;" role="button" data-bs-toggle="dropdown" aria-expanded="false">정렬</a>
                             <ul class="dropdown-menu" aria-labelledby="filterDropdown">
-                                <li><a class="dropdown-item" href="{{url_for('main.starlist')}}">내가 별점 준 동화</a></li>
+                                <li><a class="dropdown-item" href="{{url_for('main.starlist')}}">상위 별점 동화</a></li>
                                 <li><a class="dropdown-item" href="{{url_for('main.datelist')}}">오래된 동화</a></li>
                                 <li><a class="dropdown-item" href="{{url_for('main.mylist')}}">내가 만든 동화</a></li>
+                                <li><a class="dropdown-item" href="{{url_for('main.mystarlist')}}">내가 별점 준 동화</a></li>
                             </ul>
                         </li>
                     </div>
@@ -72,7 +77,13 @@
                                         <!-- Product name-->
                                         <h5 class="fw-bolder">{{list.book_no}}</h5>
                                         <h5 class="fw-bolder">{{list.book_title}}</h5>
-                                        
+                                        <!-- Product reviews-->
+                                        <div class="d-flex justify-content-center small text-warning mb-2">
+                                            {% for _ in range(book_rate[loop.index0] | int) %}
+                                                <div class="bi-star-fill"></div>
+                                            {% endfor %}
+                                            ({{book_rate[loop.index0]}})
+                                        </div>  
                                         <!-- Product price-->
                                         <p style="font-family: 'Gowun Batang', serif;">
                                             작가 : {{book_mem_name[loop.index0]}}
@@ -94,42 +105,6 @@
                             </div>
                         </div>
                         {% endfor %}
-                    {% else %}
-                    <div class="col mb-5">
-                        <div class="card h-100">
-                            <!-- Product image-->
-                            <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-                            <!-- Product details-->
-                            <div class="card-body p-4">
-                                <div class="text-center">
-                                    <!-- Product name-->
-                                    <h5 class="fw-bolder" style="font-family: 'Gowun Batang', serif;">없음</h5>
-                                    <!-- Product reviews-->
-                                    <div class="d-flex justify-content-center small text-warning mb-2">
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                    </div>
-                                    <!-- Product price-->
-                                    <p style="font-family: 'Gowun Batang', serif;">
-                                        제목 : 없음
-                                        <br>
-                                        작가 : 없음
-                                    </p>
-                                </div>
-                            </div>
-                            <!-- Product actions-->
-                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center" style="font-family: 'Jua', sans-serif;"><a class="btn btn-outline-warning mt-auto"
-                                    {% if g.user %} href="{{url_for('book.make')}}"
-                                    {% else %} href="{{url_for('auth.login')}}"
-                                    {% endif %}>나도 만들기</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     {% endif %}
                 </div>
             </div>

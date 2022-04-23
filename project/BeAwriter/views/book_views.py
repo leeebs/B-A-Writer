@@ -101,6 +101,17 @@ def bookstar(book_no):
                           book_no=book_no,
                           rating=int(VALUE))
             db.session.add(star)
+
+            book = Storybook.query.get(book_no)
+
+            if book.avg == 0:
+                book.avg = VALUE
+
+            else:
+                book_avg =db.session.query(func.avg(Rating.rating))\
+                    .join(Storybook)\
+                    .filter(Rating.book_no == book.book_no)
+                book.avg = book_avg
             db.session.commit()
             
             book = Storybook.query.get(book_no)
