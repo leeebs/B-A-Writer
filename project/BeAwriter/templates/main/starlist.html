@@ -39,7 +39,7 @@
                         <li style="list-style:none;" class="dropdown">
                             <a class="dropdown-toggle btn btn-success" id="filterDropdown" href="#" style="font-family: 'Jua', sans-serif; color:#fff;" role="button" data-bs-toggle="dropdown" aria-expanded="false">정렬</a>
                             <ul class="dropdown-menu" aria-labelledby="filterDropdown">
-                                <li><a class="dropdown-item" href="{{url_for('main.starlist')}}">내가 별점 준 동화</a></li>
+                                <li><a class="dropdown-item" href="{{url_for('main.starlist')}}">상위 별점 동화</a></li>
                                 <li><a class="dropdown-item" href="{{url_for('main.datelist')}}">오래된 동화</a></li>
                                 <li><a class="dropdown-item" href="{{url_for('main.mylist')}}">내가 만든 동화</a></li>
                             </ul>
@@ -49,13 +49,13 @@
                 <div class="row">
                     <div class="col-1"></div>
                     <div class="col-10">
-                        <h3>내가 별점 준 동화</h3>
+                        <h3>상위 별점 동화</h3>
                         <hr>
                     </div>
                 </div>
                 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center mt-4">
                     {% if star_list %}
-                        {% for smalllist in star_list.items %}
+                        {% for smalllist in star_list.items%}
                         <div class="col mb-5">
                             <div class="card h-100">
                                 <!-- Sale badge-->
@@ -73,15 +73,15 @@
                                     <div class="text-center">
                                         <!-- Product name-->
                                         <h5 class="fw-bolder">{{smalllist.book_no}}</h5>
-                                        <h5 class="fw-bolder">{{star_book_title}}</h5>
+                                        <h5 class="fw-bolder">{{smalllist.book_title}}</h5>
                                         
                                         <!-- Product price-->
                                         <p>
                                             작가 : {{star_mem_name[loop.index0]}}
                                             <br>
-                                            날짜 : {{star_book_date[loop.index0]|datetime}}
+                                            날짜 : {{smalllist.book_date|datetime}}
                                             <br>
-                                            평균 평점 : {{rate}}
+                                            평균 평점 : {{smalllist.avg}}
                                         </p>
                                     </div>
                                 </div>
@@ -95,6 +95,9 @@
                                 </div>
                             </div>
                         </div>
+                        {% if len(smalllist) %3 == 0 %} 
+                            <br>
+                        {% endif %}
                         {% endfor %}
 
                     {% else %}
