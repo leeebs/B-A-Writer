@@ -90,16 +90,16 @@
                                         <p style="font-family: 'Gowun Batang', serif;">
                                             작가 : {{star_mem_name[loop.index0]}}
                                             <br>
-                                            날짜 : {{star_book_date[loop.index0]|datetime}}
+                                            날짜 : {{smalllist.book_date|datetime}}
                                             <br>
-                                            평점 : {{rate[loop.index0]}}
+                                            평점 : {{star_rate[loop.index0]}}
                                         </p>
                                     </div>
                                 </div>
                                 <!-- Product actions-->
                                 <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                                     <div class="text-center" style="font-family: 'Jua', sans-serif;"><a class="btn btn-outline-warning mt-auto"
-                                        {% if g.user %} href="{{url_for('book.readbook', book_no = list.book_no)}}"
+                                        {% if g.user %} href="{{url_for('book.readbook', book_no = smalllist.book_no)}}"
                                         {% else %} href="{{url_for('auth.login')}}"
                                         {% endif %}>보러가기</a>
                                     </div>

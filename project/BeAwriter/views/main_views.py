@@ -35,7 +35,7 @@ def index():
         
         book_avg.append(book.avg)
             
-    book_list = book_list.paginate(page, per_page=3)
+    book_list = book_list.paginate(page, per_page=4)
     
     if g.user:
         star_mem_name = []
@@ -53,7 +53,7 @@ def index():
             star_book_date.append(book.book_date)
             star_avg.append(book.avg)
 
-        star_list = star_list.paginate(page, per_page=3)
+        star_list = star_list.paginate(page, per_page=4)
 
         return render_template('main/main.html', book_list=book_list, page = page, book_mem_name = book_mem_name, book_rate=book_avg,book_img_path=book_img_path,
             star_list=star_list, star_mem_name=star_mem_name, star_book_title=star_book_title, star_book_date=star_book_date, star_rate=star_avg)
@@ -74,7 +74,7 @@ def datelist():
         book_mem_name.append(member.member_name)
         book_avg.append(book.avg)
     book_list = book_list.paginate(page, per_page=9)
-    return render_template('main/datelist.html', book_list=book_list, page=page, book_mem_name=book_mem_name, rate=book_avg)
+    return render_template('main/datelist.html', book_list=book_list, page=page, book_mem_name=book_mem_name, book_rate=book_avg)
 
 # 별점
 @bp.route('/starlist')
@@ -93,6 +93,7 @@ def starlist():
         star_book_title.append(star.book_title)
         star_book_date.append(star.book_date)
         book_avg.append(star.avg)
+        star_rate.append(star.avg)
 
     star_list = star_list.paginate(page, per_page=12)
 

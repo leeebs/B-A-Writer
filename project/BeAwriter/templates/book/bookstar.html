@@ -25,7 +25,11 @@
         <header class="bg-warning py-5">
             <div class="container px-4 px-lg-5">
                 <div class="text-center text-white">
-                    <a class="display-4 fw-bolder nav-link" href="{{url_for('book.make')}}" style="color:blueviolet; font-family: 'Jua', sans-serif;">나도 만들기</a>
+                    <a class="display-4 fw-bolder nav-link" 
+                            {% if g.user %}href="{{ url_for('book.make')}}"
+                            {% else %} href="{{url_for('auth.login')}}"
+                            {% endif %}
+                        style="color:blueviolet; font-family: 'Jua', sans-serif;">나도 만들기</a>
                     <p class="lead fw-normal text-white mb-0" style="font-family: 'Jua', sans-serif;">상상의 나래를 펼쳐 보아요!</p>
                 </div>
             </div>
