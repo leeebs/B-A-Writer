@@ -40,7 +40,7 @@ def index():
     for star in star_list:
         member = Member.query.get(star.member_no)
         star_mem_name.append(member.member_name)
-        image = Image.query.get(book.book_no)
+        image = Image.query.get(star.book_no)
         if image:
             star_img_path.append(image.img_path)
         else:
@@ -50,7 +50,7 @@ def index():
     star_list = star_list.paginate(page, per_page=4)
 
     return render_template('main/main.html', book_list=book_list, page = page, book_mem_name = book_mem_name, book_avg=book_avg,book_img_path=book_img_path,
-        star_list=star_list, star_mem_name=star_mem_name, star_avg=star_avg)
+        star_list=star_list, star_mem_name=star_mem_name, star_avg=star_avg, star_img_path=star_img_path)
     
 # 기본 화면 _ 오래된 순으로 표시
 @bp.route('/datelist')
@@ -59,12 +59,19 @@ def datelist():
     book_list = Storybook.query.order_by(Storybook.book_date.asc())
     book_mem_name = []
     book_avg = []
+    book_img_path = []
+
     for book in book_list:
         member = Member.query.get(book.member_no)
         book_mem_name.append(member.member_name)
         book_avg.append(book.avg)
+        image = Image.query.get(book.book_no)
+        if image:
+            book_img_path.append(image.img_path)
+        else:
+            book_img_path.append(None)
     book_list = book_list.paginate(page, per_page=9)
-    return render_template('main/datelist.html', book_list=book_list, page=page, book_mem_name=book_mem_name, book_rate=book_avg)
+    return render_template('main/datelist.html', book_list=book_list, page=page, book_mem_name=book_mem_name, book_rate=book_avg, book_img_path=book_img_path)
 
 # 별점
 @bp.route('/starlist')
@@ -76,6 +83,7 @@ def starlist():
     star_book_title = []
     star_book_date = []
     book_avg = []
+    book_img_path=[]
 
     for star in star_list:
         member = Member.query.get(star.member_no)
@@ -84,10 +92,15 @@ def starlist():
         star_book_date.append(star.book_date)
         book_avg.append(star.avg)
         star_rate.append(star.avg)
+        image = Image.query.get(star.book_no)
+        if image:
+            book_img_path.append(image.img_path)
+        else:
+            book_img_path.append(None)
 
     star_list = star_list.paginate(page, per_page=12)
 
-    return render_template('main/starlist.html', star_list=star_list, star_mem_name=star_mem_name, star_rate=star_rate)
+    return render_template('main/starlist.html', star_list=star_list, star_mem_name=star_mem_name, star_rate=star_rate, book_img_path=book_img_path)
 
 # 내가 만든
 @bp.route('/mylist', methods=['GET', 'POST'])
@@ -96,13 +109,19 @@ def mylist():
     book_mem_name = []
     my_list = Storybook.query.filter(Storybook.member_no == g.user.member_no).order_by(Storybook.book_no.asc())
     book_rate = []
+    book_img_path = []
     for me in my_list:
         member = Member.query.get(me.member_no)
         book_mem_name.append(member.member_name)
         book_rate.append(me.avg)
+        image = Image.query.get(me.book_no)
+        if image:
+            book_img_path.append(image.img_path)
+        else:
+            book_img_path.append(None)
     my_list = my_list.paginate(page, per_page=12)
 
-    return render_template('main/mylist.html', my_list=my_list, page=page, book_mem_name=book_mem_name, book_rate=book_rate)
+    return render_template('main/mylist.html', my_list=my_list, page=page, book_mem_name=book_mem_name, book_rate=book_rate, book_img_path=book_img_path)
 
 
 # 내가 별점 준 전체
@@ -113,6 +132,7 @@ def mystarlist():
     star_book_title=[]
     star_book_date=[]
     star_rate=[]
+    book_img_path = []
     star_list = Rating.query.filter(Rating.member_no == g.user.member_no).order_by(Rating.book_no.asc())
     for star in star_list:
         member = Member.query.get(star.member_no)
@@ -121,7 +141,12 @@ def mystarlist():
         star_book_title.append(book.book_title)
         star_book_date.append(book.book_date)
         star_rate.append(book.avg)
+        image = Image.query.get(star.book_no)
+        if image:
+            book_img_path.append(image.img_path)
+        else:
+            book_img_path.append(None)
 
     star_list = star_list.paginate(page, per_page=12)
     return render_template('main/mystarlist.html', star_list=star_list, page=page, star_mem_name=star_mem_name, star_book_title=star_book_title,
-        star_book_date=star_book_date, star_rate=star_rate)
+        star_book_date=star_book_date, star_rate=star_rate, book_img_path=book_img_path)
