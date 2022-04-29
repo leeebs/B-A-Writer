@@ -27,25 +27,28 @@
         <section class="py-5">
             <div class="container px-4 px-lg-5 mt-4">
                 <div class="row mb-5">
-                    <div class="col-6 text-center">
-                        <form method="post" class="justify-content-center">
+                    <div class="col-6 text-center justify-content-center">
+                        <!-- <form method="post" class="justify-content-center"> -->
                             <h4 style="font-family: 'Jua', sans-serif;">동화를 써주세요!😊</h4>
                             <p style="font-size:large;"><textarea rows=5 name='writecontent' id='writecontent' placeholder="동화 내용 입력하기" style="width:100%; border:solid 5px; border-color:blueviolet;" autofocus></textarea></p>
                             <button id="btn1" class="btn btn-success mx-2" style="font-family: 'Jua', sans-serif;">동화에 바로 넣기</button>
-                            <button class="btn btn-success mx-2" style="font-family: 'Jua', sans-serif;">도움받기</button>
+                            <button id="btn4" class="btn btn-success mx-2" style="font-family: 'Jua', sans-serif;">도움받기</button>
                             {% if msg %}
                             <p class="my-3" style="color:rgba(220, 20, 60, 0.5); font-family: 'Jua', sans-serif;">{{msg}}</p>
                             {% endif %}
-                        </form>
+                        <!-- </form> -->
                     </div>
                     <div class="col-6 text-center justify-content-center">
                         <h4 style="font-family: 'Jua', sans-serif;">도움을 줄게요!😉</h4>
                         <p style="font-size:large;">
-                            <textarea rows=5 name=content placeholder="도움받기 버튼을 눌러주세요" style="width:100%; border:solid 5px; border-color:blueviolet;" readonly></textarea>
-                            <!-- 동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다동화다 -->
+                            <textarea rows=5 name='modelcontent' id='modelcontent' placeholder="도움받기 버튼을 눌러주세요" style="width:100%; border:solid 5px; border-color:blueviolet;"readonly></textarea>
                         </p>
-                        <button class="btn btn-success mx-2" type="submit" style="font-family: 'Jua', sans-serif;">동화에 넣기</button>
+                        <button id="btn3" class="btn btn-success mx-2" type="submit" style="font-family: 'Jua', sans-serif;">동화에 넣기</button>
                     </div>
+                </div>
+                <div id="loading" class="mt-2">
+                    <img src="{{url_for('static', filename='assets/loadingimg.gif')}}">
+                    <!-- <p style="font-family: 'Jua', sans-serif;">열심히 쓰고 있어요!</p> -->
                 </div>
                 <div class="row text-center justify-content-center">
                     <h4 style="font-family: 'Jua', sans-serif;">동화가 만들어지고 있어요 😎</h4>
@@ -85,6 +88,32 @@
                 return false;
             });
 
+            $("#btn3").click(function(){
+                var writecon = $("#modelcontent").val();
+                var makecon = $("#makedcontent").text();
+                var postdata = {
+                    'inputdata' : writecon,
+                    'origindata' : makecon
+                }
+                $.ajax({
+                    type: 'POST',
+                    url: "{{url_for('book.req')}}",
+                    data: JSON.stringify(postdata),
+                    dataType: "JSON",
+                    contentType: "application/json",
+                    success: function(data){
+                        $("#makedcontent").text(data['origindata']+' '+data['inputdata']);
+                        $("#modelcontent").val('');
+                        $("#modelcontent").attr("readonly",true);
+                        //$('#writecontent').focus();
+                    },
+                    error: function(request, status, error){
+                        alert('ajax error:['+status+']['+error+']')
+                    }
+                })
+                return false;
+            });
+
             $("#btn2").click(function(){
                 var allcon = $("#makedcontent").text();
                 var postdata = {
@@ -111,7 +140,37 @@
                 })
             });
 
+            $("#btn4").click(function(){
+                var writecon = $("#writecontent").val();
+                var postdata = {
+                    'inputdata' : writecon
+                }
+                $('#loading').show();
+                $.ajax({
+                    type: 'POST',
+                    url: "{{url_for('book.req_story')}}",
+                    data: JSON.stringify(postdata),
+                    dataType: "JSON",
+                    contentType: "application/json",
+                    success: function(output){
+                        $('#loading').hide();
+                        if (output['outputdata']!=undefined){
+                            $("#modelcontent").val(output['outputdata']);
+                            $("#writecontent").val('');
+                            $("#modelcontent").removeAttr("readonly");
+                        }
+                        else{
+                            alert('내용을 입력해주세요.')
+                        }
+                    },
+                    error: function(request, status, error){
+                        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+                    }
+                })
+            });
+
             $(document).ready(function() {
+                $('#loading').hide();
                 $("#writecontent").keydown(function(key) {
                     if (key.keyCode == 13) {
                         $("#btn1").click();

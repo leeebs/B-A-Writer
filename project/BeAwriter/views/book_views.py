@@ -7,6 +7,43 @@ from BeAwriter.models import *
 from datetime import datetime
 from sqlalchemy import and_
 
+from transformers import AutoModelWithLMHead, PreTrainedTokenizerFast
+from fastai.text.all import *
+from hanspell import spell_checker
+import re
+
+def preprocessing(res):
+    spelled_sent = spell_checker.check(res)
+    hanspell_sent = spelled_sent.checked
+    return hanspell_sent
+
+def outputmodel(input):
+    PATH = "../project/BeAwriter/static/storymodel/"
+    model = AutoModelWithLMHead.from_pretrained(PATH)
+    tokenizer = PreTrainedTokenizerFast.from_pretrained(PATH)
+    
+    device = "cpu"
+    model = model.to(device)
+
+    prompt_ids = tokenizer.encode(input)
+    inp = tensor(prompt_ids)[None].cpu()
+    preds = model.generate(inp,
+                            use_cache=True,
+                            pad_token_id=tokenizer.pad_token_id,
+                            eos_token_id=tokenizer.eos_token_id,
+                            bos_token_id=tokenizer.bos_token_id,
+                            max_length=30,
+                            do_sample=True,
+                            repetition_penalty=5.0,
+                            temperature=0.9,
+                            top_k=50,
+                            top_p=0.92
+                        ) 
+    output = tokenizer.decode(preds[0].cpu().numpy())
+    output = re.sub('[0-9:\n]','',output)
+    return output
+
+
 bp = Blueprint('book', __name__, url_prefix='/book')
 
 @bp.route('/', methods=('GET','POST'))
@@ -17,8 +54,14 @@ def make():
         content = request.form['writecontent']
         if not content:
             msg = "키워드나 짧은 문장을 작성해주세요!"
+        # else:
+        #     hanspell_sent = preprocessing(content)
+        #     res = outputmodel(hanspell_sent)
+        #     res = preprocessing(res)
+        #     return res
+        
         if msg is None:
-            return redirect(url_for('book.make')) #동화생성페이지로 수정
+            return render_template('book/makebook.html')
         
     return render_template('book/makebook.html', msg=msg)
 
@@ -28,6 +71,17 @@ def req():
     data = request.get_json()                 
     return jsonify(data)
 
+@bp.route('/req_story', methods=['POST'])
+def req_story():
+    data = request.get_json()
+    if data['inputdata']:
+        hanspell_sent = preprocessing(data['inputdata'])
+        res = outputmodel(hanspell_sent)
+        outputdata = preprocessing(res)
+        output = { 'outputdata' : outputdata }
+    else:
+        output = {}        
+    return jsonify(output)                
 
 @bp.route('/save', methods=['POST'])
 def save():
