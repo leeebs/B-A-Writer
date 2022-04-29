@@ -22,11 +22,11 @@ def outputmodel(input):
     model = AutoModelWithLMHead.from_pretrained(PATH)
     tokenizer = PreTrainedTokenizerFast.from_pretrained(PATH)
     
-    device = "cpu"
+    device = "cuda:0"
     model = model.to(device)
 
     prompt_ids = tokenizer.encode(input)
-    inp = tensor(prompt_ids)[None].cpu()
+    inp = tensor(prompt_ids)[None].cuda()
     preds = model.generate(inp,
                             use_cache=True,
                             pad_token_id=tokenizer.pad_token_id,
@@ -39,7 +39,7 @@ def outputmodel(input):
                             top_k=50,
                             top_p=0.92
                         ) 
-    output = tokenizer.decode(preds[0].cpu().numpy())
+    output = tokenizer.decode(preds[0].cuda().numpy())
     output = re.sub('[0-9:\n]','',output)
     return output
 
