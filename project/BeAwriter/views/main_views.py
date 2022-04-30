@@ -30,7 +30,7 @@ def index():
             book_img_path.append(None)
         book_avg.append(book.avg)
             
-    book_list = book_list.paginate(page, per_page=4)
+    book_list = book_list.paginate(page, per_page=3)
     
     star_mem_name = []
     star_img_path = []
@@ -47,7 +47,7 @@ def index():
             star_img_path.append(None)
         star_avg.append(star.avg)
 
-    star_list = star_list.paginate(page, per_page=4)
+    star_list = star_list.paginate(page, per_page=3)
 
     return render_template('main/main.html', book_list=book_list, page = page, book_mem_name = book_mem_name, book_avg=book_avg,book_img_path=book_img_path,
         star_list=star_list, star_mem_name=star_mem_name, star_avg=star_avg, star_img_path=star_img_path)
