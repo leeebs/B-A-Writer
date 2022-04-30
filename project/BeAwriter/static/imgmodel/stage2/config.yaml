@@ -1,0 +1,54 @@
+arch:
+  type: rq-transformer
+  ema: null
+  ar_hierarchy: null
+  vocab_size: 16384
+  block_size:
+  - 8
+  - 8
+  - 4
+  vocab_size_cond: 16384
+  block_size_cond: 32
+  embed_dim: 1280
+  input_embed_dim: 256
+  input_emb_vqvae: true
+  head_emb_vqvae: true
+  cumsum_depth_ctx: true
+  shared_tok_emb: true
+  embd_pdrop: 0.0
+  body:
+    n_layer: 26
+    block:
+      embed_dim: 1280
+      n_head: 20
+      mlp_bias: true
+      attn_bias: true
+      attn_pdrop: 0.0
+      resid_pdrop: 0.1
+      gelu: v1
+  head:
+    n_layer: 4
+    block:
+      embed_dim: 1280
+      n_head: 20
+      mlp_bias: true
+      attn_bias: true
+      attn_pdrop: 0.0
+      resid_pdrop: 0.1
+      gelu: v1
+  shared_cls_emb: true
+
+dataset:
+  dataset: cc3m
+  txt_tok_name: bpe16k_huggingface
+  vocab_size_txt: 16384
+  vocab_size: 16384
+  image_resolution: 256
+  context_length: 32
+  transforms: dalle-vqvae
+  bpe_dropout: 0.1
+
+sampling:
+  top_k: [1024]
+  top_p: [0.9]
+  temp: 1.0
