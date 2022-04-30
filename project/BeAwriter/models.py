@@ -41,7 +41,7 @@ class Image(db.Model):
     img_path = db.Column(db.String(500), nullable=False)
 
 class Pageimage(db.Model):
-    pageimage_no = db.Colunm(db.Integer, primary_key=True, autoincrement=True, nullable=True)
+    pageimage_no = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=True)
     book_no = db.Column(db.Integer,
                         db.ForeignKey('storybook.book_no', ondelete='CASCADE'),
                         nullable=True)
