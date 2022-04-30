@@ -225,6 +225,5 @@ def readbook(book_no):
     pageimage_list = Pageimage.query.filter(Pageimage.book_no==book_no).all()
     for pi in pageimage_list:
         pageimagepath_list.append(pi.pageimg_path)
-    print(pageimagepath_list)
     
     return render_template("/book/readbook.html", book=book, storyArray=storyArray, image=image,  book_no=book_no, audio=audio, pageimagepath_list=pageimagepath_list)
