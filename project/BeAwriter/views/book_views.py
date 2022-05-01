@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, url_for, request, g, jsonify, current_app
 from werkzeug.utils import redirect, secure_filename
 import json
-from gtts import gTTS 
+from gtts import gTTS
 from BeAwriter import db
 from BeAwriter.models import *
 from datetime import datetime
@@ -22,6 +22,7 @@ def outputmodel(input):
     model = AutoModelWithLMHead.from_pretrained(PATH)
     tokenizer = PreTrainedTokenizerFast.from_pretrained(PATH)
     
+    # device = "cpu"
     device = "cuda:0"
     model = model.to(device)
 
@@ -32,7 +33,7 @@ def outputmodel(input):
                             pad_token_id=tokenizer.pad_token_id,
                             eos_token_id=tokenizer.eos_token_id,
                             bos_token_id=tokenizer.bos_token_id,
-                            max_length=30,
+                            max_length=len(input)+30,
                             do_sample=True,
                             repetition_penalty=5.0,
                             temperature=0.9,
@@ -54,11 +55,6 @@ def make():
         content = request.form['writecontent']
         if not content:
             msg = "키워드나 짧은 문장을 작성해주세요!"
-        # else:
-        #     hanspell_sent = preprocessing(content)
-        #     res = outputmodel(hanspell_sent)
-        #     res = preprocessing(res)
-        #     return res
         
         if msg is None:
             return render_template('book/makebook.html')
@@ -88,7 +84,10 @@ def save():
     data = request.get_json()
     temp = "temp"
     if data['alldata']:
-        sb = Storybook(book_con=data['alldata'],
+        book_contents = data['alldata']
+        book_contents = re.sub('[.+]','.',book_contents)
+           
+        sb = Storybook(book_con=book_contents,
                     member_no=g.user.member_no,
                     book_title=temp,
                     book_date = datetime.now(timezone('Asia/Seoul')))
@@ -197,8 +196,13 @@ def readbook(book_no):
     book = Storybook.query.get_or_404(book_no)
     image = Image.query.get(book_no)
     content = book.book_con
-    DIVN = [220, 320, 420, 520, 620]
+    
+    DIVN = 3
+    split_content = []
+    temp = ''
     storyArray = []
+    
+    pageimagepath_list = []
     
     filename=str(book.book_no)+'.mp3'
     audio = 'audio/'+filename
@@ -210,19 +214,19 @@ def readbook(book_no):
         book.speak_path = audio_path
         db.session.commit()
 
-    for divn in DIVN:
-        story = []
-        a = 0
-        b = divn
-        for _ in range(len(content)//divn):
-            story.append(content[a:b])
-            a += divn
-            b += divn
-        story.append(content[a:len(content)])
-        storyArray.append(story)
+    split_content = content.split('.')
+    for idx, sentence in enumerate(split_content):
+        if idx%DIVN+1 < DIVN:
+            temp += sentence+'. '
+        else:
+            storyArray.append(temp)
+            temp = ''
+            
+    pageimage_list = Pageimage.query.filter(Pageimage.book_no==book_no).all()
+    for pi in pageimage_list:
+        pageimagepath_list.append(pi.pageimg_path)
     
-    return render_template("/book/readbook.html", book=book, storyArray=storyArray, sa1=storyArray[1], sa2=storyArray[2], image=image,  book_no=book_no, audio=audio)
-    
+    return render_template("/book/readbook.html", book=book, storyArray=storyArray, image=image, book_no=book_no, audio=audio, pageimagepath_list=pageimagepath_list)
 
 
 
@@ -280,3 +284,4 @@ def imgmodel():
     img.save(f'{text_prompts}_temp_{temperature}_top_k_{top_k}_top_p_{top_p}.jpg')
     # output = img
     # return output
+    
