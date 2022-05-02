@@ -21,6 +21,16 @@ import torch.nn.functional as F
 from transformers import AutoTokenizer
 from BeAwriter.static.imgmodel.notebook_utils import TextEncoder, load_model, get_generated_images_by_texts
 
+from krwordrank.sentence import summarize_with_sentences
+from krwordrank.word import summarize_with_keywords
+from krwordrank.word import KRWordRank
+from krwordrank.hangle import normalize
+import os
+import sys
+import urllib.request
+import requests
+from konlpy.tag import Okt
+
 def preprocessing(res):
     spelled_sent = spell_checker.check(res)
     hanspell_sent = spelled_sent.checked
@@ -49,9 +59,44 @@ def outputmodel(input):
                             top_k=50,
                             top_p=0.92
                         ) 
-    output = tokenizer.decode(preds[0].cuda().numpy())
+    output = tokenizer.decode(preds[0].cpu().numpy())
     output = re.sub('[0-9:\n]','',output)
     return output
+
+def keyword_translate(text):
+    data = {'text': text,
+            'source':'ko',
+            'target':'en'}
+    url = "https://openapi.naver.com/v1/papago/n2mt"
+    header = {
+        "X-Naver-Client-Id":'fQlpBVosQc_buCxfp_5V',
+        "X-Naver-Client-Secret":'CEurYwz6Kl'
+    }
+    response = requests.post(url, headers=header, data= data)
+    rescode = response.status_code
+    
+    if(rescode==200):
+        t_text = response.json()
+        return t_text['message']['result']['translatedText']
+    else:
+        return print("Error Code:" , rescode)
+
+def extraction_keyword(texts):
+    okt = Okt()
+    stopwords = {'너무', '정말', '진짜', '그만', '갑자', '바로', '그때', '정말루', '정말로', '옛날',
+                 '이제', '다시', '당장', '무슨', '분명', '어느', '우와', '하자', '이번에는', '깜짝', }
+    keywords, sents = summarize_with_sentences(
+                    [texts],
+                    stopwords = stopwords,
+                    diversity=0.5,
+                    min_count=1,
+                    num_keywords=10,
+                    num_keysents=10,
+    )
+    keywords = list(keywords.keys())
+    print(keywords)
+    keywords = [j[0] for i in keywords for j in okt.pos(i) if j[1] == 'Noun' and len(j[0]) > 1]
+    return keyword_translate(keywords[0])
 
 
 bp = Blueprint('book', __name__, url_prefix='/book')
@@ -103,20 +148,22 @@ def save():
         db.session.add(sb)
         db.session.commit()
         
-        # 이미지      
-        DIVN = 3
+        # 문장 분할   
+        DIVN = 5
         split_content = []
         temp = ''
         storyArray = []
         
         split_content = book_contents.split('.')
         for idx, sentence in enumerate(split_content):
-            if idx%DIVN+1 <= DIVN:
+            if idx%DIVN+1 < DIVN:
                 temp += sentence+'. '
             else:
+                temp += sentence+'. '
                 storyArray.append(temp)
                 temp = ''
-        
+        print('1 ok')
+        # 모델 로드
         vqvae_path = '../project/BeAwriter/static/imgmodel/stage1/model.pt'
         model_vqvae, _ = load_model(vqvae_path)
         
@@ -131,9 +178,14 @@ def save():
             
         text_encoder = TextEncoder(tokenizer_name=config.dataset.txt_tok_name, 
                             context_length=config.dataset.context_length)
-        
+        print('2 ok')
         for idx, sa in enumerate(storyArray):
-            text_prompts = 'cartoon of a dog' 
+            # 키워드
+            text_prompts = extraction_keyword(sa)
+            text_prompts = 'Cartoon of ' + text_prompts
+            print(text_prompts)
+
+            # 이미지
             num_samples = 1
             temperature= 0.8
             top_k=2048
@@ -150,7 +202,7 @@ def save():
                                             top_k,
                                             top_p,
                                             )
-            
+            print('3 ok')
             images = [pixels.cpu().numpy() * 0.5 + 0.5]
             images = torch.from_numpy(np.array(images))
             images = torch.clamp(images, 0, 1)
@@ -158,12 +210,13 @@ def save():
             img = Image.fromarray(np.uint8(grid.numpy().transpose([1,2,0])*255))
             IMGPATH = f'{sb.book_no}_{idx}.jpg'
             img.save('../project/BeAwriter/static/pageimage/'+IMGPATH)   
-        
+            print('4 ok')
             pi = Pageimage(book_no=sb.book_no,
                         pageper_img_no=idx,
                         pageimg_path=IMGPATH)
             db.session.add(pi)
             db.session.commit()
+            print('5 ok')
             
         book = { 'bookn' : sb.book_no,
                 'con' : sb.book_con }
@@ -203,7 +256,7 @@ def cover(book_no):
                 extension=f.filename.split('.')[-1]
                 filename=f'{g.user.member_no}_{sb.book_no}.{extension}'
                 f.save('../project/BeAwriter/static/image/'+ filename)              
-                img = Image(book_no=sb.book_no,
+                img = CoverImage(book_no=sb.book_no,
                             img_path=filename)
                 db.session.add(img)
                 db.session.commit()
@@ -266,10 +319,10 @@ def bookstar(book_no):
 @bp.route('/readbook/<int:book_no>/')
 def readbook(book_no):
     book = Storybook.query.get_or_404(book_no)
-    image = Image.query.get(book_no)
+    image = CoverImage.query.get(book_no)
     content = book.book_con
-    
-    DIVN = 3
+
+    DIVN = 5
     split_content = []
     temp = ''
     storyArray = []
@@ -288,29 +341,17 @@ def readbook(book_no):
 
     split_content = content.split('.')
     for idx, sentence in enumerate(split_content):
-        if idx%DIVN+1 <= DIVN:
+        if idx%DIVN+1 < DIVN:
             temp += sentence+'. '
         else:
+            temp += sentence+'. '
             storyArray.append(temp)
             temp = ''
-            
+
     pageimage_list = Pageimage.query.filter(Pageimage.book_no==book_no).all()
     for pi in pageimage_list:
         pageimagepath_list.append(pi.pageimg_path)
+    print(pageimagepath_list)
     
     return render_template("/book/readbook.html", book=book, storyArray=storyArray, image=image, book_no=book_no, audio=audio, pageimagepath_list=pageimagepath_list)
-
-
-
-
-
-
-# @bp.route('/img')
-# def imgmodel():
-
-    
-
-    
-# #     # output = img
-# #     # return output
     

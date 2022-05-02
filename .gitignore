@@ -4,6 +4,10 @@
 
 ### model ###
 *.bin
+*.pt
+*.mp3
+*.jpg
+*.png
 
 ### flask migration ###
 migrations/

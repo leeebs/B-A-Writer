@@ -11330,9 +11330,3 @@ textarea.form-control-lg {
   left: 50%;
   z-index: 100;
 }
-#loading > p {
-  position: absolute;
-  top: 57%;
-  left: 43%;
-  z-index: 101;
-}

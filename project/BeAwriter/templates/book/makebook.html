@@ -44,9 +44,8 @@
                         <button id="btn3" class="btn btn-success mx-2" type="submit" style="font-family: 'Jua', sans-serif;">동화에 넣기</button>
                     </div>
                 </div>
-                <div id="loading" class="mt-2">
+                <div id="loading" class="mt-2 text-center justify-content-center">
                     <img src="{{url_for('static', filename='assets/loadingimg.gif')}}">
-                    <!-- <p style="font-family: 'Jua', sans-serif;">열심히 쓰고 있어요!</p> -->
                 </div>
                 <div class="row text-center justify-content-center">
                     <h4 style="font-family: 'Jua', sans-serif;">동화가 만들어지고 있어요 😎</h4>
@@ -117,6 +116,7 @@
                 var postdata = {
                     'alldata' : allcon
                 }
+                $('#loading').show();
                 $.ajax({
                     type: 'POST',
                     url: "{{url_for('book.save')}}",
@@ -124,6 +124,7 @@
                     dataType: "JSON",
                     contentType: "application/json",
                     success: function(book){
+                        $('#loading').hide();
                         if (book['con']!=undefined){
                             var num = book['bookn'];
                             location.href="/book/cover/"+num

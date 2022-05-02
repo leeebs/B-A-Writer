@@ -23,7 +23,7 @@ def index():
     for book in book_list:
         member = Member.query.get(book.member_no)
         book_mem_name.append(member.member_name)
-        image = Image.query.get(book.book_no)
+        image = CoverImage.query.get(book.book_no)
         if image:
             book_img_path.append(image.img_path)
         else:
@@ -40,7 +40,7 @@ def index():
     for star in star_list:
         member = Member.query.get(star.member_no)
         star_mem_name.append(member.member_name)
-        image = Image.query.get(star.book_no)
+        image = CoverImage.query.get(star.book_no)
         if image:
             star_img_path.append(image.img_path)
         else:
@@ -65,7 +65,7 @@ def datelist():
         member = Member.query.get(book.member_no)
         book_mem_name.append(member.member_name)
         book_avg.append(book.avg)
-        image = Image.query.get(book.book_no)
+        image = CoverImage.query.get(book.book_no)
         if image:
             book_img_path.append(image.img_path)
         else:
@@ -92,7 +92,7 @@ def starlist():
         star_book_date.append(star.book_date)
         book_avg.append(star.avg)
         star_rate.append(star.avg)
-        image = Image.query.get(star.book_no)
+        image = CoverImage.query.get(star.book_no)
         if image:
             book_img_path.append(image.img_path)
         else:
@@ -114,7 +114,7 @@ def mylist():
         member = Member.query.get(me.member_no)
         book_mem_name.append(member.member_name)
         book_rate.append(me.avg)
-        image = Image.query.get(me.book_no)
+        image = CoverImage.query.get(me.book_no)
         if image:
             book_img_path.append(image.img_path)
         else:
@@ -141,7 +141,7 @@ def mystarlist():
         star_book_title.append(book.book_title)
         star_book_date.append(book.book_date)
         star_rate.append(book.avg)
-        image = Image.query.get(star.book_no)
+        image = CoverImage.query.get(star.book_no)
         if image:
             book_img_path.append(image.img_path)
         else:
