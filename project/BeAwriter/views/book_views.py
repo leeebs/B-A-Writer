@@ -162,6 +162,9 @@ def save():
                 temp += sentence+'. '
                 storyArray.append(temp)
                 temp = ''
+        
+        if temp:
+            storyArray.append(temp)
         print('1 ok')
         # 모델 로드
         vqvae_path = '../project/BeAwriter/static/imgmodel/stage1/model.pt'
@@ -179,6 +182,7 @@ def save():
         text_encoder = TextEncoder(tokenizer_name=config.dataset.txt_tok_name, 
                             context_length=config.dataset.context_length)
         print('2 ok')
+        print(storyArray)
         for idx, sa in enumerate(storyArray):
             # 키워드
             text_prompts = extraction_keyword(sa)
@@ -348,10 +352,14 @@ def readbook(book_no):
             storyArray.append(temp)
             temp = ''
 
+    if temp:
+            storyArray.append(temp)
+
     pageimage_list = Pageimage.query.filter(Pageimage.book_no==book_no).all()
     for pi in pageimage_list:
         pageimagepath_list.append(pi.pageimg_path)
     print(pageimagepath_list)
+    print(storyArray)
     
     return render_template("/book/readbook.html", book=book, storyArray=storyArray, image=image, book_no=book_no, audio=audio, pageimagepath_list=pageimagepath_list)
     
