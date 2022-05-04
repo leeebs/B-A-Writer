@@ -150,97 +150,45 @@
         })
     });
 
-            $("#btn3").click(function(){
-                var writecon = $("#modelcontent").val();
-                var makecon = $("#makedcontent").text();
-                var postdata = {
-                    'inputdata' : writecon,
-                    'origindata' : makecon
-                }
-                $.ajax({
-                    type: 'POST',
-                    url: "{{url_for('book.req')}}",
-                    data: JSON.stringify(postdata),
-                    dataType: "JSON",
-                    contentType: "application/json",
-                    success: function(data){
-                        $("#makedcontent").text(data['origindata']+' '+data['inputdata']);
-                        $("#modelcontent").val('');
-                        $("#modelcontent").attr("readonly",true);
-                        //$('#writecontent').focus();
-                    },
-                    error: function(request, status, error){
-                        alert('ajax error:['+status+']['+error+']')
-                    }
-                })
-                return false;
-            });
-
-            $("#btn2").click(function(){
-                var allcon = $("#makedcontent").text();
-                var postdata = {
-                    'alldata' : allcon
-                }
-                $('#loading').show();
-                $.ajax({
-                    type: 'POST',
-                    url: "{{url_for('book.save')}}",
-                    data: JSON.stringify(postdata),
-                    dataType: "JSON",
-                    contentType: "application/json",
-                    success: function(book){
-                        $('#loading').hide();
-                        if (book['con']!=undefined){
-                            var num = book['bookn'];
-                            location.href="/book/cover/"+num
-                        }
-                        else{
-                            alert('내용을 입력해주세요.')
-                        }
-                    },
-                    error: function(request, status, error){
-                        alert('ajax error:['+status+']['+error+']')
-                    }
-                })
-            });
-
-            $("#btn4").click(function(){
-                var writecon = $("#writecontent").val();
-                var postdata = {
-                    'inputdata' : writecon
-                }
-                $('#loading').show();
-                $.ajax({
-                    type: 'POST',
-                    url: "{{url_for('book.req_story')}}",
-                    data: JSON.stringify(postdata),
-                    dataType: "JSON",
-                    contentType: "application/json",
-                    success: function(output){
-                        $('#loading').hide();
-                        if (output['outputdata']!=undefined){
-                            $("#modelcontent").val(output['outputdata']);
-                            $("#writecontent").val('');
-                            $("#modelcontent").removeAttr("readonly");
-                        }
-                        else{
-                            alert('내용을 입력해주세요.')
-                        }
-                    },
-                    error: function(request, status, error){
-                        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-                    }
-                })
-            });
-
-            $(document).ready(function() {
+    $("#btn4").click(function(){
+        var writecon = $("#writecontent").val();
+        var postdata = {
+            'inputdata' : writecon
+        }
+        $('#loading').show();
+        $.ajax({
+            type: 'POST',
+            url: "{{url_for('book.req_story')}}",
+            data: JSON.stringify(postdata),
+            dataType: "JSON",
+            contentType: "application/json",
+            success: function(output){
                 $('#loading').hide();
-                $("#writecontent").keydown(function(key) {
-                    if (key.keyCode == 13) {
-                        $("#btn1").click();
-                    }
-                });
-            });
-        </script>
+                if (output['outputdata']!=undefined){
+                    $("#modelcontent").val(output['outputdata']);
+                    $("#writecontent").val('');
+                    $("#modelcontent").removeAttr("readonly");
+                }
+                else{
+                    alert('내용을 입력해주세요.')
+                }
+            },
+            error: function(request, status, error){
+                alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+            }
+        })
+    });
+
+    $(document).ready(function() {
+        $('#loading').hide();
+        $("#writecontent").keydown(function(key) {
+            if (key.keyCode == 13) {
+                $("#btn1").click();
+            }
+        });
+    });
+</script>
+
+{% endblock %}
         
         {% endblock %}
