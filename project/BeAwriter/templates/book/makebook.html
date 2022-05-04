@@ -1,5 +1,5 @@
-{% extends 'base.html' %}
-{% block content %}
+        {% extends 'base.html' %}
+        {% block content %}
 
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-light bg-warning">
@@ -20,19 +20,15 @@
                     <a href="{{url_for('auth.register')}}" class="btn btn-success" style="margin-left: 15px; font-family: 'Jua', sans-serif;">회원가입</a>
                     {% endif %}
 
-        </div>
-    </div>
-</nav>
-<!-- Section-->
-<section class="py-5">
-    <div class="container px-4 px-lg-5 mt-4">
-        
+                </div>
+            </div>
+        </nav>
         <!-- Section-->
         <section class="py-5">
             <div class="container px-4 px-lg-5 mt-4">
                 <div class="row mb-5">
+                    <h4 style="font-family: 'Jua', sans-serif;" class="text-center">⭐한 줄이 끝나면 꼭 마침표(.)를 넣어주세요!⭐</h4>
                     <div class="col-6 text-center justify-content-center">
-                    <br>
                         <h4 style="font-family: 'Jua', sans-serif;">동화를 써주세요!😊</h4>
                         <p style="font-size:large;"><textarea rows=5 name='writecontent' id='writecontent' placeholder="동화 내용 입력하기" style="width:100%; border:solid 5px; border-color:blueviolet;" autofocus></textarea></p>
                         <button id="btn1" class="btn btn-success mx-2" style="font-family: 'Jua', sans-serif;">동화에 바로 넣기</button>
@@ -42,8 +38,7 @@
                         {% endif %}
                     </div>
                     <div class="col-6 text-center justify-content-center">
-                        <h4 style="font-family: 'Jua', sans-serif;">도움을 줄게요!😉<br>
-                            ⭐한 줄이 끝나면 꼭 마침표(.)를 넣어주세요!⭐</h4>
+                        <h4 style="font-family: 'Jua', sans-serif;">도움을 줄게요!😉</h4>
                         <p style="font-size:large;">
                             <textarea rows=5 name='modelcontent' id='modelcontent' placeholder="도움받기 버튼을 눌러주세요" style="width:100%; border:solid 5px; border-color:blueviolet;"readonly></textarea>
                         </p>
@@ -62,131 +57,129 @@
                 <div class="text-center my-3">
                     <button id="btn2" class="btn btn-success" style="font-family: 'Jua', sans-serif;">완성하기</button>
                 </div>
+                <div id="loading" class="mt-2 text-center justify-content-center">
+                    <img src="{{url_for('static', filename='assets/loadingimg.gif')}}">
+                </div>
             </div>
-        </div>
-        <div id="loading" class="mt-2 text-center justify-content-center">
-            <img src="{{url_for('static', filename='assets/loadingimg.gif')}}">
-        </div>
-    </div>
-</section>
+        </section>
 
-<script>
-    $("#btn1").click(function(){
-        var writecon = $("#writecontent").val();
-        var makecon = $("#makedcontent").text();
-        var postdata = {
-            'inputdata' : writecon,
-            'origindata' : makecon
-        }
-        $.ajax({
-            type: 'POST',
-            url: "{{url_for('book.req')}}",
-            data: JSON.stringify(postdata),
-            dataType: "JSON",
-            contentType: "application/json",
-            success: function(data){
-                $("#makedcontent").text(data['origindata']+' '+data['inputdata']);
-                $("#writecontent").val('');
-                $('#writecontent').focus();
-            },
-            error: function(request, status, error){
-                alert('ajax error:['+status+']['+error+']')
-            }
-        })
-        return false;
-    });
+        <script>
+            $("#btn1").click(function(){
+                var writecon = $("#writecontent").val();
+                var makecon = $("#makedcontent").text();
+                var postdata = {
+                    'inputdata' : writecon,
+                    'origindata' : makecon
+                }
+                $.ajax({
+                    type: 'POST',
+                    url: "{{url_for('book.req')}}",
+                    data: JSON.stringify(postdata),
+                    dataType: "JSON",
+                    contentType: "application/json",
+                    success: function(data){
+                        $("#makedcontent").text(data['origindata']+' '+data['inputdata']);
+                        $("#writecontent").val('');
+                        $('#writecontent').focus();
+                    },
+                    error: function(request, status, error){
+                        alert('ajax error:['+status+']['+error+']')
+                    }
+                })
+                return false;
+            });
 
-    $("#btn3").click(function(){
-        var writecon = $("#modelcontent").val();
-        var makecon = $("#makedcontent").text();
-        var postdata = {
-            'inputdata' : writecon,
-            'origindata' : makecon
-        }
-        $.ajax({
-            type: 'POST',
-            url: "{{url_for('book.req')}}",
-            data: JSON.stringify(postdata),
-            dataType: "JSON",
-            contentType: "application/json",
-            success: function(data){
-                $("#makedcontent").text(data['origindata']+' '+data['inputdata']);
-                $("#modelcontent").val('');
-                $("#modelcontent").attr("readonly",true);
-                //$('#writecontent').focus();
-            },
-            error: function(request, status, error){
-                alert('ajax error:['+status+']['+error+']')
-            }
-        })
-        return false;
-    });
+            $("#btn3").click(function(){
+                var writecon = $("#modelcontent").val();
+                var makecon = $("#makedcontent").text();
+                var postdata = {
+                    'inputdata' : writecon,
+                    'origindata' : makecon
+                }
+                $.ajax({
+                    type: 'POST',
+                    url: "{{url_for('book.req')}}",
+                    data: JSON.stringify(postdata),
+                    dataType: "JSON",
+                    contentType: "application/json",
+                    success: function(data){
+                        $("#makedcontent").text(data['origindata']+' '+data['inputdata']);
+                        $("#modelcontent").val('');
+                        $("#modelcontent").attr("readonly",true);
+                        //$('#writecontent').focus();
+                    },
+                    error: function(request, status, error){
+                        alert('ajax error:['+status+']['+error+']')
+                    }
+                })
+                return false;
+            });
 
-    $("#btn2").click(function(){
-        var allcon = $("#makedcontent").text();
-        var postdata = {
-            'alldata' : allcon
-        }
-        $('#loading').show();
-        $.ajax({
-            type: 'POST',
-            url: "{{url_for('book.save')}}",
-            data: JSON.stringify(postdata),
-            dataType: "JSON",
-            contentType: "application/json",
-            success: function(book){
+            $("#btn2").click(function(){
+                var allcon = $("#makedcontent").text();
+                var postdata = {
+                    'alldata' : allcon
+                }
+                $('#loading').show();
+                $.ajax({
+                    type: 'POST',
+                    url: "{{url_for('book.save')}}",
+                    data: JSON.stringify(postdata),
+                    dataType: "JSON",
+                    contentType: "application/json",
+                    success: function(book){
+                        $('#loading').hide();
+                        if (book['con']!=undefined){
+                            var num = book['bookn'];
+                            location.href="/book/cover/"+num
+                        }
+                        else{
+                            alert('내용을 확인해주세요.')
+                        }
+                    },
+                    error: function(request, status, error){
+                        alert('ajax error:['+status+']['+error+']')
+                    }
+                })
+            });
+
+            $("#btn4").click(function(){
+                var writecon = $("#writecontent").val();
+                var postdata = {
+                    'inputdata' : writecon
+                }
+                $('#loading').show();
+                $.ajax({
+                    type: 'POST',
+                    url: "{{url_for('book.req_story')}}",
+                    data: JSON.stringify(postdata),
+                    dataType: "JSON",
+                    contentType: "application/json",
+                    success: function(output){
+                        $('#loading').hide();
+                        if (output['outputdata']!=undefined){
+                            $("#modelcontent").val(output['outputdata']);
+                            $("#writecontent").val('');
+                            $("#modelcontent").removeAttr("readonly");
+                        }
+                        else{
+                            alert('내용을 입력해주세요.')
+                        }
+                    },
+                    error: function(request, status, error){
+                        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+                    }
+                })
+            });
+
+            $(document).ready(function() {
                 $('#loading').hide();
-                if (book['con']!=undefined){
-                    var num = book['bookn'];
-                    location.href="/book/cover/"+num
-                }
-                else{
-                    alert('내용을 입력해주세요.')
-                }
-            },
-            error: function(request, status, error){
-                alert('ajax error:['+status+']['+error+']')
-            }
-        })
-    });
-
-    $("#btn4").click(function(){
-        var writecon = $("#writecontent").val();
-        var postdata = {
-            'inputdata' : writecon
-        }
-        $('#loading').show();
-        $.ajax({
-            type: 'POST',
-            url: "{{url_for('book.req_story')}}",
-            data: JSON.stringify(postdata),
-            dataType: "JSON",
-            contentType: "application/json",
-            success: function(output){
-                $('#loading').hide();
-                if (output['outputdata']!=undefined){
-                    $("#modelcontent").val(output['outputdata']);
-                    $("#writecontent").val('');
-                    $("#modelcontent").removeAttr("readonly");
-                }
-                else{
-                    alert('내용을 입력해주세요.')
-                }
-            },
-            error: function(request, status, error){
-                alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-            }
-        })
-    });
-
-    $(document).ready(function() {
-        $('#loading').hide();
-        $("#writecontent").keydown(function(key) {
-            if (key.keyCode == 13) {
-                $("#btn1").click();
-            }
-        });
-    });
-</script>
-
-{% endblock %}
+                $("#writecontent").keydown(function(key) {
+                    if (key.keyCode == 13) {
+                        $("#btn1").click();
+                    }
+                });
+            });
+        </script>
+        
+        {% endblock %}
