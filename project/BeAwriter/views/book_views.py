@@ -156,13 +156,13 @@ def save():
         
         split_content = book_contents.split('.')
         for idx, sentence in enumerate(split_content):
-            if idx%DIVN+1 < DIVN:
-                temp += sentence+'. '
-            else:
-                temp += sentence+'. '
-                storyArray.append(temp)
-                temp = ''
-        
+            if sentence:
+                if idx%DIVN+1 < DIVN:
+                    temp += sentence+'. '
+                else:
+                    temp += sentence+'. '
+                    storyArray.append(temp)
+                    temp = ''
         if temp:
             storyArray.append(temp)
         print('1 ok')
