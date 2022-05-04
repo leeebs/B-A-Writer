@@ -165,6 +165,7 @@ def save():
         
         if temp:
             storyArray.append(temp)
+
         print('1 ok')
         # 모델 로드
         vqvae_path = '../project/BeAwriter/static/imgmodel/stage1/model.pt'
@@ -351,7 +352,6 @@ def readbook(book_no):
             temp += sentence+'. '
             storyArray.append(temp)
             temp = ''
-
     if temp:
             storyArray.append(temp)
 
@@ -359,7 +359,5 @@ def readbook(book_no):
     for pi in pageimage_list:
         pageimagepath_list.append(pi.pageimg_path)
     print(pageimagepath_list)
-    print(storyArray)
     
-    return render_template("/book/readbook.html", book=book, storyArray=storyArray, image=image, book_no=book_no, audio=audio, pageimagepath_list=pageimagepath_list)
-    
+    return render_template("/book/readbook.html", book=book, storyArray=storyArray, image=image, book_no=book_no, audio=audio, pageimagepath_list=pageimagepath_list) 
