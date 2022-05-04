@@ -2,6 +2,13 @@
 # Created by https://www.toptal.com/developers/gitignore/api/windows,python,visualstudiocode,flask,database
 # Edit at https://www.toptal.com/developers/gitignore?templates=windows,python,visualstudiocode,flask,database
 
+### model ###
+*.bin
+*.pt
+*.mp3
+*.jpg
+*.png
+
 ### flask migration ###
 migrations/
 

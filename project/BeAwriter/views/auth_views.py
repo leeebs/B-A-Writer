@@ -22,8 +22,7 @@ def login():
             user = Member.query.filter_by(member_id=ID).first()
             if not user:
                 error = "존재하지 않는 아이디 입니다."
-            # elif not check_password_hash(user.member_password, PW): # 암호화
-            elif user.member_password != PW:
+            elif not check_password_hash(user.member_password, PW):
                 error = "비밀번호를 확인해주세요."
             
         if error is None:
@@ -63,8 +62,7 @@ def register():
             m = Member()
             m.member_id = id
             m.member_email = email
-            m.member_password = password
-            # m.member_password = generate_password_hash(password) 암호화 저장 나중에 로그인 비밀번호 비교도 함께 수정
+            m.member_password = generate_password_hash(password)
             m.member_name = name
 
             db.session.add(m)
