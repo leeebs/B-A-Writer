@@ -26,23 +26,13 @@
 <!-- Section-->
 <section class="py-5">
     <div class="container px-4 px-lg-5 mt-4">
-        <div class="row mb-5">
-            <div class="col-6 text-center justify-content-center">
-            <br>
-                <h4 style="font-family: 'Jua', sans-serif;">동화를 써주세요!😊</h4>
-                <p style="font-size:large;"><textarea rows=5 name='writecontent' id='writecontent' placeholder="동화 내용 입력하기" style="width:100%; border:solid 5px; border-color:blueviolet;" autofocus></textarea></p>
-                <button id="btn1" class="btn btn-success mx-2" style="font-family: 'Jua', sans-serif;">동화에 바로 넣기</button>
-                <button id="btn4" class="btn btn-success mx-2" style="font-family: 'Jua', sans-serif;">도움받기</button>
-                {% if msg %}
-                <p class="my-3" style="color:rgba(220, 20, 60, 0.5); font-family: 'Jua', sans-serif;">{{msg}}</p>
-                {% endif %}
-            </div>
-        </nav>
+        
         <!-- Section-->
         <section class="py-5">
             <div class="container px-4 px-lg-5 mt-4">
                 <div class="row mb-5">
                     <div class="col-6 text-center justify-content-center">
+                    <br>
                         <h4 style="font-family: 'Jua', sans-serif;">동화를 써주세요!😊</h4>
                         <p style="font-size:large;"><textarea rows=5 name='writecontent' id='writecontent' placeholder="동화 내용 입력하기" style="width:100%; border:solid 5px; border-color:blueviolet;" autofocus></textarea></p>
                         <button id="btn1" class="btn btn-success mx-2" style="font-family: 'Jua', sans-serif;">동화에 바로 넣기</button>
@@ -76,15 +66,6 @@
         </div>
         <div id="loading" class="mt-2 text-center justify-content-center">
             <img src="{{url_for('static', filename='assets/loadingimg.gif')}}">
-        </div>
-        <div class="row text-center justify-content-center">
-            <h4 style="font-family: 'Jua', sans-serif;">동화가 만들어지고 있어요 😎</h4>
-            <div style="overflow:auto; width:98%; height:150px; border:solid 5px; border-color:blueviolet;">
-                <p id="makedcontent" style="font-size:large;"></p>
-            </div>
-        </div>
-        <div class="text-center my-3">
-            <button id="btn2" class="btn btn-success" style="font-family: 'Jua', sans-serif;">완성하기</button>
         </div>
     </div>
 </section>
