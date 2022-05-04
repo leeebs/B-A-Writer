@@ -31,7 +31,8 @@ def create_app():
     admin = Admin(app, name='B a writer', template_mode='bootstrap3')
     admin.add_view(ModelView(models.Member, db.session))
     admin.add_view(ModelView(models.Storybook, db.session))
-    admin.add_view(ModelView(models.Image, db.session))
+    admin.add_view(ModelView(models.CoverImage, db.session))
+    admin.add_view(ModelView(models.Pageimage, db.session))
     admin.add_view(ModelView(models.Question, db.session))
     admin.add_view(ModelView(models.QuestionComment, db.session))
     

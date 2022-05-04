@@ -13,8 +13,14 @@
                     </ul>
 
                     {% if g.user %}
-                    <span class="mx-5" style="font-family: 'Jua', sans-serif;">{{ g.user.member_name }}님 안녕하세요!👋🏻</span>
-                    <a href="{{url_for('auth.logout')}}" class="btn btn-success" style="font-family: 'Jua', sans-serif;">로그아웃</a>
+                        {% if g.user.member_type == 0 %}
+                        <span class="mx-5" style="font-family: 'Jua', sans-serif;">{{ g.user.member_name }}님 안녕하세요!👋🏻</span>
+                        <a href="{{url_for('auth.logout')}}" class="btn btn-success" style="font-family: 'Jua', sans-serif;">로그아웃</a>
+                        {% else %}
+                        <span class="mx-5" style="font-family: 'Jua', sans-serif;">관리자님 안녕하세요!👋🏻</span>
+                        <a href="{{url_for('auth.logout')}}" class="btn btn-success" style="font-family: 'Jua', sans-serif;">로그아웃</a>
+                        <a href="/admin" class="btn btn-success mx-2" style="font-family: 'Jua', sans-serif;">관리페이지</a>
+                        {% endif %}
                     {% else %}
                     <a href="{{url_for('auth.login')}}" class="btn btn-success" style="font-family: 'Jua', sans-serif;">로그인</a>
                     <a href="{{url_for('auth.register')}}" class="btn btn-success" style="margin-left: 15px; font-family: 'Jua', sans-serif;">회원가입</a>

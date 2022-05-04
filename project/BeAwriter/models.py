@@ -32,7 +32,7 @@ class Rating(db.Model):
                         nullable=False)
     rating = db.Column(db.Integer, nullable=False)
     
-class Image(db.Model):
+class CoverImage(db.Model):
     book_no = db.Column(db.Integer,
                         db.ForeignKey('storybook.book_no', ondelete='CASCADE'),
                         primary_key=True,
