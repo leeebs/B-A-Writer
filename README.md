@@ -1,6 +1,7 @@
 # B-A-Writer
 ***
-![ddf8ce96f606f](https://user-images.githubusercontent.com/28862384/167321907-3f9d3edc-aeed-4135-9b70-932274ce853c.jpg)
+![81d4a71985f947f2da56658ffdcf58e2](https://user-images.githubusercontent.com/28862384/167350120-3ef5ca6d-d6a2-444b-b2c0-ce42567c22a6.jpg)
+
 + ## 동화를 만들어주는 AI 창작 서비스
 COVID로 야외 활동이 제한된 시기, 아이들과 함께 할 수 있는 서비스.<br>
 아이들과 함께 동화를 만들며 좋은 추억을 쌓아보세요.<br>
