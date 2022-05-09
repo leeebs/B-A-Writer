@@ -41,7 +41,7 @@ SQLite
 3. start.py에 등록되어 있는 set FLASK_APP=BeAwriter, set FLASK_ENV=development 를 각각 cmd 창에 입력<br>
 4. flask run 입력
 
-+ ## 구동 시 필요 프로그램
++ ## 구동 시 설치 프로그램
 !pip install flask_migrate <br>
 !pip install flask_admin<br>
 !pip install git+https://github.com/ssut/py-hanspell.git<br>
