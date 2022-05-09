@@ -64,7 +64,7 @@ pip install konlpy<br>
 
 + ## AI Model
 + ### KoGPT-2
-https://drive.google.com/drive/folders/19M-dN7ui3LVTfs3KYqyrTE8OzuJSJu7a?usp=sharing <br>
+[link](https://drive.google.com/drive/folders/19M-dN7ui3LVTfs3KYqyrTE8OzuJSJu7a?usp=sharing) <br>
 pytorch_model.bin 파일을 다운받아 static > storymodel 폴더에 넣기
 
 + ### RQ-Transformer
