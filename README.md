@@ -10,8 +10,23 @@ COVID로 야외 활동이 제한된 시기, 아이들과 함께 할 수 있는 �
 조수빈(조장), 송영근, 안서연, 이반석, 정희창, 조우리
 
 + ## 작업 환경
+Visual Studio Code
+
++ ## 사용 언어
++ ### Front
++ #### Language
+HTML, CSS, Javascript
++ #### Framework
+Bootstrap5
+
++ ### Back
++ #### Language
+Python
++ #### Framework
 Flask
-Colab
+
++ ## 사용 모델
+KoGPT, RQ-Transformer, GAN
 
 + ## 구동 방법
 Anaconda Prompt activate => project 폴더로 이동 => start.py에 등록되어 있는 set FLASK_APP=BeAwriter, set FLASK_ENV=development 를 각각 cmd 창에 입력 => flask run 입력
