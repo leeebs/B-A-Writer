@@ -29,7 +29,7 @@ Flask
 + ## AI
 KoGPT-2<br>RQ-Transformer<br> GAN
 
-+ ### API
++ ## API
 GTTS<br> Papago <br> Han-spell
 
 + ## DB
