@@ -6,7 +6,7 @@ from sqlalchemy.sql import func
 class Member(db.Model):
     member_no = db.Column(db.Integer, primary_key=True, nullable=False)
     member_id = db.Column(db.String(20), nullable=False)
-    member_password = db.Column(db.String(30), nullable=False)
+    member_password = db.Column(db.String(500), nullable=False)
     member_email = db.Column(db.String(30), nullable=False)
     member_name = db.Column(db.String(20), nullable=False)
     member_type = db.Column(db.SmallInteger, nullable=False, server_default='0')

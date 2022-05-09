@@ -57,7 +57,7 @@
                 <div class="text-center my-3">
                     <button id="btn2" class="btn btn-success" style="font-family: 'Jua', sans-serif;">완성하기</button>
                 </div>
-                <div id="loading" class="mt-2 text-center justify-content-center">
+                <div id="loading2" class="mt-2 text-center justify-content-center">
                     <img src="{{url_for('static', filename='assets/loadingimg.gif')}}">
                 </div>
             </div>
@@ -120,7 +120,7 @@
                 var postdata = {
                     'alldata' : allcon
                 }
-                $('#loading').show();
+                $('#loading2').show();
                 $.ajax({
                     type: 'POST',
                     url: "{{url_for('book.save')}}",
@@ -128,7 +128,7 @@
                     dataType: "JSON",
                     contentType: "application/json",
                     success: function(book){
-                        $('#loading').hide();
+                        $('#loading2').hide();
                         if (book['con']!=undefined){
                             var num = book['bookn'];
                             location.href="/book/cover/"+num
@@ -174,6 +174,7 @@
 
             $(document).ready(function() {
                 $('#loading').hide();
+                $('#loading2').hide();
                 $("#writecontent").keydown(function(key) {
                     if (key.keyCode == 13) {
                         $("#btn1").click();

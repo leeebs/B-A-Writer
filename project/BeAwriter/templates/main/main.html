@@ -9,7 +9,10 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                         <li class="nav-item"><a class="nav-link active" aria-current="page" href="{{url_for('main.index')}}" style="color:blueviolet; font-family: 'Jua', sans-serif;">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{url_for('qna.qnalist')}}" style="color:blueviolet; font-family: 'Jua', sans-serif;">QnA</a></li>
+                        <li class="nav-item"><a class="nav-link" 
+                            {% if g.user %}href="{{ url_for('qna.qnalist')}}"
+                            {% else %} href="{{url_for('auth.login')}}"
+                            {% endif %} style="color:blueviolet; font-family: 'Jua', sans-serif;">QnA</a></li>
                     </ul>
 
                     {% if g.user %}
@@ -62,9 +65,9 @@
                                 <!-- <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">1st</div> -->
                                 <!-- Product image-->
                                 {% if book_img_path[loop.index0] %}
-                                <img class="card-img-top" style="max-width:100%; height:180px" src="{{ url_for('static', filename='image/'+ book_img_path[loop.index0]) }}" alt="..." />
+                                <img class="card-img-top" style="max-width:100%; height:180px" src="{{ url_for('static', filename='maked_image/'+ book_img_path[loop.index0]) }}" alt="..." />
                                 {% else %}
-                                <img class="card-img-top" style="max-width:100%; height:180px" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+                                <img class="card-img-top" style="max-width:100%; height:180px" src="{{url_for('static', filename='image/default.PNG')}}" alt="..." />
                                 {% endif %}             
  
                                 <!-- Product details-->
@@ -123,9 +126,9 @@
                                 {% endif %}
                                 <!-- Product image-->
                                 {% if star_img_path[loop.index0] %}
-                                <img class="card-img-top" style="max-width:100%; height:180px" src="{{ url_for('static', filename='image/'+ star_img_path[loop.index0]) }}" alt="..." />
+                                <img class="card-img-top" style="max-width:100%; height:180px" src="{{ url_for('static', filename='maked_image/'+ star_img_path[loop.index0]) }}" alt="..." />
                                 {% else %}
-                                <img class="card-img-top" style="max-width:100%; height:180px" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+                                <img class="card-img-top" style="max-width:100%; height:180px" src="{{url_for('static', filename='image/default.PNG')}}" alt="..." />
                                 {% endif %}             
  
                                 <!-- Product details-->
@@ -167,7 +170,9 @@
             <div class="row">
                 <div class="col-10"></div>
                 <div class="col-2 mb-3">
-                    <a href="{{url_for('main.datelist')}}" class="btn btn-success" style="font-family: 'Jua', sans-serif;">더 보러가기</a>    
+                    <a {% if g.user %}href="{{ url_for('main.datelist')}}"
+                            {% else %} href="{{url_for('auth.login')}}"
+                            {% endif %} class="btn btn-success" style="font-family: 'Jua', sans-serif;">더 보러가기</a>    
                 </div>
             </div>
         </section>

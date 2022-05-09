@@ -27,7 +27,7 @@ def create_app():
     from . import models
     
         # 관리자 페이지    
-    app.config['FLASK_ADMIN_SWATCH'] = 'Simplex'
+    app.config['FLASK_ADMIN_SWATCH'] = 'cerulean'
     admin = Admin(app, name='B a writer', template_mode='bootstrap3')
     admin.add_view(ModelView(models.Member, db.session))
     admin.add_view(ModelView(models.Storybook, db.session))

@@ -5,6 +5,7 @@
 ### model ###
 *.bin
 *.pt
+*.pth
 *.mp3
 *.jpg
 *.png

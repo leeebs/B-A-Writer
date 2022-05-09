@@ -71,9 +71,9 @@
                                 <!-- Product image-->
 
                                 {% if book_img_path[loop.index0] %}
-                                <img class="card-img-top" style="max-width:100%; height:180px" src="{{ url_for('static', filename='image/'+ book_img_path[loop.index0]) }}" alt="..." />
+                                <img class="card-img-top" style="max-width:100%; height:180px" src="{{ url_for('static', filename='maked_image/'+ book_img_path[loop.index0]) }}" alt="..." />
                                 {% else %}
-                                <img class="card-img-top" style="max-width:100%; height:180px" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+                                <img class="card-img-top" style="max-width:100%; height:180px" src="{{url_for('static', filename='image/default.PNG')}}" alt="..." />
                                 {% endif %}            
 
                                 <!-- Product details-->
@@ -112,7 +112,7 @@
                     <div class="col mb-5">
                         <div class="card h-100">
                             <!-- Product image-->
-                            <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+                            <img class="card-img-top" src="{{url_for('static', filename='image/default.PNG')}}" alt="..." />
                             <!-- Product details-->
                             <div class="card-body p-4">
                                 <div class="text-center">

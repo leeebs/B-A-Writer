@@ -65,7 +65,7 @@
                             <form action="{{url_for('book.cover', book_no=book_no)}}" method="post"
                                 enctype="multipart/form-data">
                                 <div class="row mt-5 mb-4 justify-content-center">
-                                    <img src="{{url_for('static', filename='assets/image/default.PNG')}}" style="width: 450px; height: 300px;" id="img" />
+                                    <img src="{{url_for('static', filename='image/default.PNG')}}" style="width: 450px; height: 300px;" id="img" />
                                 </div>
                                 <input type="file" id="input_img" name ="file" style="font-family: 'Jua', sans-serif;"/>
                                 <input class="btn btn-success" type="submit" style="font-family: 'Jua', sans-serif;"/>

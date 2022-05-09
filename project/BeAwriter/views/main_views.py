@@ -25,7 +25,7 @@ def index():
         book_mem_name.append(member.member_name)
         image = CoverImage.query.get(book.book_no)
         if image:
-            book_img_path.append(image.img_path)
+            book_img_path.append(image.maked_img_path)
         else:
             book_img_path.append(None)
         book_avg.append(book.avg)
@@ -42,7 +42,7 @@ def index():
         star_mem_name.append(member.member_name)
         image = CoverImage.query.get(star.book_no)
         if image:
-            star_img_path.append(image.img_path)
+            star_img_path.append(image.maked_img_path)
         else:
             star_img_path.append(None)
         star_avg.append(star.avg)
@@ -67,7 +67,7 @@ def datelist():
         book_avg.append(book.avg)
         image = CoverImage.query.get(book.book_no)
         if image:
-            book_img_path.append(image.img_path)
+            book_img_path.append(image.maked_img_path)
         else:
             book_img_path.append(None)
     book_list = book_list.paginate(page, per_page=9)
@@ -94,7 +94,7 @@ def starlist():
         star_rate.append(star.avg)
         image = CoverImage.query.get(star.book_no)
         if image:
-            book_img_path.append(image.img_path)
+            book_img_path.append(image.maked_img_path)
         else:
             book_img_path.append(None)
 
@@ -116,7 +116,7 @@ def mylist():
         book_rate.append(me.avg)
         image = CoverImage.query.get(me.book_no)
         if image:
-            book_img_path.append(image.img_path)
+            book_img_path.append(image.maked_img_path)
         else:
             book_img_path.append(None)
     my_list = my_list.paginate(page, per_page=12)
@@ -143,7 +143,7 @@ def mystarlist():
         star_rate.append(book.avg)
         image = CoverImage.query.get(star.book_no)
         if image:
-            book_img_path.append(image.img_path)
+            book_img_path.append(image.maked_img_path)
         else:
             book_img_path.append(None)
 
