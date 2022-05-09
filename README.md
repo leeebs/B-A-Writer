@@ -42,20 +42,19 @@ SQLite
 4. flask run 입력
 
 + ## 구동 시 필요 프로그램
-!pip install flask_migrate
-!pip install flask_admin
-!pip install git+https://github.com/ssut/py-hanspell.git
-!pip install flask_wtf
-!pip install gtts
-!pip install pytz
-!pip install regex
-!pip install transformers
-!pip install fastai==2.2.5
+!pip install flask_migrate <br>
+!pip install flask_admin<br>
+!pip install git+https://github.com/ssut/py-hanspell.git<br>
+!pip install flask_wtf<br>
+!pip install gtts<br>
+!pip install pytz<br>
+!pip install regex<br>
+!pip install transformers<br>
+!pip install fastai==2.2.5<br>
 
-!pip install git+https://github.com/openai/CLIP.git
-!pip install omegaconf
-!pip install EasyDict
+!pip install git+https://github.com/openai/CLIP.git<br>
+!pip install omegaconf<br>
+!pip install EasyDict<br>
 
-!pip install krwordrank
-!pip install konlpy
-
+!pip install krwordrank<br>
+!pip install konlpy<br>
