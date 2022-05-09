@@ -1,6 +1,6 @@
 # B-A-Writer
 ***
-![다운로드](https://user-images.githubusercontent.com/28862384/166394995-b0cef3a4-76a2-4d77-8a68-9faf23f70fa0.jpg)
+![ddf8ce96f606f](https://user-images.githubusercontent.com/28862384/167321907-3f9d3edc-aeed-4135-9b70-932274ce853c.jpg)
 + ## 동화를 만들어주는 AI 창작 서비스
 COVID로 야외 활동이 제한된 시기, 아이들과 함께 할 수 있는 서비스.
 아이들과 함께 동화를 만들며 좋은 추억을 쌓아보세요.
@@ -11,3 +11,6 @@ COVID로 야외 활동이 제한된 시기, 아이들과 함께 할 수 있는 �
 
 + ## 구동 방법
 Anaconda Prompt activate => project 폴더로 이동 => start.py에 등록되어 있는 set FLASK_APP=BeAwriter, set FLASK_ENV=development 를 각각 cmd 창에 입력 => flask run 입력
+
++ ## 구동 시 필요 프로그램
+cuda 
