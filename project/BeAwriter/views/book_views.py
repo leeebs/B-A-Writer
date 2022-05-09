@@ -31,6 +31,15 @@ import urllib.request
 import requests
 from konlpy.tag import Okt
 
+import torch
+import torch.nn as nn
+from torch import sigmoid
+from torch.utils.data import DataLoader
+from torchvision.datasets import ImageFolder
+from torchvision import transforms
+import matplotlib.pyplot as plt
+import numpy as np
+
 def preprocessing(res):
     spelled_sent = spell_checker.check(res)
     hanspell_sent = spelled_sent.checked
@@ -97,6 +106,66 @@ def extraction_keyword(texts):
     print(keywords)
     keywords = [j[0] for i in keywords for j in okt.pos(i) if j[1] == 'Noun' and len(j[0]) > 1]
     return keyword_translate(keywords[0])
+
+class ResidualBlock(nn.Module):
+    def __init__(self):
+        super(ResidualBlock, self).__init__()
+        self.conv_1 = nn.Conv2d(in_channels=256, out_channels=256, kernel_size=3, stride=1, padding=1)
+        self.conv_2 = nn.Conv2d(in_channels=256, out_channels=256, kernel_size=3, stride=1, padding=1)
+        self.norm_1 = nn.BatchNorm2d(256)
+        self.norm_2 = nn.BatchNorm2d(256)
+
+    def forward(self, x):
+        output = self.norm_2(self.conv_2(F.relu(self.norm_1(self.conv_1(x)))))
+        return output + x #ES
+
+class Generator(nn.Module):
+    def __init__(self):
+        super(Generator, self).__init__()
+        self.conv_1 = nn.Conv2d(in_channels=3, out_channels=64, kernel_size=7, stride=1, padding=3)
+        self.norm_1 = nn.BatchNorm2d(64)
+        
+        # down-convolution #
+        self.conv_2 = nn.Conv2d(in_channels=64, out_channels=128, kernel_size=3, stride=2, padding=1)
+        self.conv_3 = nn.Conv2d(in_channels=128, out_channels=128, kernel_size=3, stride=1, padding=1)
+        self.norm_2 = nn.BatchNorm2d(128)
+        
+        self.conv_4 = nn.Conv2d(in_channels=128, out_channels=256, kernel_size=3, stride=2, padding=1)
+        self.conv_5 = nn.Conv2d(in_channels=256, out_channels=256, kernel_size=3, stride=1, padding=1)
+        self.norm_3 = nn.BatchNorm2d(256)
+        
+        # residual blocks #
+        residualBlocks = []
+        for l in range(8):
+            residualBlocks.append(ResidualBlock())
+        self.res = nn.Sequential(*residualBlocks)
+        
+        # up-convolution #
+        self.conv_6 = nn.ConvTranspose2d(in_channels=256, out_channels=128, kernel_size=3, stride=2, padding=1, output_padding=1)
+        self.conv_7 = nn.ConvTranspose2d(in_channels=128, out_channels=128, kernel_size=3, stride=1, padding=1)
+        self.norm_4 = nn.BatchNorm2d(128)
+
+        self.conv_8 = nn.ConvTranspose2d(in_channels=128, out_channels=64, kernel_size=3, stride=2, padding=1, output_padding=1)
+        self.conv_9 = nn.ConvTranspose2d(in_channels=64, out_channels=64, kernel_size=3, stride=1, padding=1)
+        self.norm_5 = nn.BatchNorm2d(64)
+        
+        self.conv_10 = nn.Conv2d(in_channels=64, out_channels=3, kernel_size=7, stride=1, padding=3)
+
+    def forward(self, x):
+        x = F.relu(self.norm_1(self.conv_1(x)))
+        
+        x = F.relu(self.norm_2(self.conv_3(self.conv_2(x))))
+        x = F.relu(self.norm_3(self.conv_5(self.conv_4(x))))
+        
+        x = self.res(x)
+        x = F.relu(self.norm_4(self.conv_7(self.conv_6(x))))
+        x = F.relu(self.norm_5(self.conv_9(self.conv_8(x))))
+
+        x = self.conv_10(x)
+
+        x = sigmoid(x)
+
+        return x
 
 
 bp = Blueprint('book', __name__, url_prefix='/book')
@@ -259,9 +328,36 @@ def cover(book_no):
             else:
                 extension=f.filename.split('.')[-1]
                 filename=f'{g.user.member_no}_{sb.book_no}.{extension}'
-                f.save('../project/BeAwriter/static/image/'+ filename)              
+                f.save('../project/BeAwriter/static/image/1/'+ filename)
+                
+                # 이미지 변환
+                device = torch.device('cpu')
+                if torch.cuda.is_available():
+                    device = torch.device('cuda')
+                    print("Train on GPU.")
+                else:
+                    print("No cuda available")
+                checkpoint = torch.load('../project/BeAwriter/static/covermodel/best_checkpoint.pth', map_location=torch.device(device))
+                G_inference = Generator()
+                G_inference.load_state_dict(checkpoint['g_state_dict'])
+                
+                batch_size = 16
+                transformer = transforms.Compose([
+                    transforms.Resize((350, 400)),
+                    transforms.ToTensor() # ToTensor() changes the range of the values from [0, 255] to [0.0, 1.0]
+                ])
+                photo_dataset = ImageFolder('../project/BeAwriter/static/image/', transformer)
+                photo_dataloader_valid = DataLoader(photo_dataset, batch_size, shuffle=True, num_workers=0)
+                test_images = iter(photo_dataloader_valid).next()[0]
+                result_images_best_checkpoint = G_inference(test_images)
+                
+                filename_new = f'{g.user.member_no}_{sb.book_no}.jpg'
+                images = np.transpose(result_images_best_checkpoint[0].detach().numpy(), (1, 2, 0))
+                plt.imsave('../project/BeAwriter/static/maked_image/'+filename_new,images)
+                            
                 img = CoverImage(book_no=sb.book_no,
-                            img_path=filename)
+                            img_path=filename,
+                            maked_img_path=filename_new)
                 db.session.add(img)
                 db.session.commit()
 
