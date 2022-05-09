@@ -42,22 +42,22 @@ SQLite
 4. flask run 입력
 
 + ## 구동 시 설치 프로그램
-!pip install flask_migrate <br>
-!pip install flask_admin<br>
-!pip install git+https://github.com/ssut/py-hanspell.git<br>
-!pip install flask_wtf<br>
-!pip install gtts<br>
-!pip install pytz<br>
-!pip install regex<br>
-!pip install transformers<br>
-!pip install fastai==2.2.5<br>
+pip install flask_migrate <br>
+pip install flask_admin<br>
+pip install git+https://github.com/ssut/py-hanspell.git<br>
+pip install flask_wtf<br>
+pip install gtts<br>
+pip install pytz<br>
+pip install regex<br>
+pip install transformers<br>
+pip install fastai==2.2.5<br>
 
-!pip install git+https://github.com/openai/CLIP.git<br>
-!pip install omegaconf<br>
-!pip install EasyDict<br>
+pip install git+https://github.com/openai/CLIP.git<br>
+pip install omegaconf<br>
+pip install EasyDict<br>
 
-!pip install krwordrank<br>
-!pip install konlpy<br>
+pip install krwordrank<br>
+pip install konlpy<br>
 
 + ## AI Model
 + ### KoGPT-2
