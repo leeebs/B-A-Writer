@@ -10,34 +10,36 @@ COVID로 야외 활동이 제한된 시기, 아이들과 함께 할 수 있는 �
 조수빈(조장), 송영근, 안서연, 이반석, 정희창, 조우리
 
 + ## 작업 환경
-> Visual Studio Code <br> Colab
+Visual Studio Code <br>
+Colab
 
 + ## 사용 언어
 + ### Front
 + #### Language
-> HTML <br> CSS <br> Javascript
+HTML<br>CSS<br> Javascript
 + #### Framework
-> Bootstrap5
+Bootstrap5
 
 + ### Back
 + #### Language
-> Python
+Python
 + #### Framework
-> Flask
+Flask
 
 + ## AI
-> KoGPT-2 <br> RQ-Transformer <br> GAN
+KoGPT-2<br>RQ-Transformer<br> GAN
 
 + ## API
-> GTTS <br> Papago <br> Han-spell
+GTTS<br> Papago <br> Han-spell
 
 + ## DB
-> SQLite
+SQLite
 
 + ## 구동 방법
 1. Anaconda Prompt activate <br>
 2. project 폴더로 이동 <br>
 3. start.py에 등록되어 있는 set FLASK_APP=BeAwriter, set FLASK_ENV=development 를 각각 cmd 창에 입력<br>
+로컬에서 실행시 set, 리눅스에서 실행 시 export로 적어주세요.
 4. flask run 입력
 
 + ## 구동 시 설치 프로그램
