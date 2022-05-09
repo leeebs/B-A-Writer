@@ -9,7 +9,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                         <li class="nav-item"><a class="nav-link active" aria-current="page" href="{{url_for('main.index')}}" style="color:blueviolet; font-family: 'Jua', sans-serif;">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!" style="color:blueviolet; font-family: 'Jua', sans-serif;">QnA</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{url_for('qna.qnalist')}}" style="color:blueviolet; font-family: 'Jua', sans-serif;">QnA</a></li>
                     </ul>
 
                     {% if g.user %}
@@ -65,7 +65,7 @@
                             <form action="{{url_for('book.cover', book_no=book_no)}}" method="post"
                                 enctype="multipart/form-data">
                                 <div class="row mt-5 mb-4 justify-content-center">
-                                    <img src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" style="width: 450px; height: 300px;" id="img" />
+                                    <img src="{{url_for('static', filename='assets/image/default.PNG')}}" style="width: 450px; height: 300px;" id="img" />
                                 </div>
                                 <input type="file" id="input_img" name ="file" style="font-family: 'Jua', sans-serif;"/>
                                 <input class="btn btn-success" type="submit" style="font-family: 'Jua', sans-serif;"/>

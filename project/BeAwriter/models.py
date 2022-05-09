@@ -39,6 +39,7 @@ class CoverImage(db.Model):
                         autoincrement=True,
                         nullable=False)
     img_path = db.Column(db.String(500), nullable=False)
+    maked_img_path = db.Column(db.String(500), nullable=False)
 
 class Pageimage(db.Model):
     pageimage_no = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=True)
