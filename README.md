@@ -13,30 +13,29 @@ COVID로 야외 활동이 제한된 시기, 아이들과 함께 할 수 있는 �
 조수빈(조장), 송영근, 안서연, 이반석, 정희창, 조우리
 
 + ## 작업 환경
-Visual Studio Code <br>
-Colab
+> Visual Studio Code <br> Colab
 
 + ## 사용 언어
 + ### Front
 + #### Language
-HTML<br>CSS<br> Javascript
+> HTML <br> CSS <br> Javascript
 + #### Framework
-Bootstrap5
+> Bootstrap5
 
 + ### Back
 + #### Language
-Python
+> Python
 + #### Framework
-Flask
+> Flask
 
 + ## AI
-KoGPT-2<br>RQ-Transformer<br> GAN
+> KoGPT-2 <br> RQ-Transformer <br> GAN
 
 + ## API
-GTTS<br> Papago <br> Han-spell
+> GTTS <br> Papago <br> Han-spell
 
 + ## DB
-SQLite
+> SQLite
 
 + ## 구동 방법
 1. Anaconda Prompt activate <br>
