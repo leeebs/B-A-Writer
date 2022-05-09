@@ -341,14 +341,12 @@ def cover(book_no):
                 G_inference = Generator()
                 G_inference.load_state_dict(checkpoint['g_state_dict'])
                 
-                batch_size = 16
                 transformer = transforms.Compose([
                     transforms.Resize((350, 400)),
                     transforms.ToTensor() # ToTensor() changes the range of the values from [0, 255] to [0.0, 1.0]
                 ])
-                photo_dataset = ImageFolder('../project/BeAwriter/static/image/', transformer)
-                photo_dataloader_valid = DataLoader(photo_dataset, batch_size, shuffle=True, num_workers=0)
-                test_images = iter(photo_dataloader_valid).next()[0]
+                test_images = Image.open('../project/BeAwriter/static/image/1/'+filename)
+                test_images = transformer(test_images)[None,]
                 result_images_best_checkpoint = G_inference(test_images)
                 
                 filename_new = f'{g.user.member_no}_{sb.book_no}.jpg'
