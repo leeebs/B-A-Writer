@@ -39,7 +39,7 @@ SQLite
 1. Anaconda Prompt activate <br>
 2. project 폴더로 이동 <br>
 3. start.py에 등록되어 있는 set FLASK_APP=BeAwriter, set FLASK_ENV=development 를 각각 cmd 창에 입력<br>
-로컬에서 실행시 set, 리눅스에서 실행 시 export로 적어주세요.
+윈도우에서 실행시 set, 리눅스에서 실행 시 export로 적어주세요.
 4. flask run 입력
 
 + ## 구동 시 설치 프로그램
