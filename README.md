@@ -29,6 +29,9 @@ Flask
 + ## AI
 KoGPT-2<br>RQ-Transformer<br> GAN
 
++ ### API
+GTTS<br> Papago <br> Han-spell
+
 + ## DB
 SQLite
 
@@ -39,4 +42,20 @@ SQLite
 4. flask run 입력
 
 + ## 구동 시 필요 프로그램
-cuda 
+!pip install flask_migrate
+!pip install flask_admin
+!pip install git+https://github.com/ssut/py-hanspell.git
+!pip install flask_wtf
+!pip install gtts
+!pip install pytz
+!pip install regex
+!pip install transformers
+!pip install fastai==2.2.5
+
+!pip install git+https://github.com/openai/CLIP.git
+!pip install omegaconf
+!pip install EasyDict
+
+!pip install krwordrank
+!pip install konlpy
+
