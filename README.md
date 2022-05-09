@@ -64,7 +64,7 @@ pip install konlpy<br>
 
 + ## AI Model
 + ### KoGPT-2
-[link](https://drive.google.com/drive/folders/19M-dN7ui3LVTfs3KYqyrTE8OzuJSJu7a?usp=sharing) <br>
+[link](https://drive.google.com/uc?export=download&id=1-1DGCLsrqViL7GNJPsXpivPHptn1MwEm) <br>
 pytorch_model.bin 파일을 다운받아 static > storymodel 폴더에 넣기
 
 + ### RQ-Transformer
@@ -72,7 +72,7 @@ pytorch_model.bin 파일을 다운받아 static > storymodel 폴더에 넣기
 + #### stage 1
 압축을 풀고 stage 1 폴더 내의 model.pt 를 다운받아 static > imagemodel > stage1 폴더에 넣기
 + #### stage 2
-압축을 풀고 stage 2 폴더 내의 model.pt 를 다운받아 statc > imagemodel > stage2 폴더에 넣기
+압축을 풀고 stage 2 폴더 내의 model.pt 를 다운받아 static > imagemodel > stage2 폴더에 넣기
 
 + ## 주의사항
 Cuda를 사용하기 때문에 GPU가 필요합니다.
