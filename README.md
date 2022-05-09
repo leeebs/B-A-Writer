@@ -69,11 +69,11 @@ pytorch_model.bin 파일을 다운받아 static > storymodel 폴더에 넣기
 
 + ### RQ-Transformer
 + #### stage 1
-https://drive.google.com/drive/folders/19GscvzbL550c7r3fv-EXv715U9qC3DoY <br>
+[link](https://drive.google.com/drive/folders/19GscvzbL550c7r3fv-EXv715U9qC3DoY) <br>
 model.pt 를 다운받아 static > imagemodel > stage1 폴더에 넣기
 
 + #### stage 2
-https://drive.google.com/drive/folders/1ihFHo__HTJzNIDek5UhQGnXNlIyqD8SF <br>
+[link](https://drive.google.com/drive/folders/1ihFHo__HTJzNIDek5UhQGnXNlIyqD8SF) <br>
 model.pt 를 다운받아 statc > imagemodel > stage2 폴더에 넣기
 
 + ## 주의사항
