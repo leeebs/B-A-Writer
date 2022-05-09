@@ -82,13 +82,13 @@ pytorch_model.bin 파일을 다운받아 static > storymodel 폴더에 넣기
 │       ├── config.yaml
 │       └── model.pt
 │
-├── storymodel
-│   ├── config.json
-│   ├── special_tokens_map.json
-│   ├── tokenizer_config.json
-│   ├── tokenizer.json
-│   └── pytorch_model.bin
-└──
+└──  storymodel
+    ├── config.json
+    ├── special_tokens_map.json
+    ├── tokenizer_config.json
+    ├── tokenizer.json
+    └── pytorch_model.bin
+
 ```
 + ## 주의사항
 Cuda를 사용하기 때문에 GPU가 필요합니다.
