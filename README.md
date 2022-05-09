@@ -73,6 +73,22 @@ pytorch_model.bin 파일을 다운받아 static > storymodel 폴더에 넣기
 압축을 풀고 stage 1 폴더 내의 model.pt 를 다운받아 static > imagemodel > stage1 폴더에 넣기
 + #### stage 2
 압축을 풀고 stage 2 폴더 내의 model.pt 를 다운받아 static > imagemodel > stage2 폴더에 넣기
+```
+├── imgmodel
+│   ├── stage1
+│   │   ├── config.yaml
+│   │   └── model.pt
+│   └── stage2
+│       ├── config.yaml
+│       └── model.pt
+│
+└──  storymodel
+    ├── config.json
+    ├── special_tokens_map.json
+    ├── tokenizer_config.json
+    ├── tokenizer.json
+    └── pytorch_model.bin
 
+```
 + ## 주의사항
 Cuda를 사용하기 때문에 GPU가 필요합니다.
