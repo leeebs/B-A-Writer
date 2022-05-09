@@ -25,8 +25,11 @@ Python
 + #### Framework
 Flask
 
-+ ## 사용 모델
++ ## AI
 KoGPT, RQ-Transformer, GAN
+
++ ## DB
+SQLite
 
 + ## 구동 방법
 Anaconda Prompt activate => project 폴더로 이동 => start.py에 등록되어 있는 set FLASK_APP=BeAwriter, set FLASK_ENV=development 를 각각 cmd 창에 입력 => flask run 입력
