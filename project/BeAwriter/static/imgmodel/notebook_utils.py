@@ -13,13 +13,9 @@
 # limitations under the License.
 
 import os
-import sys
-
 from PIL import Image
-import yaml
 import numpy as np
 import torch
-import torchvision
 import clip
 import torch.nn.functional as F
 
@@ -103,8 +99,7 @@ def get_generated_images_by_texts(model_ar,
                                   top_p,
                                   amp=True,
                                   fast=True,
-                                  is_tqdm=True,
-                                 ):
+                                  is_tqdm=True):
     
     sample_shape = model_ar.get_block_size()
     
@@ -119,17 +114,13 @@ def get_generated_images_by_texts(model_ar,
                                       top_p=top_p,
                                       amp=amp,
                                       fast=fast,
-                                      is_tqdm=is_tqdm,
-                                     )
-    pixels = torch.cat([model_vqvae.decode_code(generated_codes[i:i+1]) 
-                                        for i in range(generated_codes.size(0))
-                   ], dim=0)
+                                      is_tqdm=is_tqdm)
+    pixels = torch.cat([model_vqvae.decode_code(generated_codes[i:i+1]) for i in range(generated_codes.size(0))], dim=0)
 
     clip_scores = get_clip_score(pixels, 
                                  text_prompts, 
                                  model_clip, 
-                                 preprocess_clip,
-                                )
+                                 preprocess_clip)
 
     reranked_idxs = clip_scores.argsort(descending=True)
     reranked_pixels = pixels[reranked_idxs]

@@ -1,5 +1,3 @@
-from enum import unique
-from pytz import timezone
 from BeAwriter import db
 from sqlalchemy.sql import func
 
@@ -46,8 +44,10 @@ class Pageimage(db.Model):
     book_no = db.Column(db.Integer,
                         db.ForeignKey('storybook.book_no', ondelete='CASCADE'),
                         nullable=True)
-    pageper_img_no = db.Column(db.Integer, nullable=False)    #이미지가 들어가는 페이지 넘버
-    pageimg_path = db.Column(db.String(500), nullable=False)  #이미지 경로
+    pageper_img_no = db.Column(db.Integer, nullable=False)
+    # 이미지가 들어가는 페이지 넘버  
+    pageimg_path = db.Column(db.String(500), nullable=False)
+    # 이미지 경로
     # 책 한권에 여러 페이지, 각 페이지에 이미지가 1개 들어가기 때문에 페이지 넘버, 해당 페이지에 대한 이미지 경로를 DB에 넣어줌
     
 class Question(db.Model):

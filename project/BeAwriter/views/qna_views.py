@@ -1,11 +1,10 @@
-from flask import Blueprint, render_template, url_for, request, session, g, flash
-from werkzeug.security import generate_password_hash, check_password_hash
-from werkzeug.utils import redirect, secure_filename
+from flask import Blueprint, render_template, url_for, request, g
+from werkzeug.utils import redirect
 from BeAwriter.forms import QuestionForm, AnswerForm
 
 from BeAwriter import db
-from BeAwriter.models import *
-from datetime import datetime
+from BeAwriter.models import Question, QuestionComment, Member
+from datetime import datetime, timezone
 
 bp = Blueprint('qna', __name__, url_prefix='/qna')
 
@@ -17,7 +16,7 @@ def qnawrite():
         question = Question(subject=form.subject.data,
                                 content=form.content.data,
                                 member_no=g.user.member_no,
-                                ques_date = datetime.now(timezone('Asia/Seoul')) )
+                                ques_date = datetime.now(timezone('Asia/Seoul')))
         db.session.add(question)
         db.session.commit()
         return redirect(url_for('qna.qnalist'))
@@ -40,7 +39,7 @@ def qnalist():
                     Question.content.ilike(search) |  # 질문 내용
                     Member.member_name.ilike(search) |  # 질문 작성자
                     sub_query.c.comment_con.ilike(search)   # 답변 내용
-             ) \
+                    ) \
             .distinct()
     question_list = question_list.paginate(page, per_page=10)
     return render_template('qna/FAQ_list.html', question_list=question_list, page=page, kw=kw)

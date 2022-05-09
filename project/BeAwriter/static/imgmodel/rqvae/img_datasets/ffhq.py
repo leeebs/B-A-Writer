@@ -47,7 +47,8 @@ class ImageFolder(torchvision.datasets.VisionDataset):
     def _verify_split(self, split):
         if split not in self.valid_splits:
             msg = "Unknown split {} .".format(split)
-            msg += "Valid splits are {{}}.".format(", ".join(self.valid_splits))
+            msg += "Valid splits are {{}}."\
+                .format(", ".join(self.valid_splits))
             raise ValueError(msg)
         return split
 

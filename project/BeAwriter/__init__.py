@@ -1,4 +1,4 @@
-from flask import Flask, session
+from flask import Flask
 # from flask_session import Session
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
@@ -26,7 +26,7 @@ def create_app():
     # 모델
     from . import models
     
-        # 관리자 페이지    
+    # 관리자 페이지    
     app.config['FLASK_ADMIN_SWATCH'] = 'cerulean'
     admin = Admin(app, name='B a writer', template_mode='bootstrap3')
     admin.add_view(ModelView(models.Member, db.session))

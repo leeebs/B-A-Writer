@@ -3,7 +3,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import redirect
 
 from BeAwriter import db
-from BeAwriter.models import *
+from BeAwriter.models import Member
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
