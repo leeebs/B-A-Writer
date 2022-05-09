@@ -27,7 +27,7 @@ Python
 Flask
 
 + ## AI
-KoGPT<br>RQ-Transformer<br> GAN
+KoGPT-2<br>RQ-Transformer<br> GAN
 
 + ## DB
 SQLite
