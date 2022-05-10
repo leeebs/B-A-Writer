@@ -16,8 +16,6 @@
 <br>
 
 ## 2. 서비스 소개
-
-메인화면 캡쳐해서 넣는걸로
 ![image](https://user-images.githubusercontent.com/61009770/167703483-af59df25-7a51-4240-b457-d226c84456fc.png)
 
 #F9AB00
