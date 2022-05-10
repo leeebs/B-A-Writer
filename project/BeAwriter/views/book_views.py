@@ -3,7 +3,9 @@ from werkzeug.utils import redirect
 from gtts import gTTS
 from BeAwriter import db
 from BeAwriter.models import Storybook, CoverImage, Rating, Pageimage
-from datetime import datetime, timezone
+
+import datetime
+from pytz import timezone, utc
 from sqlalchemy import and_
 from sqlalchemy.sql import func
 
@@ -35,6 +37,10 @@ from torch import sigmoid
 from torchvision import transforms
 import matplotlib.pyplot as plt
 import numpy as np
+
+KST = timezone('Asia/Seoul')
+
+now = datetime.datetime.utcnow()
 
 def preprocessing(res):
     spelled_sent = spell_checker.check(res)
@@ -208,7 +214,7 @@ def save():
         sb = Storybook(book_con=book_contents,
                     member_no=g.user.member_no,
                     book_title=temp,
-                    book_date = datetime.now(timezone('Asia/Seoul')))
+                    book_date =  KST.localize(now))
         db.session.add(sb)
         db.session.commit()
         
