@@ -4,7 +4,8 @@ import json
 from gtts import gTTS
 from BeAwriter import db
 from BeAwriter.models import *
-from datetime import datetime
+import datetime
+from pytz import timezone, utc
 from sqlalchemy import and_
 
 from transformers import AutoModelWithLMHead, PreTrainedTokenizerFast
@@ -30,6 +31,10 @@ import sys
 import urllib.request
 import requests
 from konlpy.tag import Okt
+
+KST = timezone('Asia/Seoul')
+
+now = datetime.datetime.utcnow()
 
 def preprocessing(res):
     spelled_sent = spell_checker.check(res)
@@ -144,7 +149,7 @@ def save():
         sb = Storybook(book_con=book_contents,
                     member_no=g.user.member_no,
                     book_title=temp,
-                    book_date = datetime.now(timezone('Asia/Seoul')))
+                    book_date =  KST.localize(now))
         db.session.add(sb)
         db.session.commit()
         

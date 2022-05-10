@@ -5,10 +5,14 @@ from BeAwriter.forms import QuestionForm, AnswerForm
 
 from BeAwriter import db
 from BeAwriter.models import *
-from datetime import datetime
+import datetime
+from pytz import timezone, utc
 
 bp = Blueprint('qna', __name__, url_prefix='/qna')
 
+KST = timezone('Asia/Seoul')
+
+now = datetime.datetime.utcnow()
 
 @bp.route('/qnawrite/', methods=('GET', 'POST'))
 def qnawrite():
@@ -17,7 +21,7 @@ def qnawrite():
         question = Question(subject=form.subject.data,
                                 content=form.content.data,
                                 member_no=g.user.member_no,
-                                ques_date = datetime.now(timezone('Asia/Seoul')) )
+                                ques_date =  KST.localize(now))
         db.session.add(question)
         db.session.commit()
         return redirect(url_for('qna.qnalist'))
