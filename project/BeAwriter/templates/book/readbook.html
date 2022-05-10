@@ -29,7 +29,7 @@
                     {% if image %}              
                     <img src="{{ url_for('static', filename='maked_image/'+ image.maked_img_path) }}" style="width:450px; height:300px; margin:auto;">
                     {% else %}                    
-                    <img src="{{url_for('static', filename='assets/image/default.PNG')}}" style="width:450px; height:300px; margin:auto;">
+                    <img src="{{url_for('static', filename='image/default.PNG')}}" style="width:450px; height:300px; margin:auto;">
                     {% endif %}                  
                 </div>
                 <div class="row text-center" style="font-family: 'Gowun Batang', serif;"><h2>{{book.book_title}}</h2></div>

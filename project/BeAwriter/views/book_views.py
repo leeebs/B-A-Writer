@@ -5,7 +5,7 @@ from BeAwriter import db
 from BeAwriter.models import Storybook, CoverImage, Rating, Pageimage
 
 import datetime
-from pytz import timezone, utc
+from pytz import timezone
 from sqlalchemy import and_
 from sqlalchemy.sql import func
 
@@ -19,16 +19,9 @@ import torch
 import torchvision
 import clip
 import torch.nn.functional as F
-# from transformers import AutoTokenizer
 from BeAwriter.static.imgmodel.notebook_utils import TextEncoder, load_model, get_generated_images_by_texts
 
 from krwordrank.sentence import summarize_with_sentences
-# from krwordrank.word import summarize_with_keywords
-# from krwordrank.word import KRWordRank
-# from krwordrank.hangle import normalize
-# import os
-# import sys
-# import urllib.request
 import requests
 from konlpy.tag import Okt
 
@@ -39,7 +32,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 KST = timezone('Asia/Seoul')
-
 now = datetime.datetime.utcnow()
 
 def preprocessing(res):
@@ -106,34 +98,41 @@ def extraction_keyword(texts):
     keywords = list(keywords.keys())
     print(keywords)
     keywords = [j[0] for i in keywords for j in okt.pos(i) if j[1] == 'Noun' and len(j[0]) > 1]
+    if len(keywords) == 0 :
+        return 'nothing'
     return keyword_translate(keywords[0])
 
 class ResidualBlock(nn.Module):
-    def __init__(self):
+    def __init__(self, use_bias=False):
         super(ResidualBlock, self).__init__()
-        self.conv_1 = nn.Conv2d(in_channels=256, out_channels=256, kernel_size=3, stride=1, padding=1)
-        self.conv_2 = nn.Conv2d(in_channels=256, out_channels=256, kernel_size=3, stride=1, padding=1)
-        self.norm_1 = nn.BatchNorm2d(256)
-        self.norm_2 = nn.BatchNorm2d(256)
+        self.conv_1 = nn.Conv2d(in_channels=256, out_channels=256, kernel_size=3, stride=1, padding=1, bias=use_bias)
+        self.norm_1 = nn.InstanceNorm2d(256)
+        self.conv_2 = nn.Conv2d(in_channels=256, out_channels=256, kernel_size=3, stride=1, padding=1, bias=use_bias)
+        self.norm_2 = nn.InstanceNorm2d(256)
+        # self.norm_1 = nn.BatchNorm2d(256)
+        # self.norm_2 = nn.BatchNorm2d(256)
 
     def forward(self, x):
-        output = self.norm_2(self.conv_2(F.relu(self.norm_1(self.conv_1(x)))))
+        output = self.norm_2(self.conv_2(F.leaky_relu(self.norm_1(self.conv_1(x)))))
         return output + x
 
 class Generator(nn.Module):
-    def __init__(self):
+    def __init__(self, use_bias=False):
         super(Generator, self).__init__()
-        self.conv_1 = nn.Conv2d(in_channels=3, out_channels=64, kernel_size=7, stride=1, padding=3)
-        self.norm_1 = nn.BatchNorm2d(64)
+        self.conv_1 = nn.Conv2d(in_channels=3, out_channels=64, kernel_size=7, stride=1, padding=3, bias=use_bias)
+        # self.norm_1 = nn.BatchNorm2d(64)
+        self.norm_1 = nn.InstanceNorm2d(64)
         
         # down-convolution #
-        self.conv_2 = nn.Conv2d(in_channels=64, out_channels=128, kernel_size=3, stride=2, padding=1)
-        self.conv_3 = nn.Conv2d(in_channels=128, out_channels=128, kernel_size=3, stride=1, padding=1)
-        self.norm_2 = nn.BatchNorm2d(128)
+        self.conv_2 = nn.Conv2d(in_channels=64, out_channels=128, kernel_size=3, stride=2, padding=1,bias=use_bias)
+        self.conv_3 = nn.Conv2d(in_channels=128, out_channels=128, kernel_size=3, stride=1, padding=1,bias=use_bias)
+        # self.norm_2 = nn.BatchNorm2d(128)
+        self.norm_2 = nn.InstanceNorm2d(128)
         
-        self.conv_4 = nn.Conv2d(in_channels=128, out_channels=256, kernel_size=3, stride=2, padding=1)
-        self.conv_5 = nn.Conv2d(in_channels=256, out_channels=256, kernel_size=3, stride=1, padding=1)
-        self.norm_3 = nn.BatchNorm2d(256)
+        self.conv_4 = nn.Conv2d(in_channels=128, out_channels=256, kernel_size=3, stride=2, padding=1,bias=use_bias)
+        self.conv_5 = nn.Conv2d(in_channels=256, out_channels=256, kernel_size=3, stride=1, padding=1,bias=use_bias)
+        # self.norm_3 = nn.BatchNorm2d(256)
+        self.norm_3 = nn.InstanceNorm2d(256)
         
         # residual blocks #
         residualBlocks = []
@@ -142,25 +141,28 @@ class Generator(nn.Module):
         self.res = nn.Sequential(*residualBlocks)
         
         # up-convolution #
-        self.conv_6 = nn.ConvTranspose2d(in_channels=256, out_channels=128, kernel_size=3, stride=2, padding=1, output_padding=1)
-        self.conv_7 = nn.ConvTranspose2d(in_channels=128, out_channels=128, kernel_size=3, stride=1, padding=1)
-        self.norm_4 = nn.BatchNorm2d(128)
+        self.conv_6 = nn.ConvTranspose2d(in_channels=256, out_channels=128, kernel_size=3, stride=2, padding=1, output_padding=1, bias=use_bias)
+        self.conv_7 = nn.ConvTranspose2d(in_channels=128, out_channels=128, kernel_size=3, stride=1, padding=1, bias=use_bias)
+        self.norm_4 = nn.InstanceNorm2d(128)
+        # self.norm_4 = nn.BatchNorm2d(128)
 
-        self.conv_8 = nn.ConvTranspose2d(in_channels=128, out_channels=64, kernel_size=3, stride=2, padding=1, output_padding=1)
-        self.conv_9 = nn.ConvTranspose2d(in_channels=64, out_channels=64, kernel_size=3, stride=1, padding=1)
-        self.norm_5 = nn.BatchNorm2d(64)
+        self.conv_8 = nn.ConvTranspose2d(in_channels=128, out_channels=64, kernel_size=3, stride=2, padding=1, output_padding=1, bias=use_bias)
+        self.conv_9 = nn.ConvTranspose2d(in_channels=64, out_channels=64, kernel_size=3, stride=1, padding=1, bias=use_bias)
+        self.norm_5 = nn.InstanceNorm2d(64)
+        # self.norm_5 = nn.BatchNorm2d(64)
         
-        self.conv_10 = nn.Conv2d(in_channels=64, out_channels=3, kernel_size=7, stride=1, padding=3)
+        self.conv_10 = nn.Conv2d(in_channels=64, out_channels=3, kernel_size=7, stride=1, padding=3, bias=use_bias)
+        
 
     def forward(self, x):
-        x = F.relu(self.norm_1(self.conv_1(x)))
-        
-        x = F.relu(self.norm_2(self.conv_3(self.conv_2(x))))
-        x = F.relu(self.norm_3(self.conv_5(self.conv_4(x))))
+        x = F.leaky_relu(self.norm_1(self.conv_1(x)))
+        x = F.leaky_relu(self.norm_2(self.conv_3(self.conv_2(x))))
+        x = F.leaky_relu(self.norm_3(self.conv_5(self.conv_4(x))))
         
         x = self.res(x)
-        x = F.relu(self.norm_4(self.conv_7(self.conv_6(x))))
-        x = F.relu(self.norm_5(self.conv_9(self.conv_8(x))))
+
+        x = F.leaky_relu(self.norm_4(self.conv_7(self.conv_6(x))))
+        x = F.leaky_relu(self.norm_5(self.conv_9(self.conv_8(x))))
 
         x = self.conv_10(x)
 
@@ -214,7 +216,7 @@ def save():
         sb = Storybook(book_con=book_contents,
                     member_no=g.user.member_no,
                     book_title=temp,
-                    book_date =  KST.localize(now))
+                    book_date = KST.localize(now))
         db.session.add(sb)
         db.session.commit()
         
@@ -342,10 +344,10 @@ def cover(book_no):
                 G_inference.load_state_dict(checkpoint['g_state_dict'])
                 
                 transformer = transforms.Compose([
-                    transforms.Resize((350, 400)),
-                    transforms.ToTensor() # ToTensor() changes the range of the values from [0, 255] to [0.0, 1.0]
+                    transforms.Resize((350, 450)),
+                    transforms.ToTensor()
                 ])
-                test_images = Image.open('../project/BeAwriter/static/image/1/'+filename)
+                test_images = Image.open('../project/BeAwriter/static/image/1/'+filename).convert('RGB')
                 test_images = transformer(test_images)[None,]
                 result_images_best_checkpoint = G_inference(test_images)
                 

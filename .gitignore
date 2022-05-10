@@ -6,16 +6,16 @@
 *.bin
 *.pt
 *.pth
-*.mp3
-*.jpg
-*.png
+# *.mp3
+# *.jpg
+# *.png
 
 ### flask migration ###
-migrations/
+# migrations/
 
 ### Database ###
 *.accdb
-*.db
+# *.db
 *.dbf
 *.mdb
 *.pdb

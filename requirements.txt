@@ -1,0 +1,16 @@
+# (pip install ~)
+
+flask_migrate
+flask_admin
+git+https://github.com/ssut/py-hanspell.git
+flask_wtf
+gtts
+pytz
+regex
+transformers
+fastai==2.2.5
+git+https://github.com/openai/CLIP.git
+omegaconf
+EasyDict
+krwordrank
+konlpy
