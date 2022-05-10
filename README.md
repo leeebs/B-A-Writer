@@ -16,7 +16,9 @@
 <br>
 
 ## 2. 서비스 소개
-![image](https://user-images.githubusercontent.com/61009770/167703483-af59df25-7a51-4240-b457-d226c84456fc.png)
+<div align="center">
+<img src='https://user-images.githubusercontent.com/61009770/167703483-af59df25-7a51-4240-b457-d226c84456fc.png' height='400' width='400'>
+</div>
 
 #F9AB00
 
