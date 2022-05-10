@@ -64,13 +64,12 @@
 > GTTS <br> Papago <br> Han-spell
 
 
-
 ## 7. 구동 방법
 1. Anaconda Prompt activate <br>
 2. requirements.txt 를 이용해 설치 폴더를 작성해주세요.
 3. project 폴더로 이동 <br>
-4. start.py에 등록되어 있는 set FLASK_APP=BeAwriter, set FLASK_ENV=development 를 각각 cmd 창에 입력.<br>
-윈도우에서 실행시 set, 리눅스에서 실행 시 export로 적어주세요.
+4. start.py에 등록되어 있는 `set FLASK_APP=BeAwriter`, `set FLASK_ENV=development` 를 각각 cmd 창에 입력.<br>
+윈도우에서 실행시 `set`, 리눅스에서 실행 시 `export`로 적어주세요.
 5. flask run 입력
 
 + ## AI Model
