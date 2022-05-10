@@ -20,7 +20,6 @@
 <img src='https://user-images.githubusercontent.com/61009770/167703483-af59df25-7a51-4240-b457-d226c84456fc.png'>
 </div>
 
-#F9AB00
 
 ## 3. 작업 환경
 > <img src="https://img.shields.io/badge/Visual Studio code-007ACC?style=flat&logo=Visual Studio code&logoColor=white"/> <br> <img src="https://img.shields.io/badge/Google Colab-F9AB00?style=flat&logo=Google Colab-&logoColor=white"/>
@@ -71,6 +70,23 @@
 4. start.py에 등록되어 있는 `set FLASK_APP=BeAwriter`, `set FLASK_ENV=development` 를 각각 cmd 창에 입력.<br>
 윈도우에서 실행시 `set`, 리눅스에서 실행 시 `export`로 적어주세요.
 5. flask run 입력
+
++ ## 설치 프로그램
+(pip install ~)<br>
+flask_migrate <br>
+flask_admin<br>
+git+https://github.com/ssut/py-hanspell.git<br>
+flask_wtf<br>
+gtts<br>
+pytz<br>
+regex<br>
+transformers<br>
+fastai==2.2.5<br>
+git+https://github.com/openai/CLIP.git<br>
+omegaconf<br>
+EasyDict<br>
+krwordrank<br>
+konlpy<br>
 
 + ## AI Model
 + ### KoGPT-2
