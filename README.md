@@ -17,11 +17,66 @@
 
 ## 2. 서비스 소개
 <div align="center">
-<img src='https://user-images.githubusercontent.com/61009770/167703483-af59df25-7a51-4240-b457-d226c84456fc.png' height='600' width='600'>
+<img src='https://user-images.githubusercontent.com/63540952/167746860-ef42e09c-ee58-4ade-bea3-a92796867742.jpeg' height='600' width='900'>
 </div>
 
-
-## 3. 작업 환경
+## 3. UI/UX
+<details>
+  <summary>메인 화면</summary>
+   <div markdown="1">       
+     <br>
+     <img src="https://user-images.githubusercontent.com/63540952/167745469-2d551155-7c8c-4e6d-a24b-f7a8845c0436.png" width="800" height="700">
+     <br>
+     <text>⇒ 처음 메인화면 구성이다.</text>
+   </div>
+</details>
+<details>
+  <summary>회원가입</summary>
+   <div markdown="1">       
+     <br>
+     <img src="https://user-images.githubusercontent.com/63540952/167745751-25f09b5c-a0ac-45ec-8c3f-013b1873fb8f.PNG" width="800" height="700">
+     <br>
+     <text>⇒ 회원가입 </text>
+   </div>
+ </details>
+ <details>
+  <summary>로그인</summary>
+   <div markdown="1">       
+     <br>
+     <img src="https://user-images.githubusercontent.com/63540952/167745896-34abd1c7-6f0b-44fb-8e08-af40a4dc4d09.PNG" width="800" height="700">
+     <br>
+     <text>⇒ 로그인 </text>
+   </div>
+ </details>
+ <details>
+  <summary>QnA게시판</summary>
+   <div markdown="1">       
+     <br>
+     <img src="https://user-images.githubusercontent.com/63540952/167745995-656c3d5f-fb3b-4173-be06-1c72007dc9b8.PNG" width="800" height="700">
+     <br>
+     <text>⇒ QnA게시판 </text>
+   </div>
+ </details>
+ <details>
+  <summary>QnA작성</summary>
+   <div markdown="1">       
+     <br>
+     <img src="https://user-images.githubusercontent.com/63540952/167746015-85a1f41f-b828-478d-8fe0-933d99853800.PNG" width="800" height="700">
+     <br>
+     <text>⇒ QnA작성 </text>
+   </div>
+ </details>
+ <details>
+  <summary>QnA답변</summary>
+   <div markdown="1">       
+     <br>
+     <img src="https://user-images.githubusercontent.com/63540952/167746489-3635a7bb-f5f4-46ac-a855-77ab7c048f0e.PNG" width="800" height="700">
+     <br>
+     <text>⇒ QnA답변 </text>
+   </div>
+ </details>
+ 
+## 4. 작업 환경
 > <img src="https://img.shields.io/badge/Visual Studio code-007ACC?style=flat&logo=Visual Studio code&logoColor=white"/> <br> <img src="https://img.shields.io/badge/Google Colab-F9AB00?style=flat&logo=Google Colab-&logoColor=white"/>
 
 + ## 사용 언어
@@ -34,10 +89,12 @@
 + ### DB
 <img src="https://img.shields.io/badge/SQLite-003B57?style=flat&logo=SQLite&logoColor=white"/>
 
-## 4. ERD
+## 5. ERD
 ![dba PNG](https://user-images.githubusercontent.com/63540952/167684479-e447fdcb-725e-435f-8ada-9276978587e8.png)
 
-## 5. 기능 설명
+
+
+## 6. 기능 설명
 
 ### 일반 사용자
 
@@ -56,7 +113,7 @@
 
 
 
-## 6. AI 기능
+## 7. AI 기능
 + ## 중요 모델
 > KoGPT-2 <br> RQ-Transformer <br> CartoonGAN
 
@@ -64,7 +121,7 @@
 > GTTS <br> Papago <br> Han-spell
 
 
-## 7. 구동 방법
+## 8. 구동 방법
 1. Anaconda Prompt activate <br>
 2. requirements.txt 를 이용해 설치 폴더를 작성해주세요.
 3. project 폴더로 이동 <br>
