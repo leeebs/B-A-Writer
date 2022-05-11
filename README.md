@@ -17,7 +17,7 @@
 
 ## 2. 서비스 소개
 <div align="center">
-<img src='https://user-images.githubusercontent.com/63540952/167746860-ef42e09c-ee58-4ade-bea3-a92796867742.jpeg' height='600' width='900'>
+<img src='AI 11조 포스터](https://user-images.githubusercontent.com/63540952/167753456-0b1ab857-a105-4f8d-93f7-91699553c6b4.jpg' height='600' width='900'>
 </div>
 
 ## 3. UI/UX
