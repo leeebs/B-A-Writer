@@ -75,6 +75,61 @@
      <text>⇒ QnA답변 </text>
    </div>
  </details>
+ <details>
+  <summary>동화작성</summary>
+   <div markdown="1">       
+     <br>
+     <img src="https://user-images.githubusercontent.com/63540952/167747170-a8619554-c40d-41e1-a83c-9f1df4885b46.PNG" width="800" height="700">
+     <br>
+     <text>⇒ 동화작성 </text>
+   </div>
+ </details>
+ <details>
+  <summary>동화제목</summary>
+   <div markdown="1">       
+     <br>
+     <img src="https://user-images.githubusercontent.com/63540952/167747311-6378c651-2d16-426e-b81d-913342728601.PNG" width="800" height="700">
+     <br>
+     <text>⇒ 동화제목 </text>
+   </div>
+ </details>
+ <details>
+  <summary>표지</summary>
+   <div markdown="1">       
+     <br>
+     <img src="https://user-images.githubusercontent.com/63540952/167747379-3a9c06c8-6614-4614-9209-c37dd112f5ca.PNG" width="800" height="700">
+     <br>
+     <text>⇒ 표지 </text>
+   </div>
+ </details>
+ <details>
+  <summary>동화책읽기</summary>
+   <div markdown="1">       
+     <br>
+     <img src="https://user-images.githubusercontent.com/63540952/167747379-3a9c06c8-6614-4614-9209-c37dd112f5ca.PNG" width="800" height="700">
+     <br>
+     <text>⇒ 동화책읽기 </text>
+   </div>
+ </details>
+ <details>
+  <summary>별점</summary>
+   <div markdown="1">       
+     <br>
+     <img src="https://user-images.githubusercontent.com/63540952/167747723-56382311-c6ab-42f9-a90b-8e94e68df27a.PNG" width="800" height="700">
+     <br>
+     <text>⇒ 별점 </text>
+   </div>
+ </details>
+ <details>
+  <summary>관리자페이지</summary>
+   <div markdown="1">       
+     <br>
+     <img src="https://user-images.githubusercontent.com/63540952/167747798-7927646b-dc3d-43fc-9160-22d07854eb4b.PNG" width="800" height="700">
+     <br>
+     <text>⇒ 관리자 </text>
+   </div>
+ </details>
+ 
  
 ## 4. 작업 환경
 > <img src="https://img.shields.io/badge/Visual Studio code-007ACC?style=flat&logo=Visual Studio code&logoColor=white"/> <br> <img src="https://img.shields.io/badge/Google Colab-F9AB00?style=flat&logo=Google Colab-&logoColor=white"/>
