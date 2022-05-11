@@ -73,20 +73,22 @@
 5. flask run 입력
 
 
-+ ## AI Model
+## AI Model
 + ### KoGPT-2
-[link](https://drive.google.com/uc?export=download&id=1-1DGCLsrqViL7GNJPsXpivPHptn1MwEm) <br>
+모델 다운로드 : [link](https://drive.google.com/uc?export=download&id=1-1DGCLsrqViL7GNJPsXpivPHptn1MwEm) <br>
+
 pytorch_model.bin 파일을 다운받아 static > storymodel 폴더에 넣기
 
 + ### RQ-Transformer
-[link](https://arena.kakaocdn.net/brainrepo/models/RQVAE/dcd95e8f08408e113aab6451fae895f5/cc3m.tar.gz) <br>
-+ #### stage 1
+모델 다운로드 : [link](https://arena.kakaocdn.net/brainrepo/models/RQVAE/dcd95e8f08408e113aab6451fae895f5/cc3m.tar.gz) <br>
+
 압축을 풀고 stage 1 폴더 내의 model.pt 를 다운받아 static > imagemodel > stage1 폴더에 넣기
-+ #### stage 2
+
 압축을 풀고 stage 2 폴더 내의 model.pt 를 다운받아 static > imagemodel > stage2 폴더에 넣기
 
 + ### CartoonGAN
-[link]() <br>
+모델 다운로드 : [link]() <br>
+
 best_checkpoint.pth 파일을 다운받아 static > covermodel 폴더에 넣기
 
 ```
