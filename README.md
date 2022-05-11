@@ -19,8 +19,9 @@
 <div align="center">
 <img src='https://user-images.githubusercontent.com/63540952/167753456-0b1ab857-a105-4f8d-93f7-91699553c6b4.jpg' height='600' width='900'>
 </div>
-
-## 3. UI/UX
+## 3. eda분석 
+https://colab.research.google.com/drive/1OG4IjBmqa1OqENf4Q6KWyiMzmDUJZt50?usp=sharing
+## 4. UI/UX
 <details>
   <summary>메인 화면</summary>
    <div markdown="1">       
@@ -131,7 +132,7 @@
  </details>
  
  
-## 4. 작업 환경
+## 5. 작업 환경
 > <img src="https://img.shields.io/badge/Visual Studio code-007ACC?style=flat&logo=Visual Studio code&logoColor=white"/> <br> <img src="https://img.shields.io/badge/Google Colab-F9AB00?style=flat&logo=Google Colab-&logoColor=white"/>
 
 + ## 사용 언어
@@ -144,12 +145,12 @@
 + ### DB
 <img src="https://img.shields.io/badge/SQLite-003B57?style=flat&logo=SQLite&logoColor=white"/>
 
-## 5. ERD
+## 6. ERD
 ![dba PNG](https://user-images.githubusercontent.com/63540952/167684479-e447fdcb-725e-435f-8ada-9276978587e8.png)
 
 
 
-## 6. 기능 설명
+## 7. 기능 설명
 
 ### 일반 사용자
 
@@ -168,7 +169,7 @@
 
 
 
-## 7. AI 기능
+## 8. AI 기능
 + ## 중요 모델
 모델 클릭시 만든 모델을 볼 수 있습니다.
 > [KoGPT-2](https://colab.research.google.com/drive/1lJP79PZ8VV7OlRhKjeLv5-MFKRq-dM4v?usp=sharing)  <br> RQ-VAE-Transformer <br> [CartoonGAN](https://colab.research.google.com/drive/1iIJEwKdCQMnshzNHNegMXK4wS3-Kghty?usp=sharing)
@@ -177,7 +178,7 @@
 > GTTS <br> Papago <br> Han-spell
 
 
-## 8. 구동 방법
+## 9. 구동 방법
 1. Anaconda Prompt activate <br>
 2. requirements.txt 를 이용해 설치 폴더를 작성해주세요.
 3. project 폴더로 이동 <br>
