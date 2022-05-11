@@ -1,12 +1,10 @@
 from flask import Blueprint, render_template, url_for, request, g
 from werkzeug.utils import redirect
 from BeAwriter.forms import QuestionForm, AnswerForm
-
 from BeAwriter import db
 from BeAwriter.models import Question, QuestionComment, Member
-
 import datetime
-from pytz import timezone
+from pytz import timezone, utc
 
 bp = Blueprint('qna', __name__, url_prefix='/qna')
 
