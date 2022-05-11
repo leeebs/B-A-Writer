@@ -4,8 +4,10 @@ import json
 from gtts import gTTS
 from BeAwriter import db
 from BeAwriter.models import *
+
 import datetime
 from pytz import timezone, utc
+
 from sqlalchemy import and_
 from transformers import AutoModelWithLMHead, PreTrainedTokenizerFast
 from fastai.text.all import *
@@ -32,7 +34,7 @@ import requests
 from konlpy.tag import Okt
 
 KST = timezone('Asia/Seoul') #한국시간에 맞게 출력
-now = datetime.datetime.utcnow()
+now = datetime.datetime.utcnow() #현재시간
 
 def preprocessing(res):
     spelled_sent = spell_checker.check(res)
