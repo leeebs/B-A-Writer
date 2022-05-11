@@ -170,7 +170,7 @@
 
 ## 7. AI 기능
 + ## 중요 모델
-> KoGPT-2 <br> RQ-Transformer <br> CartoonGAN
+> KoGPT-2 <br> RQ-VAE-Transformer <br> CartoonGAN
 
 + ## 사용 API
 > GTTS <br> Papago <br> Han-spell
@@ -191,7 +191,7 @@
 
 pytorch_model.bin 파일을 다운받아 static > storymodel 폴더에 넣기
 
-+ ### RQ-Transformer
++ ### RQ-VAE-Transformer
 모델 다운로드 : [link](https://arena.kakaocdn.net/brainrepo/models/RQVAE/dcd95e8f08408e113aab6451fae895f5/cc3m.tar.gz) <br>
 
 압축을 풀고 stage 1 폴더 내의 model.pt 를 다운받아 static > imagemodel > stage1 폴더에 넣기
