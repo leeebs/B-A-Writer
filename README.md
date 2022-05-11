@@ -19,8 +19,10 @@
 <div align="center">
 <img src='https://user-images.githubusercontent.com/63540952/167753456-0b1ab857-a105-4f8d-93f7-91699553c6b4.jpg' height='600' width='900'>
 </div>
+
 ## 3. eda분석 
 https://colab.research.google.com/drive/1OG4IjBmqa1OqENf4Q6KWyiMzmDUJZt50?usp=sharing
+
 ## 4. UI/UX
 <details>
   <summary>메인 화면</summary>
