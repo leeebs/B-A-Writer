@@ -21,7 +21,7 @@ def qnawrite():
         question = Question(subject=form.subject.data,
                                 content=form.content.data,
                                 member_no=g.user.member_no,
-                                ques_date =  KST.localize(now))
+                                ques_date =  utc.localize(now).astimezone(KST))
         db.session.add(question)
         db.session.commit()
         return redirect(url_for('qna.qnalist'))
