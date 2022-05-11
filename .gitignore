@@ -11,11 +11,11 @@
 # *.png
 
 ### flask migration ###
-# migrations/
+migrations/
 
 ### Database ###
 *.accdb
-# *.db
+*.db
 *.dbf
 *.mdb
 *.pdb
