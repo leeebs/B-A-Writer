@@ -75,7 +75,7 @@
 
 ## AI Model
 + ### KoGPT-2
-모델 다운로드 : [link](https://drive.google.com/uc?export=download&id=1-1DGCLsrqViL7GNJPsXpivPHptn1MwEm) <br>
+모델 다운로드 : [link](https://drive.google.com/uc?export=download&id=1fdTzWFb1N_ehDBGT6aFQU2JalbVC_t8o) <br>
 
 pytorch_model.bin 파일을 다운받아 static > storymodel 폴더에 넣기
 
