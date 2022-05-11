@@ -200,7 +200,7 @@ pytorch_model.bin 파일을 다운받아 static > storymodel 폴더에 넣기
 압축을 풀고 stage 2 폴더 내의 model.pt 를 다운받아 static > imagemodel > stage2 폴더에 넣기
 
 + ### CartoonGAN
-모델 다운로드 : [link]() <br>
+모델 다운로드 : [link](https://drive.google.com/uc?export=download&id=1rweWKZln5ql0PpYqcvbi3Ni3MTPfgGIG) <br>
 
 best_checkpoint.pth 파일을 다운받아 static > covermodel 폴더에 넣기
 
