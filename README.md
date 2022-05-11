@@ -71,22 +71,6 @@
 윈도우에서 실행시 `set`, 리눅스에서 실행 시 `export`로 적어주세요.
 5. flask run 입력
 
-+ ## 설치 프로그램
-(pip install ~)<br>
-flask_migrate <br>
-flask_admin<br>
-git+https://github.com/ssut/py-hanspell.git<br>
-flask_wtf<br>
-gtts<br>
-pytz<br>
-regex<br>
-transformers<br>
-fastai==2.2.5<br>
-git+https://github.com/openai/CLIP.git<br>
-omegaconf<br>
-EasyDict<br>
-krwordrank<br>
-konlpy<br>
 
 + ## AI Model
 + ### KoGPT-2
