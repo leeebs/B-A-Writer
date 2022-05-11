@@ -106,7 +106,7 @@
   <summary>동화책읽기</summary>
    <div markdown="1">       
      <br>
-     <img src="https://user-images.githubusercontent.com/63540952/167747379-3a9c06c8-6614-4614-9209-c37dd112f5ca.PNG" width="800" height="700">
+     <img src="https://user-images.githubusercontent.com/63540952/167751940-02d0a5a6-5a0d-4420-95d8-670bfedc1c3a.png" width="800" height="700">
      <br>
      <text>⇒ 동화책읽기 </text>
    </div>
@@ -228,3 +228,15 @@ best_checkpoint.pth 파일을 다운받아 static > covermodel 폴더에 넣기
 + ## 주의사항
 Cuda를 사용하기 때문에 GPU가 필요합니다.
 
+
++ ## 산출물 완성도
+<details>
+  <summary>산출물가이드라인</summary>
+   <div markdown="1">       
+     <br>
+     <img src="https://user-images.githubusercontent.com/63540952/167751773-c84a67f9-9788-4d07-8092-5326f75c2ee2.jpeg" width="800" height="700">
+     <br>
+     <text>⇒ 구현가이드 100% </text>
+   </div>
+ </details>
+ 
