@@ -17,7 +17,7 @@
 
 ## 2. 서비스 소개
 <div align="center">
-<img src='https://user-images.githubusercontent.com/61009770/167703483-af59df25-7a51-4240-b457-d226c84456fc.png' height='400' width='600'>
+<img src='https://user-images.githubusercontent.com/61009770/167703483-af59df25-7a51-4240-b457-d226c84456fc.png' height='600' width='600'>
 </div>
 
 
