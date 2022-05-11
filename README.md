@@ -170,7 +170,8 @@
 
 ## 7. AI 기능
 + ## 중요 모델
-> KoGPT-2 <br> RQ-VAE-Transformer <br> CartoonGAN
+모델 클릭시 모델을 세부적으로 볼 수 있습니다.
+> [KoGPT-2](https://colab.research.google.com/drive/1lJP79PZ8VV7OlRhKjeLv5-MFKRq-dM4v?usp=sharing)  <br> RQ-VAE-Transformer <br> CartoonGAN
 
 + ## 사용 API
 > GTTS <br> Papago <br> Han-spell
