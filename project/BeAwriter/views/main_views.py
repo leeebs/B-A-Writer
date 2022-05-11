@@ -8,7 +8,7 @@ bp = Blueprint('main', __name__, url_prefix='/')
 @bp.route('/', methods=['GET', 'POST'])
 def index():
     page = request.args.get('page', type=int, default=1)
-    book_list = Storybook.query.order_by(Storybook.book_date.desc())
+    book_list = Storybook.query.order_by(Storybook.book_no.desc())
     book_mem_name = []
     book_img_path = []
     book_avg = []

@@ -216,7 +216,7 @@ def save():
         sb = Storybook(book_con=book_contents,
                     member_no=g.user.member_no,
                     book_title=temp,
-                    book_date = KST.localize(now))
+                    book_date =  utc.localize(now).astimezone(KST))
         db.session.add(sb)
         db.session.commit()
         
