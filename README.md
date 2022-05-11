@@ -20,7 +20,7 @@
 <img src='https://user-images.githubusercontent.com/63540952/167753456-0b1ab857-a105-4f8d-93f7-91699553c6b4.jpg' height='600' width='900'>
 </div>
 
-## 3. EDA 분석 
+## 3. eda분석 
 https://colab.research.google.com/drive/1OG4IjBmqa1OqENf4Q6KWyiMzmDUJZt50?usp=sharing
 
 ## 4. UI/UX
@@ -228,6 +228,17 @@ best_checkpoint.pth 파일을 다운받아 static > covermodel 폴더에 넣기
     └── best_checkpoint.pth
 
 ```
+## 산출물 완성도
+<details>
+  <summary>산출물완성도</summary>
+   <div markdown="1">       
+     <br>
+     <img src="https://user-images.githubusercontent.com/63540952/167759991-0bff8bd6-af54-4e8b-bd77-0e30f9ff7118.jpeg" width="800" height="700">
+     <br>
+     <text>⇒ 100퍼센트 구현성공!</text>
+   </div>
+</details>
+
 + ## 주의사항
 Cuda를 사용하기 때문에 GPU가 필요합니다.
 
