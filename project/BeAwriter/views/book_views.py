@@ -33,7 +33,6 @@ import requests
 from konlpy.tag import Okt
 
 KST = timezone('Asia/Seoul')
-
 now = datetime.datetime.utcnow()
 
 def preprocessing(res):
