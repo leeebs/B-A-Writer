@@ -31,7 +31,7 @@ from torchvision import transforms
 import matplotlib.pyplot as plt
 import numpy as np
 
-KST = timezone('Asia/Seoul') #한국시간에 맞게 출력
+KST = timezone('Asia/Seoul') 
 now = datetime.datetime.utcnow()
 
 def preprocessing(res):
