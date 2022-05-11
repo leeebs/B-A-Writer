@@ -2,10 +2,8 @@ from flask import Blueprint, render_template, url_for, request, session, g, flas
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import redirect, secure_filename
 from BeAwriter.forms import QuestionForm, AnswerForm
-
 from BeAwriter import db
 from BeAwriter.models import *
-
 import datetime
 from pytz import timezone, utc
 
