@@ -106,7 +106,7 @@
   <summary>동화책읽기</summary>
    <div markdown="1">       
      <br>
-     <img src="https://user-images.githubusercontent.com/63540952/167747379-3a9c06c8-6614-4614-9209-c37dd112f5ca.PNG" width="800" height="700">
+     <img src="https://user-images.githubusercontent.com/63540952/167753242-b5f52445-dd9c-4455-8dc8-92fd91983ac6.png" width="800" height="700">
      <br>
      <text>⇒ 동화책읽기 </text>
    </div>
