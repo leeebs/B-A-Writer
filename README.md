@@ -17,7 +17,7 @@
 
 ## 2. 서비스 소개
 <div align="center">
-<img src='https://user-images.githubusercontent.com/63540952/167746860-ef42e09c-ee58-4ade-bea3-a92796867742.jpeg' height='600' width='900'>
+<img src='https://user-images.githubusercontent.com/63540952/167753456-0b1ab857-a105-4f8d-93f7-91699553c6b4.jpg' height='600' width='900'>
 </div>
 
 ## 3. UI/UX
@@ -106,7 +106,7 @@
   <summary>동화책읽기</summary>
    <div markdown="1">       
      <br>
-     <img src="https://user-images.githubusercontent.com/63540952/167747379-3a9c06c8-6614-4614-9209-c37dd112f5ca.PNG" width="800" height="700">
+     <img src="https://user-images.githubusercontent.com/63540952/167753242-b5f52445-dd9c-4455-8dc8-92fd91983ac6.png" width="800" height="700">
      <br>
      <text>⇒ 동화책읽기 </text>
    </div>
@@ -170,8 +170,8 @@
 
 ## 7. AI 기능
 + ## 중요 모델
-모델 클릭시 모델을 세부적으로 볼 수 있습니다.
-> [KoGPT-2](https://colab.research.google.com/drive/1lJP79PZ8VV7OlRhKjeLv5-MFKRq-dM4v?usp=sharing)  <br> RQ-VAE-Transformer <br> CartoonGAN
+모델 클릭시 만든 모델을 볼 수 있습니다.
+> [KoGPT-2](https://colab.research.google.com/drive/1lJP79PZ8VV7OlRhKjeLv5-MFKRq-dM4v?usp=sharing)  <br> RQ-VAE-Transformer <br> [CartoonGAN](https://colab.research.google.com/drive/1iIJEwKdCQMnshzNHNegMXK4wS3-Kghty?usp=sharing)
 
 + ## 사용 API
 > GTTS <br> Papago <br> Han-spell
