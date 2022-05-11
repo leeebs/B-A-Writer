@@ -33,7 +33,7 @@ import urllib.request
 import requests
 from konlpy.tag import Okt
 
-KST = timezone('Asia/Seoul')
+KST = timezone('Asia/Seoul') #한국시간에 맞게 출력
 now = datetime.datetime.utcnow()
 
 def preprocessing(res):
