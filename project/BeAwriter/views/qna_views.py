@@ -8,8 +8,10 @@ from pytz import timezone, utc
 
 bp = Blueprint('qna', __name__, url_prefix='/qna')
 
-KST = timezone('Asia/Seoul') #한국시간에 맞게 출력
-now = datetime.datetime.utcnow()  #현재시간
+# 한국시간에 맞게 출력
+KST = timezone('Asia/Seoul')
+# 현재시간
+now = datetime.datetime.utcnow()
 
 @bp.route('/qnawrite/', methods=('GET', 'POST'))
 def qnawrite():

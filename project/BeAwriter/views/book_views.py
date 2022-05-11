@@ -31,7 +31,9 @@ from torchvision import transforms
 import matplotlib.pyplot as plt
 import numpy as np
 
-KST = timezone('Asia/Seoul') #한국시간에 맞게 출력
+# 한국시간에 맞게 출력
+KST = timezone('Asia/Seoul')
+# 현재시간
 now = datetime.datetime.utcnow()
 
 def preprocessing(res):
@@ -216,7 +218,7 @@ def save():
         sb = Storybook(book_con=book_contents,
                     member_no=g.user.member_no,
                     book_title=temp,
-                    book_date =  utc.localize(now).astimezone(KST))
+                    book_date = utc.localize(now).astimezone(KST))
         db.session.add(sb)
         db.session.commit()
         
