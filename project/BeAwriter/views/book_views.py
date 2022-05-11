@@ -1,40 +1,37 @@
-from flask import Blueprint, render_template, url_for, request, g, jsonify, current_app
-from werkzeug.utils import redirect, secure_filename
-import json
+from flask import Blueprint, render_template, url_for, request, g, jsonify
+from werkzeug.utils import redirect
 from gtts import gTTS
 from BeAwriter import db
-from BeAwriter.models import *
-
+from BeAwriter.models import Storybook, CoverImage, Rating, Pageimage
 import datetime
 from pytz import timezone, utc
-
 from sqlalchemy import and_
+from sqlalchemy.sql import func
+
 from transformers import AutoModelWithLMHead, PreTrainedTokenizerFast
-from fastai.text.all import *
+from fastai.text.all import tensor
 from hanspell import spell_checker
 import re
 
 from PIL import Image
-import yaml
 import torch
 import torchvision
 import clip
 import torch.nn.functional as F
-from transformers import AutoTokenizer
 from BeAwriter.static.imgmodel.notebook_utils import TextEncoder, load_model, get_generated_images_by_texts
 
 from krwordrank.sentence import summarize_with_sentences
-from krwordrank.word import summarize_with_keywords
-from krwordrank.word import KRWordRank
-from krwordrank.hangle import normalize
-import os
-import sys
-import urllib.request
 import requests
 from konlpy.tag import Okt
 
+import torch.nn as nn
+from torch import sigmoid
+from torchvision import transforms
+import matplotlib.pyplot as plt
+import numpy as np
+
 KST = timezone('Asia/Seoul') #한국시간에 맞게 출력
-now = datetime.datetime.utcnow() #현재시간
+now = datetime.datetime.utcnow()
 
 def preprocessing(res):
     spelled_sent = spell_checker.check(res)
@@ -62,8 +59,7 @@ def outputmodel(input):
                             repetition_penalty=5.0,
                             temperature=0.9,
                             top_k=50,
-                            top_p=0.92
-                        ) 
+                            top_p=0.92) 
     output = tokenizer.decode(preds[0].cpu().numpy())
     output = re.sub('[0-9:\n]','',output)
     return output
@@ -101,7 +97,77 @@ def extraction_keyword(texts):
     keywords = list(keywords.keys())
     print(keywords)
     keywords = [j[0] for i in keywords for j in okt.pos(i) if j[1] == 'Noun' and len(j[0]) > 1]
+    if len(keywords) == 0 :
+        return 'nothing'
     return keyword_translate(keywords[0])
+
+class ResidualBlock(nn.Module):
+    def __init__(self, use_bias=False):
+        super(ResidualBlock, self).__init__()
+        self.conv_1 = nn.Conv2d(in_channels=256, out_channels=256, kernel_size=3, stride=1, padding=1, bias=use_bias)
+        self.norm_1 = nn.InstanceNorm2d(256)
+        self.conv_2 = nn.Conv2d(in_channels=256, out_channels=256, kernel_size=3, stride=1, padding=1, bias=use_bias)
+        self.norm_2 = nn.InstanceNorm2d(256)
+        # self.norm_1 = nn.BatchNorm2d(256)
+        # self.norm_2 = nn.BatchNorm2d(256)
+
+    def forward(self, x):
+        output = self.norm_2(self.conv_2(F.leaky_relu(self.norm_1(self.conv_1(x)))))
+        return output + x
+
+class Generator(nn.Module):
+    def __init__(self, use_bias=False):
+        super(Generator, self).__init__()
+        self.conv_1 = nn.Conv2d(in_channels=3, out_channels=64, kernel_size=7, stride=1, padding=3, bias=use_bias)
+        # self.norm_1 = nn.BatchNorm2d(64)
+        self.norm_1 = nn.InstanceNorm2d(64)
+        
+        # down-convolution #
+        self.conv_2 = nn.Conv2d(in_channels=64, out_channels=128, kernel_size=3, stride=2, padding=1,bias=use_bias)
+        self.conv_3 = nn.Conv2d(in_channels=128, out_channels=128, kernel_size=3, stride=1, padding=1,bias=use_bias)
+        # self.norm_2 = nn.BatchNorm2d(128)
+        self.norm_2 = nn.InstanceNorm2d(128)
+        
+        self.conv_4 = nn.Conv2d(in_channels=128, out_channels=256, kernel_size=3, stride=2, padding=1,bias=use_bias)
+        self.conv_5 = nn.Conv2d(in_channels=256, out_channels=256, kernel_size=3, stride=1, padding=1,bias=use_bias)
+        # self.norm_3 = nn.BatchNorm2d(256)
+        self.norm_3 = nn.InstanceNorm2d(256)
+        
+        # residual blocks #
+        residualBlocks = []
+        for l in range(8):
+            residualBlocks.append(ResidualBlock())
+        self.res = nn.Sequential(*residualBlocks)
+        
+        # up-convolution #
+        self.conv_6 = nn.ConvTranspose2d(in_channels=256, out_channels=128, kernel_size=3, stride=2, padding=1, output_padding=1, bias=use_bias)
+        self.conv_7 = nn.ConvTranspose2d(in_channels=128, out_channels=128, kernel_size=3, stride=1, padding=1, bias=use_bias)
+        self.norm_4 = nn.InstanceNorm2d(128)
+        # self.norm_4 = nn.BatchNorm2d(128)
+
+        self.conv_8 = nn.ConvTranspose2d(in_channels=128, out_channels=64, kernel_size=3, stride=2, padding=1, output_padding=1, bias=use_bias)
+        self.conv_9 = nn.ConvTranspose2d(in_channels=64, out_channels=64, kernel_size=3, stride=1, padding=1, bias=use_bias)
+        self.norm_5 = nn.InstanceNorm2d(64)
+        # self.norm_5 = nn.BatchNorm2d(64)
+        
+        self.conv_10 = nn.Conv2d(in_channels=64, out_channels=3, kernel_size=7, stride=1, padding=3, bias=use_bias)
+        
+
+    def forward(self, x):
+        x = F.leaky_relu(self.norm_1(self.conv_1(x)))
+        x = F.leaky_relu(self.norm_2(self.conv_3(self.conv_2(x))))
+        x = F.leaky_relu(self.norm_3(self.conv_5(self.conv_4(x))))
+        
+        x = self.res(x)
+
+        x = F.leaky_relu(self.norm_4(self.conv_7(self.conv_6(x))))
+        x = F.leaky_relu(self.norm_5(self.conv_9(self.conv_8(x))))
+
+        x = self.conv_10(x)
+
+        x = sigmoid(x)
+
+        return x
 
 
 bp = Blueprint('book', __name__, url_prefix='/book')
@@ -133,7 +199,7 @@ def req_story():
         hanspell_sent = preprocessing(data['inputdata'])
         res = outputmodel(hanspell_sent)
         outputdata = preprocessing(res)
-        output = { 'outputdata' : outputdata }
+        output = {'outputdata' : outputdata}
     else:
         output = {}        
     return jsonify(output)                
@@ -145,7 +211,7 @@ def save():
     if data['alldata']:
         book_contents = data['alldata']
         book_contents = re.sub('[.+]','.',book_contents)
-           
+        
         sb = Storybook(book_con=book_contents,
                     member_no=g.user.member_no,
                     book_title=temp,
@@ -161,13 +227,13 @@ def save():
         
         split_content = book_contents.split('.')
         for idx, sentence in enumerate(split_content):
-            if idx%DIVN+1 < DIVN:
-                temp += sentence+'. '
-            else:
-                temp += sentence+'. '
-                storyArray.append(temp)
-                temp = ''
-        
+            if sentence:
+                if idx % DIVN+1 < DIVN:
+                    temp += sentence+'. '
+                else:
+                    temp += sentence+'. '
+                    storyArray.append(temp)
+                    temp = ''
         if temp:
             storyArray.append(temp)
         print('1 ok')
@@ -209,8 +275,7 @@ def save():
                                             num_samples,
                                             temperature,
                                             top_k,
-                                            top_p,
-                                            )
+                                            top_p)
             print('3 ok')
             images = [pixels.cpu().numpy() * 0.5 + 0.5]
             images = torch.from_numpy(np.array(images))
@@ -227,8 +292,8 @@ def save():
             db.session.commit()
             print('5 ok')
             
-        book = { 'bookn' : sb.book_no,
-                'con' : sb.book_con }
+        book = {'bookn' : sb.book_no,
+                'con' : sb.book_con}
 
     else:
         book = {}        
@@ -264,9 +329,34 @@ def cover(book_no):
             else:
                 extension=f.filename.split('.')[-1]
                 filename=f'{g.user.member_no}_{sb.book_no}.{extension}'
-                f.save('../project/BeAwriter/static/image/'+ filename)              
+                f.save('../project/BeAwriter/static/image/1/'+ filename)
+                
+                # 이미지 변환
+                device = torch.device('cpu')
+                if torch.cuda.is_available():
+                    device = torch.device('cuda')
+                    print("Train on GPU.")
+                else:
+                    print("No cuda available")
+                checkpoint = torch.load('../project/BeAwriter/static/covermodel/best_checkpoint.pth', map_location=torch.device(device))
+                G_inference = Generator()
+                G_inference.load_state_dict(checkpoint['g_state_dict'])
+                
+                transformer = transforms.Compose([
+                    transforms.Resize((350, 450)),
+                    transforms.ToTensor()
+                ])
+                test_images = Image.open('../project/BeAwriter/static/image/1/'+filename).convert('RGB')
+                test_images = transformer(test_images)[None,]
+                result_images_best_checkpoint = G_inference(test_images)
+                
+                filename_new = f'{g.user.member_no}_{sb.book_no}.jpg'
+                images = np.transpose(result_images_best_checkpoint[0].detach().numpy(), (1, 2, 0))
+                plt.imsave('../project/BeAwriter/static/maked_image/'+filename_new,images)
+                            
                 img = CoverImage(book_no=sb.book_no,
-                            img_path=filename)
+                            img_path=filename,
+                            maked_img_path=filename_new)
                 db.session.add(img)
                 db.session.commit()
 
@@ -312,7 +402,7 @@ def bookstar(book_no):
                 book.avg = book_avg
             db.session.commit()
             
-        except:
+        except Exception:
             error = "평점을 매겨주세요!"
     
         if error is None:
@@ -350,7 +440,7 @@ def readbook(book_no):
 
     split_content = content.split('.')
     for idx, sentence in enumerate(split_content):
-        if idx%DIVN+1 < DIVN:
+        if idx % DIVN+1 < DIVN:
             temp += sentence+'. '
         else:
             temp += sentence+'. '
@@ -358,7 +448,7 @@ def readbook(book_no):
             temp = ''
 
     if temp:
-            storyArray.append(temp)
+        storyArray.append(temp)
 
     pageimage_list = Pageimage.query.filter(Pageimage.book_no==book_no).all()
     for pi in pageimage_list:
